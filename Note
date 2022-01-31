@@ -1,0 +1,7 @@
+Facebook App Id: 623026452252328
+App secret: d21d478c719bea2f879717ecefc541c2
+Test address: https%3A%2F%2Fwww.singleparentlife.app%2F
+State: 1
+Send request for OAuth: https://www.facebook.com/v12.0/dialog/oauth?client_id=623026452252328&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F%0A&state=1
+
+
