@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsrDetailsServiceImp implements UserDetailsService {
+public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
