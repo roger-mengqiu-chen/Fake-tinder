@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS userPreference;
 DROP TABLE IF EXISTS userEvent;
 DROP TABLE IF EXISTS eventInvitation;
@@ -34,6 +36,10 @@ CREATE TABLE IF NOT EXISTS role (
     roleName varchar(20) NOT NULL UNIQUE,
     PRIMARY KEY (roleId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
+
+INSERT INTO role VALUES (1, "ADMIN");
+INSERT INTO role VALUES (2, "FREE_USER");
+INSERT INTO role VALUES (3, "PREMIUM_USER");
 
 CREATE TABLE IF NOT EXISTS reaction (
     reactionId tinyint AUTO_INCREMENT,
@@ -78,7 +84,7 @@ CREATE TABLE IF NOT EXISTS event (
 CREATE TABLE IF NOT EXISTS user (
     userId bigint AUTO_INCREMENT,
     email varchar(255) NOT NULL UNIQUE,
-    phone varchar(20) NOT NULL UNIQUE,
+    phone varchar(20),
     password varchar(255) NOT NULL,
     startDate date,
     loginTime datetime,
