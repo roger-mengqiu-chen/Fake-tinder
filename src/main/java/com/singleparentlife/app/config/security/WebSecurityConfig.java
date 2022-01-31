@@ -61,14 +61,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .userInfoEndpoint()
                         .userService(oauth2UserService)
                 .and()
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-                        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-                        userService.processOAuthPostLogin(oAuth2User.getEmail());
+                .successHandler((request, response, authentication) -> {
+                    CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+                    userService.processOAuthPostLogin(oAuth2User.getEmail());
 
-                        response.sendRedirect("/home");
-                    }
+                    response.sendRedirect("/home");
                 })
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
