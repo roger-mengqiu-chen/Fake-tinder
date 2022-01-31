@@ -1,4 +1,4 @@
-package com.singleparentlife.app.response;
+package com.singleparentlife.app.payload.response;
 
 import com.singleparentlife.app.constants.Status;
 
