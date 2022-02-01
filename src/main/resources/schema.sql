@@ -1,5 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS userTag;
 DROP TABLE IF EXISTS userPreference;
 DROP TABLE IF EXISTS userEvent;
 DROP TABLE IF EXISTS eventInvitation;
@@ -176,6 +177,14 @@ CREATE TABLE IF NOT EXISTS userEvent (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userPreference (
+    userId bigint,
+    preferenceId bigint,
+    PRIMARY KEY (userId, preferenceId),
+    FOREIGN KEY (userId) REFERENCES user (userId),
+    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
+
+CREATE TABLE IF NOT EXISTS userTag (
     userId bigint,
     preferenceId bigint,
     PRIMARY KEY (userId, preferenceId),
