@@ -31,9 +31,13 @@ public class MyUserDetails implements UserDetails {
         return user.getPassword();
     }
 
+    public long getInternalUserId() {
+        return user.getUserId();
+    }
+
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getFireId();
     }
 
     @Override

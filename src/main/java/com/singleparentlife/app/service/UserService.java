@@ -28,4 +28,8 @@ public class UserService {
             userMapper.save(newUser);
         }
     }
+
+    public void saveUser(User user) {
+        userMapper.save(user);
+    }
 }
