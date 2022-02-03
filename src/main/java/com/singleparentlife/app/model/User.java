@@ -11,6 +11,8 @@ public class User implements Serializable {
 
     private long userId;
 
+    private String fireId;
+
     private String email;
 
     private String phone;
