@@ -84,9 +84,10 @@ CREATE TABLE IF NOT EXISTS event (
 
 CREATE TABLE IF NOT EXISTS user (
     userId bigint AUTO_INCREMENT,
-    email varchar(255) NOT NULL UNIQUE,
+    fireId varchar(255),
+    email varchar(255),
     phone varchar(20),
-    password varchar(255) NOT NULL,
+    password varchar(255),
     startDate date,
     loginTime datetime,
     roleId tinyInt NOT NULL,
