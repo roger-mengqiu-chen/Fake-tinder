@@ -13,14 +13,61 @@ spring:
   tomcat:
     max-swallow-size: -1
 
-  security:
-    oauth2:
-      client:
-        registration:
-          facebook:
-            clientId: 623026452252328
-            clientSecret: d21d478c719bea2f879717ecefc541c2
-
+security:
+  oauth2:
+    client:
+      registration:
+        facebook:
+          clientId: 623026452252328
+          clientSecret: d21d478c719bea2f879717ecefc541c2
+    resourceserver:
+      jwt:
+        jwk-set-uri: https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com
+  firebase-props:
+    database-url: ${FIREBASE_DATABASE}
+    enable-strict-server-session: false
+    enable-check-session-revoked: false
+    enable-logout-everywhere: false
+    session-expiry-in-days: 5
+    cookie-props:
+      max-age-in-minutes: 7200
+      http-only: true
+      secure: true
+      domain: ${DOMAIN}
+      path: /
+    allow-credentials: true
+    allowed-origins:
+      - https://${DOMAIN}
+      - http://localhost:3000
+      - http://localhost:8080
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - OPTIONS
+    allowed-headers:
+      - Authorization
+      - Origin
+      - Content-Type
+      - Accept
+      - Accept-Encoding
+      - Accept-Language
+      - Access-Control-Allow-Origin
+      - Access-Control-Allow-Headers
+      - Access-Control-Request-Method
+      - X-Requested-With
+      - X-Auth-Token
+      - X-Xsrf-Token
+      - Cache-Control
+      - Id-Token
+    allowed-public-apis:
+      - /favicon.ico
+      - /session/login
+      - /public/**
+    exposed-headers:
+      - X-Xsrf-Token
 
 
 
