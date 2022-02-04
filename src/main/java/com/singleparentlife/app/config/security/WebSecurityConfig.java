@@ -88,6 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .formLogin().disable()
                 .authorizeRequests()
+                .antMatchers("/**").authenticated()
                 .antMatchers("/test/**").authenticated()//.hasAnyAuthority(RoleString.ADMIN, RoleString.FREE_USER, RoleString.PREMIUM_USER)
                 .antMatchers("/enter/**").permitAll()
                 .and()

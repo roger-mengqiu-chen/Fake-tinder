@@ -2,6 +2,7 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.payload.request.LocationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,25 +10,25 @@ import org.springframework.web.bind.annotation.*;
 public class LocationController {
 
     @PostMapping("")
-    public JsonResponse createLocation(@RequestBody LocationRequest request) {
+    public ResponseEntity<JsonResponse> createLocation(@RequestBody LocationRequest request) {
         //TODO
         return null;
     }
 
     @GetMapping("/{locationId}")
-    public JsonResponse getLocation(@PathVariable Long locationId) {
+    public ResponseEntity<JsonResponse> getLocation(@PathVariable Long locationId) {
         //TODO
         return null;
     }
 
     @PutMapping()
-    public JsonResponse updateLocation(@RequestBody LocationRequest request) {
+    public ResponseEntity<JsonResponse> updateLocation(@RequestBody LocationRequest request) {
         //TODO
         return null;
     }
 
     @DeleteMapping("/{locationId}")
-    public JsonResponse deleteLocation(@PathVariable Long locationId) {
+    public ResponseEntity<JsonResponse> deleteLocation(@PathVariable Long locationId) {
         //TODO
         return null;
     }

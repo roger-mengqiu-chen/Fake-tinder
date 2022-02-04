@@ -2,22 +2,20 @@ package com.singleparentlife.app.constants;
 
 public enum Status {
 
-    SUCCESS (0, "Success"),
+    SUCCESS ("Success"),
+    FAIL("Fail"),
 
-    INVALID_INPUT (400, "Invalid input"),
-    PERMISSION_DENIED (403, "Permission is denied"),
+    INVALID_INPUT ("Invalid input"),
+    PERMISSION_DENIED ("Permission is denied"),
+    FETCH_TOKEN_FAILED("Didn't get firebase token"),
     ;
 
-    private final int code;
+
     private final String message;
 
-    Status (int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+    Status (String message) {
 
-    public int getCode() {
-        return code;
+        this.message = message;
     }
 
     public String getMessage() {
