@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS appTerms;
 DROP TABLE IF EXISTS report;
 
 CREATE TABLE IF NOT EXISTS appTerms (
-    versionId smallint AUTO_INCREMENT,
+    versionId int AUTO_INCREMENT,
     context longText NOT NULL,
     PRIMARY KEY (versionId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
