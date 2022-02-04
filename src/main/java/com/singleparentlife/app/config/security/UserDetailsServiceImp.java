@@ -1,6 +1,7 @@
 package com.singleparentlife.app.config.security;
 
 
+import com.singleparentlife.app.mapper.RoleMapper;
 import com.singleparentlife.app.mapper.UserMapper;
 import com.singleparentlife.app.model.Role;
 import com.singleparentlife.app.model.User;
@@ -19,7 +20,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
-
+    private RoleMapper roleMapper;
     /**
      * We are using fireId as username here. Have to override the method. So can't change the method name
      */
@@ -28,8 +29,9 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
         User user = userMapper.findByFireId(fireId);
 
+
         if (user != null) {
-            Role role = userMapper.getRoleOfUser(user);
+            Role role = roleMapper.getRoleOfUser(user);
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
             MyUserDetails userDetails = new MyUserDetails(user);
