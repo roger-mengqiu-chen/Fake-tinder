@@ -2,13 +2,14 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.payload.request.TagRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tag")
 public class TagController {
-
+    @ApiOperation(value = "Create tags from a list")
     @PostMapping("/myTags")
     public ResponseEntity<JsonResponse> addTags(@RequestBody TagRequest request) {
         //TODO
