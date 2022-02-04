@@ -1,12 +1,8 @@
 package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.payload.request.AppTermRequest;
-import com.singleparentlife.app.payload.request.EventRequest;
-import com.singleparentlife.app.payload.request.MessageRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
-import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 
