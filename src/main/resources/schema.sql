@@ -48,6 +48,10 @@ CREATE TABLE IF NOT EXISTS reaction (
     PRIMARY KEY (reactionId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
+INSERT INTO reaction VALUES(1, "ACCEPT");
+INSERT INTO reaction VALUES(2, "REJECT");
+INSERT INTO reaction VALUES(3, "PENDING");
+
 CREATE TABLE IF NOT EXISTS preference (
     preferenceId bigint AUTO_INCREMENT,
     content varchar(255) NOT NULL,
