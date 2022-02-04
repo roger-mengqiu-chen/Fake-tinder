@@ -2,6 +2,7 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.payload.request.PaymentRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentController {
 
     @PostMapping("/add")
-    public JsonResponse addPayment (@RequestBody PaymentRequest request){
+    public ResponseEntity<JsonResponse> addPayment (@RequestBody PaymentRequest request){
 
         //TODO
         return null;
@@ -17,19 +18,19 @@ public class PaymentController {
     }
 
     @GetMapping("/{cardNumber}")
-    public JsonResponse getPayment (@PathVariable String cardNumber){
+    public ResponseEntity<JsonResponse> getPayment (@PathVariable String cardNumber){
         //TODO
         return null;
     }
 
     @PutMapping()
-    public JsonResponse updatePayment (@RequestBody PaymentRequest request) {
+    public ResponseEntity<JsonResponse> updatePayment (@RequestBody PaymentRequest request) {
         //TODO
         return null;
     }
 
     @DeleteMapping("/{paymentId}")
-    public JsonResponse deletePayment (@PathVariable String cardNumber) {
+    public ResponseEntity<JsonResponse> deletePayment (@PathVariable String cardNumber) {
         //ToDo
         return null;
     }

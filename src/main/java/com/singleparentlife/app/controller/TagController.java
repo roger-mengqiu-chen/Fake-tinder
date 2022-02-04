@@ -2,6 +2,7 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.payload.request.TagRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 public class TagController {
 
     @PostMapping("/myTags")
-    public JsonResponse addTags(@RequestBody TagRequest request) {
+    public ResponseEntity<JsonResponse> addTags(@RequestBody TagRequest request) {
         //TODO
         return null;
     }
     @GetMapping("/myTags")
-    public JsonResponse getTags() {
+    public ResponseEntity<JsonResponse> getTags() {
         //TODO
         return null;
     }
 
     @DeleteMapping("/myTags")
-    public JsonResponse deleteTag(@RequestBody TagRequest request) {
+    public ResponseEntity<JsonResponse> deleteTag(@RequestBody TagRequest request) {
         //TODO
         return null;
     }
 
     @PostMapping("/myPreferences")
-    public JsonResponse addPreference(@RequestBody TagRequest request) {
+    public ResponseEntity<JsonResponse> addPreference(@RequestBody TagRequest request) {
         //TODO
         return null;
     }
 
     @GetMapping("/myPreferences")
-    public JsonResponse getPreferences() {
+    public ResponseEntity<JsonResponse> getPreferences() {
         //TODO
         return null;
     }
 
     @DeleteMapping("/myPreferences")
-    public JsonResponse deletePreference(@RequestBody TagRequest request) {
+    public ResponseEntity<JsonResponse> deletePreference(@RequestBody TagRequest request) {
         //TODO
         return null;
     }
