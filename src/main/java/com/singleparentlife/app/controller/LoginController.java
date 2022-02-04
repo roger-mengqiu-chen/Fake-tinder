@@ -1,4 +1,4 @@
-package com.singleparentlife.app.controller.view;
+package com.singleparentlife.app.controller;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;

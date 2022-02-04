@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS appTerms;
 DROP TABLE IF EXISTS report;
 
 CREATE TABLE IF NOT EXISTS appTerms (
-    versionId smallint AUTO_INCREMENT,
+    versionId int AUTO_INCREMENT,
     context longText NOT NULL,
     PRIMARY KEY (versionId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
@@ -47,6 +47,10 @@ CREATE TABLE IF NOT EXISTS reaction (
     reactionType varchar(10) NOT NULL,
     PRIMARY KEY (reactionId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
+
+INSERT INTO reaction VALUES(1, "ACCEPT");
+INSERT INTO reaction VALUES(2, "REJECT");
+INSERT INTO reaction VALUES(3, "PENDING");
 
 CREATE TABLE IF NOT EXISTS preference (
     preferenceId bigint AUTO_INCREMENT,
@@ -99,6 +103,7 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS profile (
     userId bigint,
+    avatarId bigint,
     firstname varchar(255) NOT NULL,
     lastname varchar(255) NOT NULL,
     age tinyint NOT NULL,
@@ -106,7 +111,8 @@ CREATE TABLE IF NOT EXISTS profile (
     description text NOT NULL,
     locationId bigint NOT NULL,
     PRIMARY KEY (userId),
-    FOREIGN KEY (userId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId),
+    FOREIGN KEY (avatarId) REFERENCES attachment (attachmentId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS paymentInfo (
@@ -161,10 +167,11 @@ CREATE TABLE IF NOT EXISTS matches (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS eventInvitation (
+    eventInvitationId bigint AUTO_INCREMENT,
     eventId bigint,
     targetUserId bigint,
     reactionId tinyint,
-    PRIMARY KEY (eventId, targetUserId),
+    PRIMARY KEY (eventInvitationId),
     FOREIGN KEY (eventId) REFERENCES event (eventId),
     FOREIGN KEY (targetUserId) REFERENCES event (eventId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
