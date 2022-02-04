@@ -34,7 +34,6 @@ public class LoginController {
     public ResponseEntity<JsonResponse> login(@RequestBody LoginRequest request){
         String token = request.getToken();
 
-
         try {
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
             if (decodedToken != null) {
@@ -60,7 +59,7 @@ public class LoginController {
                 return ResponseEntity.status(401).body(new JsonResponse(Status.FETCH_TOKEN_FAILED));
             }
         } catch (FirebaseAuthException e) {
-            return ResponseEntity.status(500).body(new JsonResponse(Status.FAIL, "Firebase Auth error"));
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, "Invalid token !"));
         }
     }
 
