@@ -40,7 +40,7 @@ public class PreferenceService {
         }
         // If we found errors, we need to tell controller.
         if (haveError) {
-            return new JsonResponse(Status.PREFERENCES_PARTIALLY_CREATED, DataType.STATUS_MESSAGE, errors);
+            return new JsonResponse(Status.FAIL, DataType.PREFERENCES_WITH_ERROR, errors);
         }
 
         return new JsonResponse(Status.SUCCESS, null, null);
@@ -61,7 +61,7 @@ public class PreferenceService {
             Preference preference = preferenceMapper.findPreferenceByContent(content);
             if (preference == null) {
                 log.error("Preference not found: {}", content);
-                return new JsonResponse(Status.PREFERENCE_NOT_FOUND, null, null);
+                return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Preference is not found");
             }
             else {
                 preference.setContent(updatedContent);
