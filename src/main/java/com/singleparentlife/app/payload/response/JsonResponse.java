@@ -1,20 +1,17 @@
 package com.singleparentlife.app.payload.response;
 
+import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 
 public class JsonResponse {
 
     private final Status status;
 
-    private String dataType;
+    private final DataType dataType;
 
-    private Object data;
+    private final Object data;
 
-    public JsonResponse(Status status) {
-        this.status = status;
-    }
-
-    public JsonResponse(Status status, String type, Object data) {
+    public JsonResponse(Status status, DataType type, Object data) {
         this.status = status;
         this.dataType = type;
         this.data = data;
@@ -28,7 +25,7 @@ public class JsonResponse {
         return data;
     }
 
-    public String getDataType() {
+    public DataType getDataType() {
         return dataType;
     }
 }
