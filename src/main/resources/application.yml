@@ -21,9 +21,7 @@ security:
   oauth2:
     client:
       registration:
-        facebook:
-          clientId: 623026452252328
-          clientSecret: d21d478c719bea2f879717ecefc541c2
+
     resourceserver:
       jwt:
         jwk-set-uri: https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com
