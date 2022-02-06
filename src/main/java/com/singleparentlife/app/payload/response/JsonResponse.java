@@ -6,14 +6,17 @@ public class JsonResponse {
 
     private final Status status;
 
+    private String dataType;
+
     private Object data;
 
     public JsonResponse(Status status) {
         this.status = status;
     }
 
-    public JsonResponse(Status status, Object data) {
+    public JsonResponse(Status status, String type, Object data) {
         this.status = status;
+        this.dataType = type;
         this.data = data;
     }
 
@@ -23,5 +26,9 @@ public class JsonResponse {
 
     public Object getData() {
         return data;
+    }
+
+    public String getDataType() {
+        return dataType;
     }
 }
