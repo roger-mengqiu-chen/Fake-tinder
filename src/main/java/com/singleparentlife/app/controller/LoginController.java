@@ -4,21 +4,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.singleparentlife.app.config.security.UserDetailsServiceImp;
+import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.User;
 import com.singleparentlife.app.payload.request.LoginRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -49,17 +44,17 @@ public class LoginController {
                     newUser.setActive(true);
                     newUser.setSuspended(false);
                     userService.saveUser(newUser);
-                    return ResponseEntity.ok(new JsonResponse(Status.SUCCESS, "User registered !"));
+                    return ResponseEntity.ok(new JsonResponse(Status.SUCCESS, DataType.STATUS_MESSAGE, "User registered !"));
                 }
                 else {
-                    return ResponseEntity.ok(new JsonResponse(Status.SUCCESS, "User login !"));
+                    return ResponseEntity.ok(new JsonResponse(Status.SUCCESS, DataType.STATUS_MESSAGE, "User login !"));
                 }
 
             } else {
-                return ResponseEntity.status(401).body(new JsonResponse(Status.FETCH_TOKEN_FAILED));
+                return ResponseEntity.status(401).body(new JsonResponse(Status.FETCH_TOKEN_FAILED, null, null));
             }
         } catch (FirebaseAuthException e) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, "Invalid token !"));
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Invalid token !"));
         }
     }
 
