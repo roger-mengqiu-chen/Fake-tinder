@@ -1,6 +1,7 @@
 package com.singleparentlife.app.service;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
+import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.PreferenceMapper;
 import com.singleparentlife.app.model.Preference;
@@ -40,19 +41,19 @@ public class PreferenceService {
         }
         // If we found errors, we need to tell controller.
         if (haveError) {
-            return new JsonResponse(Status.PREFERENCES_PARTIALLY_CREATED, "Preferences with error", errors);
+            return new JsonResponse(Status.PREFERENCES_PARTIALLY_CREATED, DataType.STATUS_MESSAGE, errors);
         }
 
-        return new JsonResponse(Status.SUCCESS);
+        return new JsonResponse(Status.SUCCESS, null, null);
     }
 
     public JsonResponse getPreferenceByContent (String name) {
         try {
             Preference preference = preferenceMapper.findPreferenceByContent(name);
-            return new JsonResponse(Status.SUCCESS, "preference", preference);
+            return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new JsonResponse(Status.FAIL);
+            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Server error");
         }
     }
 
@@ -61,17 +62,17 @@ public class PreferenceService {
             Preference preference = preferenceMapper.findPreferenceByContent(content);
             if (preference == null) {
                 logger.error("Preference not found: {}", content);
-                return new JsonResponse(Status.PREFERENCE_NOT_FOUND);
+                return new JsonResponse(Status.PREFERENCE_NOT_FOUND, null, null);
             }
             else {
                 preference.setContent(updatedContent);
                 preferenceMapper.update(preference);
                 logger.info("Preference is updated: {} -> {}", content, updatedContent );
-                return new JsonResponse(Status.SUCCESS);
+                return new JsonResponse(Status.SUCCESS, null, null);
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new JsonResponse(Status.FAIL);
+            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE,"Server error");
         }
     }
 
@@ -79,10 +80,10 @@ public class PreferenceService {
         try {
             preferenceMapper.deletePreferenceByContent(name);
             logger.info("Preference is deleted: {}", name);
-            return new JsonResponse(Status.SUCCESS);
+            return new JsonResponse(Status.SUCCESS, null, null);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new JsonResponse(Status.FAIL);
+            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Server error");
         }
     }
 }
