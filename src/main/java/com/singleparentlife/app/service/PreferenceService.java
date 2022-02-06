@@ -1,13 +1,11 @@
 package com.singleparentlife.app.service;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.PreferenceMapper;
 import com.singleparentlife.app.model.Preference;
 import com.singleparentlife.app.payload.response.JsonResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class PreferenceService {
 
     @Autowired
     private PreferenceMapper preferenceMapper;
-
-    Logger logger = LoggerFactory.getLogger(PreferenceService.class);
 
     public JsonResponse createPreferenceFromList(List<String> preferences) {
         List<String> errors = new ArrayList<>();
@@ -29,13 +26,15 @@ public class PreferenceService {
             Preference preference = preferenceMapper.findPreferenceByContent(p);
             if (preference == null) {
                 try {
+                    preference = new Preference();
+                    preference.setContent(p);
                     preferenceMapper.save(preference);
-                    logger.info("Preference is saved: {}", p);
+                    log.info("Preference is saved: {}", p);
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                     haveError = true;
                     errors.add(p);
-                    logger.error("ERROR with saving preference: {}", p);
+                    log.error("ERROR with saving preference: {}", p);
                 }
             }
         }
@@ -52,7 +51,7 @@ public class PreferenceService {
             Preference preference = preferenceMapper.findPreferenceByContent(name);
             return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Server error");
         }
     }
@@ -61,17 +60,17 @@ public class PreferenceService {
         try {
             Preference preference = preferenceMapper.findPreferenceByContent(content);
             if (preference == null) {
-                logger.error("Preference not found: {}", content);
+                log.error("Preference not found: {}", content);
                 return new JsonResponse(Status.PREFERENCE_NOT_FOUND, null, null);
             }
             else {
                 preference.setContent(updatedContent);
                 preferenceMapper.update(preference);
-                logger.info("Preference is updated: {} -> {}", content, updatedContent );
+                log.info("Preference is updated: {} -> {}", content, updatedContent );
                 return new JsonResponse(Status.SUCCESS, null, null);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE,"Server error");
         }
     }
@@ -79,10 +78,10 @@ public class PreferenceService {
     public JsonResponse deletePreferenceByName (String name) {
         try {
             preferenceMapper.deletePreferenceByContent(name);
-            logger.info("Preference is deleted: {}", name);
+            log.info("Preference is deleted: {}", name);
             return new JsonResponse(Status.SUCCESS, null, null);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Server error");
         }
     }
