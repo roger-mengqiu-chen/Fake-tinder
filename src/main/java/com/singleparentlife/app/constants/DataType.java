@@ -5,5 +5,5 @@ public enum DataType {
 
     PREFERENCE,
     USER,
-    STATUS_MESSAGE
+    PREFERENCES_WITH_ERROR, STATUS_MESSAGE
 }
