@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tag")
-public class TagController {
+public class PreferenceController {
     @ApiOperation(value = "Create tags from a list")
     @PostMapping("/myTags")
     public ResponseEntity<JsonResponse> addTags(@RequestBody TagRequest request) {
