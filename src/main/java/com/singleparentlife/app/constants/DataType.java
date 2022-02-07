@@ -5,7 +5,9 @@ public enum DataType {
 
     /* Object types */
     PREFERENCE,
+    PREFERENCES,
     PREFERENCES_WITH_ERROR,
+    LOCATION,
 
     USER,
     REPORTED_USER,
@@ -19,5 +21,8 @@ public enum DataType {
     PREFERENCE_NOT_FOUND,
 
     USER_NOT_FOUND,
+
+    LOCATION_EXISTED,
+    LOCATION_NOT_FOUND,
 
 }
