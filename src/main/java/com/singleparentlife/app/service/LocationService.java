@@ -29,7 +29,7 @@ public class LocationService {
         }
     }
 
-    public JsonResponse getLocationById (Long locationId) {
+    public JsonResponse getLocationById (long locationId) {
         Location location = locationMapper.findById(locationId);
 
         return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
@@ -55,7 +55,7 @@ public class LocationService {
         }
     }
 
-    public JsonResponse deleteLocationById (Long locationId) {
+    public JsonResponse deleteLocationById (long locationId) {
         Location location = locationMapper.findById(locationId);
         if (location == null) {
             log.error("Location not found: {}", locationId);
