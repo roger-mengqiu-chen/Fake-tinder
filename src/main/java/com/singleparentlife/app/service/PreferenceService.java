@@ -52,7 +52,7 @@ public class PreferenceService {
             return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Server error");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Server error");
         }
     }
 
@@ -61,7 +61,7 @@ public class PreferenceService {
             Preference preference = preferenceMapper.findPreferenceByContent(content);
             if (preference == null) {
                 log.error("Preference not found: {}", content);
-                return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Preference is not found");
+                return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, "Preference is not found");
             }
             else {
                 preference.setContent(updatedContent);
@@ -71,18 +71,24 @@ public class PreferenceService {
             }
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE,"Server error");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR,"Server error");
         }
     }
 
-    public JsonResponse deletePreferenceByName (String name) {
+    public JsonResponse deletePreferenceByContent (String content) {
+
+        Preference preference = preferenceMapper.findPreferenceByContent(content);
+        if (preference == null) {
+            return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, "Preference not found");
+        }
+
         try {
-            preferenceMapper.deletePreferenceByContent(name);
-            log.info("Preference is deleted: {}", name);
+            preferenceMapper.deletePreferenceByContent(preference);
+            log.info("Preference is deleted: {}", preference.getPreferenceId());
             return new JsonResponse(Status.SUCCESS, null, null);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Server error");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Server error");
         }
     }
 }
