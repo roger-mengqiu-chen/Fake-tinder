@@ -2,6 +2,7 @@ package com.singleparentlife.app.payload.response;
 
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import org.springframework.http.ResponseEntity;
 
 public class JsonResponse {
 
@@ -27,5 +28,19 @@ public class JsonResponse {
 
     public DataType getDataType() {
         return dataType;
+    }
+
+    public ResponseEntity<JsonResponse> toResponseEntity() {
+        if (this.status.equals(Status.FAIL)) {
+            if (!this.dataType.equals(DataType.SERVER_ERROR)) {
+                return ResponseEntity.badRequest().body(this);
+            }
+            else{
+                return ResponseEntity.internalServerError().body(this);
+            }
+        }
+        else {
+            return ResponseEntity.ok(this);
+        }
     }
 }
