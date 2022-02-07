@@ -11,7 +11,7 @@ public interface LocationMapper {
 
     int save(Location location);
 
-    Location findById(Long locationId);
+    Location findById(long locationId);
 
     int delete(Location location);
 
