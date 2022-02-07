@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS profile (
     description text NOT NULL,
     locationId bigint NOT NULL,
     PRIMARY KEY (userId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
     FOREIGN KEY (avatarId) REFERENCES attachment (attachmentId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS paymentInfo (
     locationId bigint NOT NULL,
     PRIMARY KEY (cardNumber),
     FOREIGN KEY (locationId) REFERENCES location (locationId),
-    FOREIGN KEY (userId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS reportedUser (
@@ -132,7 +132,8 @@ CREATE TABLE IF NOT EXISTS reportedUser (
     reason text NOT NULL,
     reportTime datetime,
     PRIMARY KEY (userId, reporterId),
-    FOREIGN KEY (reporterId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (reporterId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS notification (
@@ -141,7 +142,7 @@ CREATE TABLE IF NOT EXISTS notification (
     content text NOT NULL,
     isRead boolean,
     PRIMARY KEY (notificationId),
-    FOREIGN KEY (userId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS message (
@@ -152,8 +153,8 @@ CREATE TABLE IF NOT EXISTS message (
     time datetime NOT NULL,
     content text NOT NULL,
     PRIMARY KEY (messageId),
-    FOREIGN KEY (senderId) REFERENCES user (userId),
-    FOREIGN KEY (receiverId) REFERENCES user (userId),
+    FOREIGN KEY (senderId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE,
     FOREIGN KEY (attachmentId) REFERENCES attachment (attachmentId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
@@ -162,8 +163,8 @@ CREATE TABLE IF NOT EXISTS matches (
     targetId bigint,
     reactionId tinyint,
     PRIMARY KEY (userId, targetId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (targetId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (targetId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS eventInvitation (
@@ -172,30 +173,30 @@ CREATE TABLE IF NOT EXISTS eventInvitation (
     targetUserId bigint,
     reactionId tinyint,
     PRIMARY KEY (eventInvitationId),
-    FOREIGN KEY (eventId) REFERENCES event (eventId),
-    FOREIGN KEY (targetUserId) REFERENCES event (eventId)
+    FOREIGN KEY (eventId) REFERENCES event (eventId) ON DELETE CASCADE,
+    FOREIGN KEY (targetUserId) REFERENCES event (eventId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userEvent (
     userId bigint,
     eventId bigint,
     PRIMARY KEY (userId, eventId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (eventId) REFERENCES event (eventId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (eventId) REFERENCES event (eventId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userPreference (
     userId bigint,
     preferenceId bigint,
     PRIMARY KEY (userId, preferenceId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userTag (
     userId bigint,
     preferenceId bigint,
     PRIMARY KEY (userId, preferenceId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
