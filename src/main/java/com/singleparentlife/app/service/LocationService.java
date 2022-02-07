@@ -50,7 +50,7 @@ public class LocationService {
                 return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
             } catch (Exception e) {
                 log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, e.getMessage());
             }
         }
     }
@@ -68,7 +68,7 @@ public class LocationService {
                 return new JsonResponse(Status.SUCCESS, null, null);
             } catch (Exception e) {
                 log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, e.getMessage());
             }
         }
     }
