@@ -55,7 +55,7 @@ public class ReportUserService {
             return new JsonResponse(Status.SUCCESS, DataType.REPORTED_USER, reportedUser);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return  new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, e.getMessage());
+            return  new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
 
@@ -72,7 +72,7 @@ public class ReportUserService {
                 return new JsonResponse(Status.SUCCESS, DataType.STATUS_MESSAGE, "ReportedUser is deleted");
             } catch (Exception e) {
                 log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, e.getMessage());
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
             }
         }
     }
