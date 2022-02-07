@@ -8,8 +8,6 @@ public class ReportUserRequest {
     @JsonProperty
     private Long userId;
     @JsonProperty
-    private Long reporterId;
-    @JsonProperty
     private String reason;
 
 }
