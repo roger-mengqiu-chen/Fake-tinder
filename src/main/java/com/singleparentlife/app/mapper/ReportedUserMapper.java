@@ -9,7 +9,7 @@ public interface ReportedUserMapper {
     
     int save(ReportedUser reportedUser);
 
-    ReportedUser findById(Long userId);
+    ReportedUser findById(long userId);
 
     int delete(ReportedUser reportedUser);
 }

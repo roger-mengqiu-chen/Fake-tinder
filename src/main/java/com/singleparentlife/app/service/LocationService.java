@@ -31,12 +31,9 @@ public class LocationService {
 
     public JsonResponse getLocationById (Long locationId) {
         Location location = locationMapper.findById(locationId);
-        if (location == null) {
-            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, null);
-        }
-        else {
-            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
-        }
+
+        return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
+
     }
 
     public JsonResponse updateLocation (Location location) {

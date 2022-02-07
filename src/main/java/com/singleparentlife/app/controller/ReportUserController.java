@@ -22,41 +22,22 @@ public class ReportUserController {
         String reason = request.getReason();
 
         JsonResponse response = reportUserService.reportUser(userId, reason);
-        if (response.getStatus().equals(Status.FAIL)) {
-            if (!response.getDataType().equals(DataType.SERVER_ERROR)) {
-                return ResponseEntity.badRequest().body(response);
-            }
-            else {
-                return ResponseEntity.internalServerError().body(response);
-            }
-        }
-        else {
-            return ResponseEntity.ok().body(response);
-        }
+        return response.toResponseEntity();
     }
 
     @GetMapping("/{reportedUserId}")
     public ResponseEntity<JsonResponse> getReportedUser(@PathVariable Long reportedUserId) {
         JsonResponse response = reportUserService.getReportedUserById(reportedUserId);
-        if (response.getStatus().equals(Status.FAIL)) {
-            return ResponseEntity.badRequest().body(response);
-        }
-        return ResponseEntity.ok().body(response);
+
+        return response.toResponseEntity();
 
     }
 
     @DeleteMapping("/{reportedUserId}")
     public ResponseEntity<JsonResponse> deleteReportedUser(@PathVariable Long reportedUserId) {
         JsonResponse response = reportUserService.deleteReportedUser(reportedUserId);
-        if (response.getStatus().equals(Status.FAIL)) {
-            if (!response.getDataType().equals(DataType.SERVER_ERROR)) {
-                return ResponseEntity.badRequest().body(response);
-            }
-            else {
-                return ResponseEntity.internalServerError().body(response);
-            }
-        }
-        return ResponseEntity.ok().body(response);
+
+        return response.toResponseEntity();
     }
 
 }
