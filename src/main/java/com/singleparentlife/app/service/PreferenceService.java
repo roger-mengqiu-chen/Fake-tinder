@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -43,7 +44,10 @@ public class PreferenceService {
             return new JsonResponse(Status.FAIL, DataType.PREFERENCES_WITH_ERROR, errors);
         }
 
-        return new JsonResponse(Status.SUCCESS, null, null);
+        List<Preference> preferenceList = preferences.stream().map(
+                e -> preferenceMapper.findPreferenceByContent(e)).collect(Collectors.toList());
+
+        return new JsonResponse(Status.SUCCESS, DataType.PREFERENCES, preferenceList);
     }
 
     public JsonResponse getPreferenceByContent (String name) {
@@ -52,7 +56,7 @@ public class PreferenceService {
             return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Server error");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
 
@@ -61,7 +65,7 @@ public class PreferenceService {
             Preference preference = preferenceMapper.findPreferenceByContent(content);
             if (preference == null) {
                 log.error("Preference not found: {}", content);
-                return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, "Preference is not found");
+                return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, null);
             }
             else {
                 preference.setContent(updatedContent);
@@ -71,7 +75,7 @@ public class PreferenceService {
             }
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR,"Server error");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR,null);
         }
     }
 
@@ -79,7 +83,7 @@ public class PreferenceService {
 
         Preference preference = preferenceMapper.findPreferenceByContent(content);
         if (preference == null) {
-            return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, "Preference not found");
+            return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, null);
         }
 
         try {
@@ -88,7 +92,7 @@ public class PreferenceService {
             return new JsonResponse(Status.SUCCESS, null, null);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Server error");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
 }
