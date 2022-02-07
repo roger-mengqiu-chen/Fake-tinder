@@ -4,6 +4,9 @@ import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * This is for wrapping response from service layer
+ */
 public class JsonResponse {
 
     private final Status status;
