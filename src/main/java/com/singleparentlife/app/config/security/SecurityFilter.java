@@ -3,7 +3,7 @@ package com.singleparentlife.app.config.security;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com.singleparentlife.app.constants.HeaderName;
+import com.singleparentlife.app.constants.SecurityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private void verifyToken(HttpServletRequest request) {
 
         FirebaseToken decodedToken = null;
-        String token = request.getHeader(HeaderName.FIRE_AUTH);
+        String token = request.getHeader(SecurityConstant.FIRE_AUTH);
         String uid = null;
         String session = null;
        Credentials.CredentialType type = null;
