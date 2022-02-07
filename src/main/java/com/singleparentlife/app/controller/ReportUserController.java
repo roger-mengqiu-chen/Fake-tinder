@@ -19,6 +19,11 @@ public class ReportUserController {
     @PostMapping()
     public ResponseEntity<JsonResponse> reportUser(@RequestBody ReportUserRequest request) {
         Long userId = request.getUserId();
+
+        if (userId == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "UserId can't be null"));
+        }
         String reason = request.getReason();
 
         JsonResponse response = reportUserService.reportUser(userId, reason);
@@ -27,6 +32,10 @@ public class ReportUserController {
 
     @GetMapping("/{reportedUserId}")
     public ResponseEntity<JsonResponse> getReportedUser(@PathVariable Long reportedUserId) {
+        if (reportedUserId == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "ReportedUserId can't be null"));
+        }
         JsonResponse response = reportUserService.getReportedUserById(reportedUserId);
 
         return response.toResponseEntity();
@@ -35,6 +44,10 @@ public class ReportUserController {
 
     @DeleteMapping("/{reportedUserId}")
     public ResponseEntity<JsonResponse> deleteReportedUser(@PathVariable Long reportedUserId) {
+        if (reportedUserId == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "ReportedUserId can't be null"));
+        }
         JsonResponse response = reportUserService.deleteReportedUser(reportedUserId);
 
         return response.toResponseEntity();
