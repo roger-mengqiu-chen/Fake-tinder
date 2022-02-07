@@ -41,7 +41,7 @@ public class PreferenceService {
         }
         // If we found errors, we need to tell controller.
         if (haveError) {
-            return new JsonResponse(Status.FAIL, DataType.PREFERENCES_WITH_ERROR, errors);
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, errors);
         }
 
         List<Preference> preferenceList = preferences.stream().map(
@@ -51,13 +51,10 @@ public class PreferenceService {
     }
 
     public JsonResponse getPreferenceByContent (String name) {
-        try {
-            Preference preference = preferenceMapper.findPreferenceByContent(name);
-            return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-        }
+
+        Preference preference = preferenceMapper.findPreferenceByContent(name);
+        return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
+
     }
 
     public JsonResponse updatePreferenceByContent (String content, String updatedContent) {
@@ -71,7 +68,7 @@ public class PreferenceService {
                 preference.setContent(updatedContent);
                 preferenceMapper.update(preference);
                 log.info("Preference is updated: {} -> {}", content, updatedContent );
-                return new JsonResponse(Status.SUCCESS, null, null);
+                return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
             }
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -89,7 +86,7 @@ public class PreferenceService {
         try {
             preferenceMapper.deletePreferenceByContent(preference);
             log.info("Preference is deleted: {}", preference.getPreferenceId());
-            return new JsonResponse(Status.SUCCESS, null, null);
+            return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
