@@ -1,5 +1,6 @@
 package com.singleparentlife.app.service;
 
+import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.ReportedUserMapper;
@@ -9,8 +10,6 @@ import com.singleparentlife.app.model.User;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +22,8 @@ public class ReportUserService {
     private ReportedUserMapper reportedUserMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private AuthUtil authUtil;
 
     public JsonResponse reportUser(Long userId, String reason) {
 
@@ -38,9 +39,7 @@ public class ReportUserService {
         }
 
         // get current user's userId as reporterId
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String fireId = authentication.getName();
-        long reporterId = userMapper.getUserIdByFireId(fireId);
+        long reporterId = authUtil.getCurrentUserId();
         LocalDateTime reportTime = LocalDateTime.now();
 
         ReportedUser reportedUser = new ReportedUser();
