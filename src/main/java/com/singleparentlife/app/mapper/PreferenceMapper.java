@@ -11,7 +11,7 @@ public interface PreferenceMapper {
 
     int save(Preference preference);
 
-    int deletePreferenceByContent(String content);
+    int deletePreferenceByContent(Preference preference);
 
     int update(Preference preference);
 }
