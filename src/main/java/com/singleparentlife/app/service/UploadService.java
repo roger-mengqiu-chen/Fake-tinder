@@ -24,31 +24,6 @@ public class UploadService {
     @Autowired
     private AttachmentMapper attachmentMapper;
 
-    public JsonResponse uploadWithMessage(Message message, MultipartFile file) {
-
-        long messageId = messageMapper.save(message);
-        message.setMessageId(messageId);
-
-        if (!file.isEmpty()) {
-            try {
-                byte[] attachmentContent = file.getBytes();
-                String attachmentType = file.getContentType();
-                Attachment attachment = new Attachment();
-                attachment.setMessageId(messageId);
-                attachment.setAttachmentType(attachmentType);
-                attachment.setAttachmentContent(attachmentContent);
-                attachmentMapper.saveWithMessage(attachment);
-                return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, message);
-            } catch (IOException e) {
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-            }
-        }
-        return new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "File can't be empty");
-    }
 
     public JsonResponse uploadWithProfile(Profile profile, MultipartFile file){
         //TODO

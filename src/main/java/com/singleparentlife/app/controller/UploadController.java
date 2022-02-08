@@ -17,22 +17,6 @@ public class UploadController {
     @Autowired
     private UploadService uploadService;
 
-    @PostMapping("/message")
-    public ResponseEntity<JsonResponse> uploadWithMessage(@RequestPart MessageRequest msg, @RequestPart MultipartFile file) {
-
-        Long senderId = msg.getSenderId();
-        Long receiverId = msg.getReceiverId();
-        String content = msg.getContent();
-        Message message = new Message();
-        message.setReceiverId(receiverId);
-        message.setSenderId(senderId);
-        message.setContent(content);
-        message.setTime(LocalDateTime.now());
-
-        JsonResponse response = uploadService.uploadWithMessage(message, file);
-        return response.toResponseEntity();
-    }
-
     @PostMapping("/profile")
     public ResponseEntity<JsonResponse> uploadWithProfile(@RequestBody MultipartFile file) {
         //TODO
