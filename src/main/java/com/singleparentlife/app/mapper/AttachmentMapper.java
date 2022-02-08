@@ -5,12 +5,18 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface AttachmentMapper {
-
-    @Insert("INSERT INTO attachment (attachmentType, attachmentContent) " +
-            "values (#{attachmentType}, #{attachmentContent})")
+    /*
+        ATTENTION: saveWithMessage is used when attachment doesn't have userId
+     */
+    @Insert("INSERT INTO attachment (messageId, attachmentType, attachmentContent) " +
+            "values (#{messageId}, #{attachmentType}, #{attachmentContent})")
     @Options(useGeneratedKeys = true, keyProperty = "attachmentId")
-    long save(Attachment attachment);
+    long saveWithMessage(Attachment attachment);
 
+    /*
+        ATTENTION: saveWithProfile is used when attachment doesn't have messageId
+     */
+    long saveWithProfile(Attachment attachment);
 
     @Select("SELECT * FROM attachment WHERE attachmentId = #{attachmentId}")
     @Results({
@@ -19,4 +25,12 @@ public interface AttachmentMapper {
             @Result(property = "attachmentContent", column = "attachmentContent")
     })
     Attachment findById(long attachmentId);
+
+    @Select("SELECT * FROM attachment WHERE messageId = #{messageId}")
+    @Results({
+            @Result(id = true, property = "attachmentId", column = "attachmentId"),
+            @Result(property = "attachmentType", column = "attachmentType"),
+            @Result(property = "attachmentContent", column = "attachmentContent")
+    })
+    Attachment findByMessageId(long messageId);
 }

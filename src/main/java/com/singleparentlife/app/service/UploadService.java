@@ -36,7 +36,7 @@ public class UploadService {
                 attachment.setMessageId(messageId);
                 attachment.setAttachmentType(attachmentType);
                 attachment.setAttachmentContent(attachmentContent);
-                attachmentMapper.save(attachment);
+                attachmentMapper.saveWithMessage(attachment);
                 return new JsonResponse(Status.SUCCESS, null, null);
             } catch (IOException e) {
                 log.error(e.getMessage());
