@@ -27,6 +27,7 @@ public class UploadService {
     public JsonResponse uploadWithMessage(Message message, MultipartFile file) {
 
         long messageId = messageMapper.save(message);
+        message.setMessageId(messageId);
 
         if (!file.isEmpty()) {
             try {
@@ -37,7 +38,7 @@ public class UploadService {
                 attachment.setAttachmentType(attachmentType);
                 attachment.setAttachmentContent(attachmentContent);
                 attachmentMapper.saveWithMessage(attachment);
-                return new JsonResponse(Status.SUCCESS, null, null);
+                return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, message);
             } catch (IOException e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");
