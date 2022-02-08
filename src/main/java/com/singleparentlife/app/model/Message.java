@@ -13,6 +13,7 @@ public class Message {
 
     private long receiverId;
 
+    private long attachmentId;
 
     private LocalDateTime time;
 
