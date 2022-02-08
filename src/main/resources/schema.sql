@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS message (
     content text NOT NULL,
     PRIMARY KEY (messageId),
     FOREIGN KEY (senderId) REFERENCES user (userId) ON DELETE CASCADE,
-    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS attachment (
