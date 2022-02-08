@@ -111,7 +111,7 @@ public class PreferenceService {
         }
     }
 
-    public JsonResponse deletePreferenceOrTagForUser(Long preferenceId, DataType dataType) {
+    public JsonResponse deletePreferenceOrTagForUser(long preferenceId, DataType dataType) {
 
         long userId = authUtil.getCurrentUserId();
 

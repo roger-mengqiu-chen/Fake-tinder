@@ -1,14 +1,11 @@
 package com.singleparentlife.app.controller;
 
-import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.payload.request.MessageRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/message")
