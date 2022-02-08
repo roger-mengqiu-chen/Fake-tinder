@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS userPreference;
 DROP TABLE IF EXISTS userEvent;
 DROP TABLE IF EXISTS eventInvitation;
 DROP TABLE IF EXISTS matches;
+DROP TABLE IF EXISTS attachment;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS reportedUser;
@@ -12,7 +13,6 @@ DROP TABLE IF EXISTS paymentInfo;
 DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS attachment;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS preference;
 DROP TABLE IF EXISTS location;
@@ -66,13 +66,6 @@ CREATE TABLE IF NOT EXISTS location (
     street varchar(255) NOT NULL,
     postcode varchar(10) NOT NULL,
     PRIMARY KEY (locationId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
-
-CREATE TABLE IF NOT EXISTS attachment (
-    attachmentId bigint AUTO_INCREMENT,
-    attachmentType varchar(10) NOT NULL,
-    attachmentContent mediumBlob NOT NULL,
-    PRIMARY KEY (attachmentId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS event (
@@ -152,13 +145,22 @@ CREATE TABLE IF NOT EXISTS message (
     messageId bigint AUTO_INCREMENT,
     senderId bigint NOT NULL,
     receiverId bigint NOT NULL,
-    attachmentId bigint,
     time datetime NOT NULL,
     content text NOT NULL,
     PRIMARY KEY (messageId),
     FOREIGN KEY (senderId) REFERENCES user (userId) ON DELETE CASCADE,
-    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE,
-    FOREIGN KEY (attachmentId) REFERENCES attachment (attachmentId)
+    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
+
+CREATE TABLE IF NOT EXISTS attachment (
+    attachmentId bigint AUTO_INCREMENT,
+    messageId bigint,
+    userId bigint,
+    attachmentType varchar(10) NOT NULL,
+    attachmentContent mediumBlob NOT NULL,
+    PRIMARY KEY (attachmentId),
+    FOREIGN KEY (messageId) REFERENCES message (messageId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES profile (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS matches (
