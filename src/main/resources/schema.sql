@@ -1,4 +1,4 @@
-SET FOREIGN_KEY_CHECKS = 0;
+
 
 DROP TABLE IF EXISTS userTag;
 DROP TABLE IF EXISTS userPreference;
@@ -96,7 +96,6 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS profile (
     userId bigint,
-    avatarId bigint,
     firstname varchar(255) NOT NULL,
     lastname varchar(255) NOT NULL,
     age tinyint NOT NULL,
@@ -107,8 +106,8 @@ CREATE TABLE IF NOT EXISTS profile (
     school varchar(255),
     locationId bigint NOT NULL,
     PRIMARY KEY (userId),
-    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
-    FOREIGN KEY (avatarId) REFERENCES attachment (attachmentId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS paymentInfo (
