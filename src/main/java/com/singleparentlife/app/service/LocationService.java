@@ -65,7 +65,7 @@ public class LocationService {
             try {
                 locationMapper.delete(location);
                 log.info("Location is deleted {}", locationId);
-                return new JsonResponse(Status.SUCCESS, null, null);
+                return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
             } catch (Exception e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
