@@ -1,23 +1,21 @@
 package com.singleparentlife.app.controller;
 
+import com.singleparentlife.app.model.Message;
+import com.singleparentlife.app.payload.request.MessageRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import com.singleparentlife.app.service.UploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
-
-    @PostMapping("/message")
-    public ResponseEntity<JsonResponse> uploadWithMessage(@RequestBody MultipartFile file) {
-        //TODO
-        return null;
-    }
+    @Autowired
+    private UploadService uploadService;
 
     @PostMapping("/profile")
     public ResponseEntity<JsonResponse> uploadWithProfile(@RequestBody MultipartFile file) {

@@ -10,7 +10,7 @@ public interface ProfileMapper {
     /* Create */
     @Insert("Insert INTO profile (userId, avatarId, firstname, lastname, age, gender, description, locationId) VALUES " +
     "(#{userId}, #{avatarId}, #{firstname}, #{lastname}, #{age}, #{gender}, #{description}, #{locationId})")
-    int save(Profile profile);
+    long save(Profile profile);
 
     /* Read */
     //Searching using userId

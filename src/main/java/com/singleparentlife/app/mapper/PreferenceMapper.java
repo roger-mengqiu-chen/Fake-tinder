@@ -9,13 +9,13 @@ public interface PreferenceMapper {
 
     Preference findByContent(String content);
 
-    int save(Preference preference);
+    long save(Preference preference);
 
     int update(Preference preference);
 
-    int savePreferenceForUser(long userId, long preferenceId);
+    long savePreferenceForUser(long userId, long preferenceId);
 
-    int saveTagForUser(long userId, long preferenceId);
+    long saveTagForUser(long userId, long preferenceId);
 
     int deletePreference(Preference preference);
 
