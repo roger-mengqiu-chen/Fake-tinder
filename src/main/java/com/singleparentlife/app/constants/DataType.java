@@ -7,7 +7,7 @@ public enum DataType {
     PREFERENCE,
     TAG,
     LOCATION,
-
+    MESSAGE,
     USER,
     REPORTED_USER,
 
@@ -23,6 +23,8 @@ public enum DataType {
     USER_NOT_FOUND,
 
     LOCATION_EXISTED,
-    LOCATION_NOT_FOUND, MESSAGE_NOT_FOUND, MESSAGE,
+    LOCATION_NOT_FOUND,
+
+    MESSAGE_NOT_FOUND,
 
 }
