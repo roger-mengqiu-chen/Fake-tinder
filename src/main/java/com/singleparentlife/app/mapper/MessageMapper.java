@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Options;
 @Mapper
 public interface MessageMapper {
 
-    @Insert("INSERT INTO message (senderId, receiverId, time, content) values " +
-            "(#{senderId}, #{receiverId}, #{time}, #{content})")
+    @Insert("INSERT INTO message (senderId, receiverId, attachmentId, time, content) values " +
+            "(#{senderId}, #{receiverId}, #{attchmentId}, #{time}, #{content})")
     @Options(useGeneratedKeys = true, keyProperty = "messageId")
     long save(Message message);
 }

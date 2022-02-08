@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS profile (
     userId bigint,
+    avatarId bigint,
     firstname varchar(255) NOT NULL,
     lastname varchar(255) NOT NULL,
     age tinyint NOT NULL,
@@ -144,11 +145,12 @@ CREATE TABLE IF NOT EXISTS message (
     messageId bigint AUTO_INCREMENT,
     senderId bigint NOT NULL,
     receiverId bigint NOT NULL,
+    attachmentId bigint,
     time datetime NOT NULL,
     content text NOT NULL,
     PRIMARY KEY (messageId),
     FOREIGN KEY (senderId) REFERENCES user (userId) ON DELETE CASCADE,
-    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE
+    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS attachment (
