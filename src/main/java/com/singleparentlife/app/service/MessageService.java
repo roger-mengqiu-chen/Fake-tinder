@@ -37,6 +37,7 @@ public class MessageService {
                 attachment.setAttachmentType(attachmentType);
                 attachment.setAttachmentContent(attachmentContent);
                 long attachmentId = attachmentMapper.saveWithMessage(attachment);
+                message.setAttachmentId(attachmentId);
                 messageMapper.updateAttachmentId(message);
 
             } catch (IOException e) {
