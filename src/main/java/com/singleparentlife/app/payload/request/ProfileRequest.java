@@ -14,7 +14,13 @@ public class ProfileRequest {
     @JsonProperty
     private Short age;
     @JsonProperty
-    private String male;
+    private String gender;
+    @JsonProperty
+    private String company;
+    @JsonProperty
+    private String school;
+    @JsonProperty
+    private String jobTitle;
     @JsonProperty
     private String description;
     @JsonProperty
