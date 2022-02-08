@@ -19,13 +19,24 @@ public class LocationController {
 
     @PostMapping("")
     public ResponseEntity<JsonResponse> createLocation(@RequestBody LocationRequest request) {
+        String country = request.getCountry().trim().toLowerCase();
+        String province = request.getProvince().trim().toLowerCase();
+        String city = request.getCity().trim().toLowerCase();
+        String street = request.getStreet().trim().toLowerCase();
+        String postcode = request.getPostcode().trim().toLowerCase();
+
+        if (country == null || province == null || city == null || street == null || postcode == null
+        || country.isEmpty() || province.isEmpty() || city.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Request missed some fields"));
+        }
 
         Location location = new Location();
-        location.setCity(request.getCity().toLowerCase());
-        location.setCountry(request.getCountry().toLowerCase());
-        location.setPostcode(request.getPostcode().toLowerCase());
-        location.setStreet(request.getStreet().toLowerCase());
-        location.setProvince(request.getProvince().toLowerCase());
+        location.setCity(city);
+        location.setCountry(country);
+        location.setPostcode(postcode);
+        location.setStreet(street);
+        location.setProvince(province);
         JsonResponse response = locationService.createLocation(location);
 
         return response.toResponseEntity();
@@ -33,19 +44,37 @@ public class LocationController {
 
     @GetMapping("/{locationId}")
     public ResponseEntity<JsonResponse> getLocation(@PathVariable Long locationId) {
+        if (locationId == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "LocationId can't be null"));
+        }
         JsonResponse response = locationService.getLocationById(locationId);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping()
     public ResponseEntity<JsonResponse> updateLocation(@RequestBody LocationRequest request) {
+
+        Long locationId = request.getLocationId();
+        String country = request.getCountry().trim().toLowerCase();
+        String province = request.getProvince().trim().toLowerCase();
+        String city = request.getCity().trim().toLowerCase();
+        String street = request.getStreet().trim().toLowerCase();
+        String postcode = request.getPostcode().trim().toLowerCase();
+
+        if (locationId == null || country == null || province == null || city == null || street == null || postcode == null
+                || country.isEmpty() || province.isEmpty() || city.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Request missed some fields"));
+        }
+
         Location location = new Location();
-        location.setLocationId(request.getLocationId());
-        location.setCountry(request.getCountry());
-        location.setProvince(request.getProvince());
-        location.setCity(request.getCity());
-        location.setStreet(request.getStreet());
-        location.setPostcode(request.getPostcode());
+        location.setLocationId(locationId);
+        location.setCountry(country);
+        location.setProvince(province);
+        location.setCity(city);
+        location.setStreet(street);
+        location.setPostcode(postcode);
 
         JsonResponse response = locationService.updateLocation(location);
 
@@ -54,7 +83,10 @@ public class LocationController {
 
     @DeleteMapping("/{locationId}")
     public ResponseEntity<JsonResponse> deleteLocation(@PathVariable Long locationId) {
-
+        if (locationId == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "LocationId can't be null"));
+        }
         JsonResponse response = locationService.deleteLocationById(locationId);
         return response.toResponseEntity();
     }
