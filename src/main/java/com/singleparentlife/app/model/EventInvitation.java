@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class EventInvitation {
 
-    private long eventInvitationId;
+    private Long eventInvitationId;
 
-    private long eventId;
+    private Long eventId;
 
-    private long targetUserId;
+    private Long targetUserId;
 
-    private short reactionId;
+    private Short reactionId;
 }

@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class Notification {
 
-    private long notificationId;
+    private Long notificationId;
 
-    private long userId;
+    private Long userId;
 
     private String content;
 
-    private boolean isRead;
+    private Boolean isRead;
 }
