@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class EventInvitationRequest {
-    @JsonProperty
-    private Long eventInvitationId;
+    //@JsonProperty
+    //private Long eventInvitationId;
     @JsonProperty
     private Long eventId;
     @JsonProperty
