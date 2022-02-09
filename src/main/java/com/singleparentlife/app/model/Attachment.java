@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class Attachment {
 
-    private long attachmentId;
+    private Long attachmentId;
 
-    private long messageId;
+    private Long messageId;
 
-    private long userId;
+    private Long userId;
 
     private String attachmentType;
 

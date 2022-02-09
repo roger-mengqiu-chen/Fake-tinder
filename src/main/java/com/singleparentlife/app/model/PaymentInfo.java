@@ -7,11 +7,11 @@ public class PaymentInfo {
 
     private String cardNumber;
 
-    private int expireData;
+    private Integer expireData;
 
-    private int ccv;
+    private Integer ccv;
 
-    private long userId;
+    private Long userId;
 
-    private long locationId;
+    private Long locationId;
 }

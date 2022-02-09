@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 @Data
 public class ReportedUser {
 
-    private long userId;
+    private Long userId;
 
-    private long reporterId;
+    private Long reporterId;
 
     private String reason;
 
