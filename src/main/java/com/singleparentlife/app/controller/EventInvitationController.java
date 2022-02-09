@@ -1,5 +1,6 @@
 package com.singleparentlife.app.controller;
 
+import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.EventInvitation;
 import com.singleparentlife.app.payload.request.EventInvitationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -26,11 +27,16 @@ public class EventInvitationController {
     }
     */
     @PostMapping("/send")
-    public ResponseEntity sendEventInvitation(@RequestBody EventInvitation eventInvitation){
+    public ResponseEntity<JsonResponse> sendEventInvitation(@RequestBody EventInvitation eventInvitation){
         System.out.println(eventInvitation.getEventId());
         System.out.println(eventInvitation.getTargetUserId());
-        eventInvitationService.createEventInvitation(eventInvitation.getEventId(), eventInvitation.getTargetUserId());
-        return ResponseEntity.ok(HttpStatus.OK);
+
+        JsonResponse response = eventInvitationService.createEventInvitation(eventInvitation.getEventId(),
+                eventInvitation.getTargetUserId());
+        if (response.getStatus().equals(Status.SUCCESS))
+            return ResponseEntity.ok().body(response);
+        else
+            return ResponseEntity.status(401).body(response);
     }
     @GetMapping()
     public ResponseEntity<JsonResponse> getInvitations() {
