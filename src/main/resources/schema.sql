@@ -105,10 +105,10 @@ CREATE TABLE IF NOT EXISTS profile (
     company varchar(255),
     jobTitle varchar(255),
     school varchar(255),
-    locationId bigint NOT NULL,
+    locationId bigint,
     PRIMARY KEY (userId),
-    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
-
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (locationId) REFERENCES location (locationId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS paymentInfo (
