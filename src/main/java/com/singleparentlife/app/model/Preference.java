@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Preference {
 
-    private long preferenceId;
+    private Long preferenceId;
 
     private String content;
 

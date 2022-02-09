@@ -5,15 +5,15 @@ import lombok.Data;
 @Data
 public class Profile {
 
-    private long userId;
+    private Long userId;
 
     private String firstname;
 
     private String lastname;
 
-    private short age;
+    private Short age;
 
-    private char gender;
+    private Character gender;
 
     private String description;
 
@@ -23,6 +23,6 @@ public class Profile {
 
     private String school;
 
-    private long locationId;
+    private Long locationId;
 
 }

@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 @Data
 public class Message {
 
-    private long messageId;
+    private Long messageId;
 
-    private long senderId;
+    private Long senderId;
 
-    private long receiverId;
+    private Long receiverId;
 
-    private long attachmentId;
+    private Long attachmentId;
 
     private LocalDateTime time;
 
