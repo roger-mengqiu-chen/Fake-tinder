@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Reaction {
 
-    private long userId;
+    private Long userId;
 
-    private long targetId;
+    private Long targetId;
 
-    private short reactionId;
+    private Short reactionId;
 }

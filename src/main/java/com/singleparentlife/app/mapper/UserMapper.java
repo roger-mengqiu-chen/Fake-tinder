@@ -11,7 +11,7 @@ public interface UserMapper {
     @Insert("INSERT INTO user (fireId, email, password, startDate, loginTime, roleId, isActive, isSuspended) VALUES " +
             "(#{fireId}, #{email}, #{password}, #{startDate}, #{loginTime}, #{roleId}, #{isActive}, #{isSuspended})")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    int save(User user);
+    long save(User user);
 
     /* Read */
     //searching user table using email

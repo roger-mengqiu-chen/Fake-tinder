@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class User implements Serializable {
 
-    private long userId;
+    private Long userId;
 
     private String fireId;
 
@@ -23,7 +23,7 @@ public class User implements Serializable {
 
     private LocalDateTime loginTime;
 
-    private int roleId;
+    private Integer roleId;
 
     private boolean isActive;
 

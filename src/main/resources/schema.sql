@@ -1,10 +1,11 @@
-SET FOREIGN_KEY_CHECKS = 0;
+
 
 DROP TABLE IF EXISTS userTag;
 DROP TABLE IF EXISTS userPreference;
 DROP TABLE IF EXISTS userEvent;
 DROP TABLE IF EXISTS eventInvitation;
 DROP TABLE IF EXISTS matches;
+DROP TABLE IF EXISTS attachment;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS reportedUser;
@@ -12,7 +13,6 @@ DROP TABLE IF EXISTS paymentInfo;
 DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS attachment;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS preference;
 DROP TABLE IF EXISTS location;
@@ -68,13 +68,6 @@ CREATE TABLE IF NOT EXISTS location (
     PRIMARY KEY (locationId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
-CREATE TABLE IF NOT EXISTS attachment (
-    attachmentId bigint AUTO_INCREMENT,
-    attachmentType varchar(10) NOT NULL,
-    attachmentContent mediumBlob NOT NULL,
-    PRIMARY KEY (attachmentId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
-
 CREATE TABLE IF NOT EXISTS event (
     eventId bigint AUTO_INCREMENT,
     eventName varchar(255) NOT NULL,
@@ -109,10 +102,13 @@ CREATE TABLE IF NOT EXISTS profile (
     age tinyint NOT NULL,
     gender char(1) NOT NULL,
     description text NOT NULL,
-    locationId bigint NOT NULL,
+    company varchar(255),
+    jobTitle varchar(255),
+    school varchar(255),
+    locationId bigint,
     PRIMARY KEY (userId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (avatarId) REFERENCES attachment (attachmentId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (locationId) REFERENCES location (locationId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS paymentInfo (
@@ -123,7 +119,7 @@ CREATE TABLE IF NOT EXISTS paymentInfo (
     locationId bigint NOT NULL,
     PRIMARY KEY (cardNumber),
     FOREIGN KEY (locationId) REFERENCES location (locationId),
-    FOREIGN KEY (userId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS reportedUser (
@@ -132,7 +128,8 @@ CREATE TABLE IF NOT EXISTS reportedUser (
     reason text NOT NULL,
     reportTime datetime,
     PRIMARY KEY (userId, reporterId),
-    FOREIGN KEY (reporterId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (reporterId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS notification (
@@ -141,7 +138,7 @@ CREATE TABLE IF NOT EXISTS notification (
     content text NOT NULL,
     isRead boolean,
     PRIMARY KEY (notificationId),
-    FOREIGN KEY (userId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS message (
@@ -152,9 +149,19 @@ CREATE TABLE IF NOT EXISTS message (
     time datetime NOT NULL,
     content text NOT NULL,
     PRIMARY KEY (messageId),
-    FOREIGN KEY (senderId) REFERENCES user (userId),
-    FOREIGN KEY (receiverId) REFERENCES user (userId),
-    FOREIGN KEY (attachmentId) REFERENCES attachment (attachmentId)
+    FOREIGN KEY (senderId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (receiverId) REFERENCES user (userId) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
+
+CREATE TABLE IF NOT EXISTS attachment (
+    attachmentId bigint AUTO_INCREMENT,
+    messageId bigint,
+    userId bigint,
+    attachmentType varchar(10) NOT NULL,
+    attachmentContent mediumBlob NOT NULL,
+    PRIMARY KEY (attachmentId),
+    FOREIGN KEY (messageId) REFERENCES message (messageId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES profile (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS matches (
@@ -162,8 +169,8 @@ CREATE TABLE IF NOT EXISTS matches (
     targetId bigint,
     reactionId tinyint,
     PRIMARY KEY (userId, targetId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (targetId) REFERENCES user (userId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (targetId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS eventInvitation (
@@ -172,30 +179,30 @@ CREATE TABLE IF NOT EXISTS eventInvitation (
     targetUserId bigint,
     reactionId tinyint,
     PRIMARY KEY (eventInvitationId),
-    FOREIGN KEY (eventId) REFERENCES event (eventId),
-    FOREIGN KEY (targetUserId) REFERENCES event (eventId)
+    FOREIGN KEY (eventId) REFERENCES event (eventId) ON DELETE CASCADE,
+    FOREIGN KEY (targetUserId) REFERENCES event (eventId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userEvent (
     userId bigint,
     eventId bigint,
     PRIMARY KEY (userId, eventId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (eventId) REFERENCES event (eventId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (eventId) REFERENCES event (eventId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userPreference (
     userId bigint,
     preferenceId bigint,
     PRIMARY KEY (userId, preferenceId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userTag (
     userId bigint,
     preferenceId bigint,
     PRIMARY KEY (userId, preferenceId),
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId)
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
+    FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;

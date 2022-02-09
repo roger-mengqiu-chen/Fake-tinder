@@ -1,17 +1,21 @@
-package com.singleparentlife.app.model;
+package com.singleparentlife.app.payload.response;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class Message {
+public class MessageResponse {
 
     private Long messageId;
 
     private Long senderId;
 
+    private String senderName;
+
     private Long receiverId;
+
+    private String receiverName;
 
     private Long attachmentId;
 

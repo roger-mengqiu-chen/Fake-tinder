@@ -2,14 +2,16 @@ package com.singleparentlife.app.model;
 
 import lombok.Data;
 
-import java.sql.Blob;
-
 @Data
 public class Attachment {
 
-    private long attachementId;
+    private Long attachmentId;
+
+    private Long messageId;
+
+    private Long userId;
 
     private String attachmentType;
 
-    private Blob attachmentContent;
+    private byte[] attachmentContent;
 }

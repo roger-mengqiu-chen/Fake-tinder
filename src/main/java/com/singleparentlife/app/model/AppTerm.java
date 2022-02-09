@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AppTerm {
 
-    private int versionId;
+    private Integer versionId;
 
     private String context;
 

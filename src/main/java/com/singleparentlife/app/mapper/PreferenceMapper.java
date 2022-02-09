@@ -7,11 +7,21 @@ import org.apache.ibatis.annotations.Mapper;
 public interface PreferenceMapper {
 
 
-    Preference findPreferenceByContent(String content);
+    Preference findByContent(String content);
 
-    int save(Preference preference);
-
-    int deletePreferenceByContent(Preference preference);
+    long save(Preference preference);
 
     int update(Preference preference);
+
+    long savePreferenceForUser(long userId, long preferenceId);
+
+    long saveTagForUser(long userId, long preferenceId);
+
+    int deletePreference(Preference preference);
+
+    int deleteUserPreference(long userId, long preferenceId);
+
+    Preference findById(long preferenceId);
+
+    int deleteUserTag(long userId, long preferenceId);
 }

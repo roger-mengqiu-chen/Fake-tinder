@@ -29,14 +29,11 @@ public class LocationService {
         }
     }
 
-    public JsonResponse getLocationById (Long locationId) {
+    public JsonResponse getLocationById (long locationId) {
         Location location = locationMapper.findById(locationId);
-        if (location == null) {
-            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, null);
-        }
-        else {
-            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
-        }
+
+        return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
+
     }
 
     public JsonResponse updateLocation (Location location) {
@@ -58,7 +55,7 @@ public class LocationService {
         }
     }
 
-    public JsonResponse deleteLocationById (Long locationId) {
+    public JsonResponse deleteLocationById (long locationId) {
         Location location = locationMapper.findById(locationId);
         if (location == null) {
             log.error("Location not found: {}", locationId);
@@ -68,7 +65,7 @@ public class LocationService {
             try {
                 locationMapper.delete(location);
                 log.info("Location is deleted {}", locationId);
-                return new JsonResponse(Status.SUCCESS, null, null);
+                return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
             } catch (Exception e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
