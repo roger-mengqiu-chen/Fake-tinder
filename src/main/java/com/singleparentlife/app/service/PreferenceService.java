@@ -1,6 +1,5 @@
 package com.singleparentlife.app.service;
 
-import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.PreferenceMapper;
@@ -16,8 +15,6 @@ public class PreferenceService {
 
     @Autowired
     private PreferenceMapper preferenceMapper;
-    @Autowired
-    private AuthUtil authUtil;
 
     public JsonResponse createPreference (String preferenceStr) {
         Preference preference = preferenceMapper.findByContent(preferenceStr);
@@ -40,9 +37,7 @@ public class PreferenceService {
         Create preference for user
         If the preference doesn't exist, create it.
      */
-    public JsonResponse createPreferenceOrTagForUser (String preferenceStr, DataType dataType) {
-
-        long userId = authUtil.getCurrentUserId();
+    public JsonResponse createPreferenceOrTagForUser (long userId, String preferenceStr, DataType dataType) {
 
         JsonResponse response = createPreference(preferenceStr);
         if (response.getStatus().equals(Status.SUCCESS)) {
@@ -111,9 +106,7 @@ public class PreferenceService {
         }
     }
 
-    public JsonResponse deletePreferenceOrTagForUser(long preferenceId, DataType dataType) {
-
-        long userId = authUtil.getCurrentUserId();
+    public JsonResponse deletePreferenceOrTagForUser(long userId, long preferenceId, DataType dataType) {
 
         Preference preference = preferenceMapper.findById(preferenceId);
         if (preference == null) {
