@@ -11,7 +11,7 @@ public interface LocationMapper {
     @Insert("INSERT INTO location (country, province, city, street, postcode) VALUES " +
     "(#{country}, #{province}, #{city}, #{street}, #{postcode})")
     @Options(useGeneratedKeys = true, keyProperty = "locationId")
-    int save(Location location);
+    long save(Location location);
 
 
     /* Read */

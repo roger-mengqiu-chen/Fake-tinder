@@ -90,33 +90,19 @@ public interface ProfileMapper {
 
 
     /* Update */
-    //update firstname in profile table
-    @Update("UPDATE profile SET firstname = #{firstname} WHERE userId = #{userId}")
-    int updateFirstname(Profile profile);
-
-    //update lastname in profile table
-    @Update("UPDATE profile SET lastname = #{lastname} WHERE userId = #{userId}")
-    int updateLastname(Profile profile);
-
-    //update description in profile table
-    @Update("UPDATE profile SET description = #{description} WHERE userId = #{userId}")
-    int updateDescription(Profile profile);
-
-    //update locationId in profile table
-    @Update("UPDATE profile SET locationId = #{locationId} WHERE userId = #{userId}")
-    int updateLocationId(Profile profile);
-
-    //update age in profile table
-    @Update("UPDATE profile SET age = #{age} WHERE userId = #{userId}")
-    int updateAge(Profile profile);
-
-    //update gender in profile table
-    @Update("UPDATE profile SET gender = #{gender} WHERE userId = #{userId}")
-    int updateGender(Profile profile);
-
-    //update avatarId in profile table
-    @Update("UPDATE profile SET avatarId = #{avatarId} WHERE userId = #{userId}")
-    int updateAvatarId(Profile profile);
+    @Update("UPDATE profile " +
+            "avatarId = #{avatarId}, " +
+            "SET firstname = #{firstname}, " +
+            "lastname = #{lastname}, " +
+            "age = #{age}, " +
+            "gender = #{gender}, " +
+            "description = #{description}, " +
+            "company = #{company}, " +
+            "jobTitle = #{jobTitle}, " +
+            "school = #{school}, " +
+            "locationId = #{locationId} " +
+            "WHERE userId = #{userId}")
+    void update(Profile profile);
 
 
     /* Delete */

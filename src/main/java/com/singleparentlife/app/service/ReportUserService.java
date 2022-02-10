@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -59,14 +60,14 @@ public class ReportUserService {
     }
 
     public JsonResponse deleteReportedUser (long userId) {
-        ReportedUser reportedUser = reportedUserMapper.findById(userId);
-        if (reportedUser == null) {
+        List<ReportedUser> reportedUsers = reportedUserMapper.findById(userId);
+        if (reportedUsers.size() == 0) {
             log.error("User id not found");
             return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, "ReportedUser id not found");
         }
         else {
             try {
-                reportedUserMapper.delete(reportedUser);
+                reportedUserMapper.deletebyId(userId);
                 log.info("ReportedUser is deleted: {}", userId);
                 return new JsonResponse(Status.SUCCESS, DataType.STATUS_MESSAGE, "ReportedUser is deleted");
             } catch (Exception e) {
@@ -77,11 +78,11 @@ public class ReportUserService {
     }
 
     public JsonResponse getReportedUserById(long userId) {
-        ReportedUser reportedUser = reportedUserMapper.findById(userId);
-        if (reportedUser == null) {
+        List<ReportedUser> reportedUsers = reportedUserMapper.findById(userId);
+        if (reportedUsers.size() == 0) {
             return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, "ReportedUser id not found");
         }
-        return new JsonResponse(Status.SUCCESS, DataType.REPORTED_USER, reportedUser);
+        return new JsonResponse(Status.SUCCESS, DataType.REPORTED_USER, reportedUsers);
     }
 
 }
