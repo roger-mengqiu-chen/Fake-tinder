@@ -11,6 +11,7 @@ import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.payload.response.MessageResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,14 +39,10 @@ public class MessageService {
         Profile receiver = profileMapper.findByUserId(message.getReceiverId());
 
         MessageResponse messageResponse = new MessageResponse();
-        messageResponse.setMessageId(messageId);
-        messageResponse.setSenderId(message.getSenderId());
+
+        BeanUtils.copyProperties(message, messageResponse);
         messageResponse.setSenderName(sender.getFirstname());
-        messageResponse.setReceiverId(message.getReceiverId());
         messageResponse.setReceiverName(receiver.getFirstname());
-        messageResponse.setAttachmentId(message.getMessageId());
-        messageResponse.setContent(message.getContent());
-        messageResponse.setTime(message.getTime());
 
         if (!file.isEmpty()) {
             try {
