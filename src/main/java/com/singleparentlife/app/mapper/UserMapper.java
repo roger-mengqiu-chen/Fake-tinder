@@ -106,7 +106,7 @@ public interface UserMapper {
 
 
     /* Delete */
-    //This will delete a user row from the user table
+    //This will delete a user row from the user table usign the userId
     @Delete("DELETE FROM user WHERE userId = #{userId}")
     int delete(User user);
 
