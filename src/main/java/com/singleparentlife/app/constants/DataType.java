@@ -10,6 +10,8 @@ public enum DataType {
     MESSAGE,
     USER,
     REPORTED_USER,
+    PROFILE,
+    MATCH,
 
     STATUS_MESSAGE,
 
@@ -26,5 +28,7 @@ public enum DataType {
     LOCATION_NOT_FOUND,
 
     MESSAGE_NOT_FOUND,
+
+    PROFILE_NOT_FOUND, REACTION_NOT_FOUND, REACTION,
 
 }
