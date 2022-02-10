@@ -16,6 +16,9 @@ public interface AttachmentMapper {
     /*
         ATTENTION: saveWithProfile is used when attachment doesn't have messageId
      */
+    @Insert("INSERT INTO attachment (messageId, userId, attachmentType, attachmentContent) VALUES " +
+            "(null, #{userId}, #{attachmentType}, #{attachmentContent})")
+    @Options(useGeneratedKeys = true, keyProperty = "attachmentId")
     long saveWithProfile(Attachment attachment);
 
     @Select("SELECT * FROM attachment WHERE attachmentId = #{attachmentId}")
