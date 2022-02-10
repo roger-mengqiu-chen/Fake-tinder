@@ -7,6 +7,8 @@ public class Profile {
 
     private Long userId;
 
+    private Long avatarId;
+
     private String firstname;
 
     private String lastname;
