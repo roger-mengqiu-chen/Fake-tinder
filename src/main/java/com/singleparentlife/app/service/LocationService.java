@@ -19,7 +19,8 @@ public class LocationService {
         Location existedLocation = locationMapper.find(location);
 
         if (existedLocation == null) {
-            locationMapper.save(location);
+            long locationId = locationMapper.save(location);
+            location.setLocationId(locationId);
             log.info("New location saved: {}", location.toString());
             return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
         }
