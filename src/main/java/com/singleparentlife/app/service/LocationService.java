@@ -15,6 +15,12 @@ public class LocationService {
     @Autowired
     private LocationMapper locationMapper;
 
+    /**
+     * Create a location
+     * If the location existed, find out the location and return it
+     * @param location
+     * @return location in database
+     */
     public JsonResponse createLocation (Location location) {
         Location existedLocation = locationMapper.find(location);
 
@@ -25,24 +31,47 @@ public class LocationService {
             return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
         }
         else {
-            log.error("Location existed: {}", location.toString());
-            return new JsonResponse(Status.FAIL, DataType.LOCATION_EXISTED, null);
+            log.error("Location existed: {}", existedLocation.toString());
+            return new JsonResponse(Status.FAIL, DataType.LOCATION_EXISTED, existedLocation);
         }
     }
 
+    /**
+     *
+     * @param locationId
+     * @return the location in database
+     */
     public JsonResponse getLocationById (long locationId) {
         Location location = locationMapper.findById(locationId);
 
         return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
-
     }
 
+    /**
+     * Detailed search for location
+     * This search matches all the attributes of this location
+     * @param location
+     * @return location in database
+     */
+    public JsonResponse findLocation (Location location) {
+        Location existedlocation = locationMapper.find(location);
+        if (existedlocation != null) {
+            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, existedlocation);
+        }
+        return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, location);
+    }
+
+    /**
+     * Update a location
+     * @param location
+     * @return new location
+     */
     public JsonResponse updateLocation (Location location) {
         Location existedLocation = locationMapper.findById(location.getLocationId());
 
         if (existedLocation == null) {
             log.error("Location not found: {}", location.getLocationId());
-            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, null);
+            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, location);
         }
         else {
             try {
@@ -56,11 +85,16 @@ public class LocationService {
         }
     }
 
+    /**
+     * Delete a location
+     * @param locationId
+     * @return deleted location
+     */
     public JsonResponse deleteLocationById (long locationId) {
         Location location = locationMapper.findById(locationId);
         if (location == null) {
             log.error("Location not found: {}", locationId);
-            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, null);
+            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, locationId);
         }
         else {
             try {
