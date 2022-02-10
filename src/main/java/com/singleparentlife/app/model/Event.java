@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 @Data
 public class Event {
 
-    private long eventId;
+    private Long eventId;
 
     private String eventName;
 
     private LocalDateTime eventTime;
 
-    private long locationId;
+    private Long locationId;
 
     private String eventDescription;
 

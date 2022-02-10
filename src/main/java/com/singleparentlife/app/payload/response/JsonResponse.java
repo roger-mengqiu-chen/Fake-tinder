@@ -1,19 +1,23 @@
 package com.singleparentlife.app.payload.response;
 
+import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import org.springframework.http.ResponseEntity;
 
+/**
+ * This is for wrapping response from service layer
+ */
 public class JsonResponse {
 
     private final Status status;
 
-    private Object data;
+    private final DataType dataType;
 
-    public JsonResponse(Status status) {
-        this.status = status;
-    }
+    private final Object data;
 
-    public JsonResponse(Status status, Object data) {
+    public JsonResponse(Status status, DataType type, Object data) {
         this.status = status;
+        this.dataType = type;
         this.data = data;
     }
 
@@ -23,5 +27,23 @@ public class JsonResponse {
 
     public Object getData() {
         return data;
+    }
+
+    public DataType getDataType() {
+        return dataType;
+    }
+
+    public ResponseEntity<JsonResponse> toResponseEntity() {
+        if (this.status.equals(Status.FAIL)) {
+            if (!this.dataType.equals(DataType.SERVER_ERROR)) {
+                return ResponseEntity.badRequest().body(this);
+            }
+            else{
+                return ResponseEntity.internalServerError().body(this);
+            }
+        }
+        else {
+            return ResponseEntity.ok(this);
+        }
     }
 }

@@ -11,7 +11,7 @@ public interface UserMapper {
     @Insert("INSERT INTO user (fireId, email, password, startDate, loginTime, roleId, isActive, isSuspended) VALUES " +
             "(#{fireId}, #{email}, #{password}, #{startDate}, #{loginTime}, #{roleId}, #{isActive}, #{isSuspended})")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    int save(User user);
+    long save(User user);
 
     /* Read */
     //searching user table using email
@@ -64,9 +64,6 @@ public interface UserMapper {
 
     })
     User findByFireId(String fireId);
-    //will move this to roleMapper
-   // @Select("SELECT * FROM role WHERE roleId = #{roleId}")
-   // Role getRoleOfUser(User user);
 
     //Searching user table using phone number
     @Select("SELECT * FROM user WHERE phone = #{phone}")
@@ -83,4 +80,11 @@ public interface UserMapper {
             @Result(property = "isSuspended", column = "isSuspended")
     })
     User findByPhone(String phone);
+
+    long getUserIdByFireId(String fireId);
+
+    /* Update */
+
+
+    /* Delete */
 }

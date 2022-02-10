@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Location {
 
-    private long locationId;
+    private Long locationId;
 
     private String country;
 
@@ -16,4 +16,11 @@ public class Location {
     private String street;
 
     private String postcode;
+
+    @Override
+    public String toString() {
+
+        return String.format("{country: %s, province: %s, city: %s, street: %s, postcode: %s}",
+                                country, province, city, street, postcode);
+    }
 }
