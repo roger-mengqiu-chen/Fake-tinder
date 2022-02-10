@@ -9,7 +9,7 @@ public interface LocationMapper {
 
     Location find(Location location);
 
-    int save(Location location);
+    long save(Location location);
 
     Location findById(long locationId);
 
