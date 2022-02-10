@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS attachment (
     attachmentId bigint AUTO_INCREMENT,
     messageId bigint,
     userId bigint,
-    attachmentType varchar(10) NOT NULL,
+    attachmentType varchar(255) NOT NULL,
     attachmentContent mediumBlob NOT NULL,
     PRIMARY KEY (attachmentId),
     FOREIGN KEY (messageId) REFERENCES message (messageId) ON DELETE CASCADE,
