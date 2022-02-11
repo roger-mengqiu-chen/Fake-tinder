@@ -26,6 +26,7 @@ public enum DataType {
     PREFERENCE_NOT_FOUND,
 
     USER_NOT_FOUND,
+    INVALID_USER,
 
     LOCATION_EXISTED,
     LOCATION_NOT_FOUND,

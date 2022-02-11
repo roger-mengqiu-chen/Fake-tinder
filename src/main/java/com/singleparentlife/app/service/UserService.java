@@ -3,9 +3,11 @@ package com.singleparentlife.app.service;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.UserMapper;
+import com.singleparentlife.app.model.Location;
 import com.singleparentlife.app.model.User;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.payload.response.SanitizedUser;
@@ -98,4 +100,42 @@ public class UserService {
         sanitizedUser.setFireId(user.getFireId());
         return sanitizedUser;
     }
+
+
+
+     /*
+     * Names of the methods to work on */
+    public  void upgrade(User user){}
+    public  void  downgrade(User user){}
+
+    public  JsonResponse  delete(User user){
+        if (user == null) {
+            log.error("user invalid: {}", user.getUserId());
+            return new JsonResponse(Status.FAIL, DataType.INVALID_USER, user.getUserId());
+        }
+
+        else{
+            try {
+
+                //could be better to use getCurrent UserId from AuthUtil but willl do this for now
+                userMapper.delete(user.getUserId());
+               //might not show up these because user is already deleted
+                log.info("User is deleted {}", user.getUserId());
+                return new JsonResponse(Status.SUCCESS, DataType.USER, user.getUserId());
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+            }
+
+    }}
+    //to delete all voids with response, just keeping these for now to not get any error
+    public  void updatePassword(User user, String password){
+
+    }
+    public  void  updateFirstName(User user, String firstName ){}
+    public  void  updateLastName(User user, String lastName){}
+    public  void  updateProfileImg(User user, Long profileImgID){}
+    public  void  updateDescription(User user, String description){}
+    public  void  updateLocation(User user, Location location){}
+
 }
