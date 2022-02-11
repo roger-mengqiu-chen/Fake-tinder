@@ -1,6 +1,5 @@
 package com.singleparentlife.app.controller;
 
-import com.singleparentlife.app.config.security.UserDetailsServiceImp;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.payload.request.LoginRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;

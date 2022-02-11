@@ -20,7 +20,7 @@ public interface LocationMapper {
     "AND street = #{street} AND postcode = #{postcode}")
     @Results ({
             @Result(id = true, property = "locationId", column = "locationId"),
-            @Result(property = "county",  column = "country"),
+            @Result(property = "country",  column = "country"),
             @Result(property = "province", column = "province"),
             @Result(property = "city", column = "city"),
             @Result(property = "street", column = "street"),
@@ -32,7 +32,7 @@ public interface LocationMapper {
     @Select("SELECT * FROM location WHERE locationId = #{locationId}")
     @Results ({
             @Result(id = true, property = "locationId", column = "locationId"),
-            @Result(property = "county",  column = "country"),
+            @Result(property = "country",  column = "country"),
             @Result(property = "province", column = "province"),
             @Result(property = "city", column = "city"),
             @Result(property = "street", column = "street"),

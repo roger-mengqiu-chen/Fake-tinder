@@ -36,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         String token = request.getHeader(SecurityConstant.FIRE_AUTH);
         String uid = null;
         String session = null;
-       Credentials.CredentialType type = null;
+        Credentials.CredentialType type = null;
         try {
             if (token != null && !token.equalsIgnoreCase("undefined")) {
                 decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);

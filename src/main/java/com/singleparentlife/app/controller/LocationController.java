@@ -6,7 +6,9 @@ import com.singleparentlife.app.model.Location;
 import com.singleparentlife.app.payload.request.LocationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.LocationService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,24 +21,12 @@ public class LocationController {
 
     @PostMapping("")
     public ResponseEntity<JsonResponse> createLocation(@RequestBody LocationRequest request) {
-        String country = request.getCountry().trim().toLowerCase();
-        String province = request.getProvince().trim().toLowerCase();
-        String city = request.getCity().trim().toLowerCase();
-        String street = request.getStreet().trim().toLowerCase();
-        String postcode = request.getPostcode().trim().toLowerCase();
-
-        if (country == null || province == null || city == null || street == null || postcode == null
-        || country.isEmpty() || province.isEmpty() || city.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
-            return ResponseEntity.badRequest().body(
-                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Request missed some fields"));
-        }
+        // format request to trim the input and convert all of them to lower case
+        request.formatted();
 
         Location location = new Location();
-        location.setCity(city);
-        location.setCountry(country);
-        location.setPostcode(postcode);
-        location.setStreet(street);
-        location.setProvince(province);
+
+        BeanUtils.copyProperties(request, location);
         JsonResponse response = locationService.createLocation(location);
 
         return response.toResponseEntity();
@@ -54,27 +44,11 @@ public class LocationController {
 
     @PutMapping()
     public ResponseEntity<JsonResponse> updateLocation(@RequestBody LocationRequest request) {
-
-        Long locationId = request.getLocationId();
-        String country = request.getCountry().trim().toLowerCase();
-        String province = request.getProvince().trim().toLowerCase();
-        String city = request.getCity().trim().toLowerCase();
-        String street = request.getStreet().trim().toLowerCase();
-        String postcode = request.getPostcode().trim().toLowerCase();
-
-        if (locationId == null || country == null || province == null || city == null || street == null || postcode == null
-                || country.isEmpty() || province.isEmpty() || city.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
-            return ResponseEntity.badRequest().body(
-                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Request missed some fields"));
-        }
+        request.formatted();
 
         Location location = new Location();
-        location.setLocationId(locationId);
-        location.setCountry(country);
-        location.setProvince(province);
-        location.setCity(city);
-        location.setStreet(street);
-        location.setPostcode(postcode);
+
+        BeanUtils.copyProperties(request, location);
 
         JsonResponse response = locationService.updateLocation(location);
 

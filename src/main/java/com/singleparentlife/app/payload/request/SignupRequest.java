@@ -6,15 +6,16 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class ProfileRequest {
+public class SignupRequest {
+
     @JsonProperty
-    private Long userId;
+    private String email;
+    @JsonProperty
+    private String phone;
     @JsonProperty
     private String firstname;
     @JsonProperty
     private String lastname;
-    @JsonProperty
-    private String email;
     @JsonProperty
     private LocalDate birthday;
     @JsonProperty
@@ -26,9 +27,7 @@ public class ProfileRequest {
     @JsonProperty
     private String company;
     @JsonProperty
-    private String school;
-    @JsonProperty
     private String jobTitle;
     @JsonProperty
-    private LocationRequest location;
+    private String school;
 }
