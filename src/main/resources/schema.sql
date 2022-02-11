@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS profile (
     userId bigint,
     avatarId bigint,
-    profileImgNumber int(1),
+    profileImgAmt int(1),
     firstname varchar(255) NOT NULL,
     lastname varchar(255) NOT NULL,
     birthday Date NOT NULL,

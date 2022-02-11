@@ -115,16 +115,17 @@ public interface ProfileMapper {
 
     /* Update */
     @Update("UPDATE profile " +
-            "avatarId = #{avatarId}, " +
-            "SET firstname = #{firstname}, " +
-            "lastname = #{lastname}, " +
-            "gender = #{gender}, " +
-            "showMe = #{showMe}, " +
-            "description = #{description}, " +
-            "company = #{company}, " +
-            "jobTitle = #{jobTitle}, " +
-            "school = #{school}, " +
-            "locationId = #{locationId} " +
+            "SET avatarId = #{avatarId}, " +
+            "   profileImgAmt = #{profileImgAmt} " +
+            "   firstname = #{firstname}, " +
+            "   lastname = #{lastname}, " +
+            "   gender = #{gender}, " +
+            "   showMe = #{showMe}, " +
+            "   description = #{description}, " +
+            "   company = #{company}, " +
+            "   jobTitle = #{jobTitle}, " +
+            "   school = #{school}, " +
+            "   locationId = #{locationId} " +
             "WHERE userId = #{userId}")
     void update(Profile profile);
 
