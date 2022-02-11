@@ -40,9 +40,22 @@ public class DownloadController {
                 .body(attachment.getAttachmentContent());
     }
 
-    @GetMapping("/profile/{profileId}")
-    public byte[] getAttachmentByProfileId(){
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity getAttachmentByProfileId(@PathVariable Long userId){
         //TODO
-        return null;
+        if (userId == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Message shouldn't be empty"));
+        }
+        Attachment attachment = downloadService.getAttachmentByMessageId(userId);
+        if (attachment == null) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.MESSAGE_NOT_FOUND, null));
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(attachment.getAttachmentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION)
+                .body(attachment.getAttachmentContent());
     }
 }
