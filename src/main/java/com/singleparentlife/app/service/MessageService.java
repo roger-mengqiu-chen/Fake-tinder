@@ -1,5 +1,6 @@
 package com.singleparentlife.app.service;
 
+import com.singleparentlife.app.Util.FileUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.AttachmentMapper;
@@ -33,6 +34,9 @@ public class MessageService {
     @Autowired
     private AttachmentMapper attachmentMapper;
 
+    @Autowired
+    private FileUtil fileUtil;
+
     public JsonResponse sendMessage (Message message, MultipartFile file) {
         long messageId = messageMapper.save(message);
         message.setMessageId(messageId);
@@ -48,27 +52,12 @@ public class MessageService {
 
         if (!file.isEmpty()) {
             try {
-                InputStream is = file.getInputStream();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                int nRead;
-                byte[] data = new byte[1024];
-                while ((nRead = is.read(data, 0, data.length)) != -1) {
-                    baos.write(data, 0, nRead);
-                }
-                baos.flush();
-                byte[] attachmentContent = baos.toByteArray();
-                baos.close();
-                is.close();
-                String attachmentType = file.getContentType();
-                Attachment attachment = new Attachment();
+                Attachment attachment = fileUtil.fileToAttachment(file);
                 attachment.setMessageId(messageId);
-                attachment.setAttachmentType(attachmentType);
-                attachment.setAttachmentContent(attachmentContent);
                 long attachmentId = attachmentMapper.saveWithMessage(attachment);
                 message.setAttachmentId(attachmentId);
                 messageMapper.updateAttachmentId(message);
                 messageResponse.setAttachmentId(attachmentId);
-
             } catch (IOException e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");
