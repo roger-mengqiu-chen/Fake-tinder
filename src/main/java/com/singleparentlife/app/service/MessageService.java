@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Service
 @Slf4j
@@ -46,7 +48,17 @@ public class MessageService {
 
         if (!file.isEmpty()) {
             try {
-                byte[] attachmentContent = file.getBytes();
+                InputStream is = file.getInputStream();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                int nRead;
+                byte[] data = new byte[1024];
+                while ((nRead = is.read(data, 0, data.length)) != -1) {
+                    baos.write(data, 0, nRead);
+                }
+                baos.flush();
+                byte[] attachmentContent = baos.toByteArray();
+                baos.close();
+                is.close();
                 String attachmentType = file.getContentType();
                 Attachment attachment = new Attachment();
                 attachment.setMessageId(messageId);
