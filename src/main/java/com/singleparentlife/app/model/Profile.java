@@ -15,8 +15,6 @@ public class Profile {
 
     private String lastname;
 
-    private Short age;
-
     private LocalDate birthday;
 
     private String gender;

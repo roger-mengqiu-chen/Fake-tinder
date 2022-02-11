@@ -8,8 +8,12 @@ import org.apache.ibatis.annotations.*;
 public interface ProfileMapper {
 
     /* Create */
-    @Insert("Insert INTO profile (userId, avatarId, firstname, lastname, age, gender, description, locationId) VALUES " +
-    "(#{userId}, #{avatarId}, #{firstname}, #{lastname}, #{age}, #{gender}, #{description}, #{locationId})")
+    @Insert("Insert INTO profile " +
+            "(userId, avatarId, firstname, lastname, birthday, gender, showMe, " +
+            "description, company, jobTitle, school, locationId) " +
+            "VALUES " +
+            "(#{userId}, #{avatarId}, #{firstname}, #{lastname}, #{birthday}, #{gender}, #{showMe}, " +
+            "#{description}, #{company}, #{jobTitle}, #{school}, #{locationId})")
     long save(Profile profile);
 
     /* Read */
@@ -20,9 +24,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByUserId in service class
@@ -35,9 +43,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByFirstname in service class
@@ -50,9 +62,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByLastname in service class
@@ -65,9 +81,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByFirstLastname in service class
@@ -80,9 +100,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByGender in service class
@@ -94,8 +118,8 @@ public interface ProfileMapper {
             "avatarId = #{avatarId}, " +
             "SET firstname = #{firstname}, " +
             "lastname = #{lastname}, " +
-            "age = #{age}, " +
             "gender = #{gender}, " +
+            "showMe = #{showMe}, " +
             "description = #{description}, " +
             "company = #{company}, " +
             "jobTitle = #{jobTitle}, " +
