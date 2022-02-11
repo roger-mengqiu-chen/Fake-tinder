@@ -36,9 +36,12 @@ public class FileUtil {
     }
 
     public boolean isValidImage(MultipartFile file) {
-        return file.getContentType().equals(MediaType.IMAGE_GIF_VALUE)
-        || file.getContentType().equals(MediaType.IMAGE_JPEG_VALUE)
-        || file.getContentType().equals(MediaType.IMAGE_PNG_VALUE);
+        String fileExtensions = ".jpg, .jpeg, .png, .gif";
+        String fileName = file.getOriginalFilename();
+        int lastIndex = fileName.lastIndexOf('.');
+        String substring = fileName.substring(lastIndex);
+
+        return fileExtensions.contains(substring.toLowerCase());
 
 
     }
