@@ -11,8 +11,6 @@ import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.payload.response.SanitizedUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -52,6 +50,7 @@ public class UserService {
             }
             else {
                 user.setLoginTime(LocalDateTime.now());
+                userMapper.update(user);
                 SanitizedUser sanitizedUser = sanitizeUser(user);
                 log.info("User login: {}", fireId);
                 return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
@@ -60,6 +59,32 @@ public class UserService {
             log.error("Invalid token");
             return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Invalid token");
         }
+    }
+
+    public JsonResponse updateUser(User user) {
+        try {
+            userMapper.update(user);
+            SanitizedUser sanitizedUser = sanitizeUser(user);
+            log.info("User updated: {}", user.getUserId());
+            return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse getUserById(Long userId) {
+        User user = userMapper.findById(userId);
+
+        if (user == null) {
+            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null);
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.USER, user);
+    }
+
+    public JsonResponse deleteUser(Long userId) {
+        //TODO
+        return null;
     }
 
     /*

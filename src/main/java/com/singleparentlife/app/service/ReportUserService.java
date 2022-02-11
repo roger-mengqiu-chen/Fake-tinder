@@ -67,7 +67,7 @@ public class ReportUserService {
         }
         else {
             try {
-                reportedUserMapper.deletebyId(userId);
+                reportedUserMapper.delete(userId);
                 log.info("ReportedUser is deleted: {}", userId);
                 return new JsonResponse(Status.SUCCESS, DataType.STATUS_MESSAGE, "ReportedUser is deleted");
             } catch (Exception e) {

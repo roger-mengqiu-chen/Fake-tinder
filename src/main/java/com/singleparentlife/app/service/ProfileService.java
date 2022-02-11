@@ -21,6 +21,11 @@ public class ProfileService {
     @Autowired
     private MatchMapper matchMapper;
 
+    /**
+     * Create a new profile
+     * @param profile profile to be created
+     * @return JsonResponse of created profile
+     */
     public JsonResponse createProfile(Profile profile) {
         try {
             profileMapper.save(profile);
@@ -34,7 +39,7 @@ public class ProfileService {
 
     /**
      * Get profile of user according to userId
-     * @param userId
+     * @param userId userId
      * @return JsonResponse about profile of this user
      */
     public JsonResponse getProfileOfUser(Long userId) {
@@ -46,6 +51,11 @@ public class ProfileService {
         return new JsonResponse(Status.SUCCESS, DataType.PROFILE, profile);
     }
 
+    /**
+     * Update a profile and return the updated profile
+     * @param profile profile
+     * @return JsonResponse of updated profile
+     */
     public JsonResponse updateProfile(Profile profile) {
         Profile existedProfile = profileMapper.findByUserId(profile.getUserId());
         if (existedProfile == null) {
@@ -63,6 +73,11 @@ public class ProfileService {
 
     }
 
+    /**
+     * Delete profile by userId
+     * @param userId userId is profileId
+     * @return JsonResponse of deleted profile
+     */
     public JsonResponse deleteProfileOfUser(Long userId) {
         Profile profile = profileMapper.findByUserId(userId);
         if (profile == null) {
@@ -79,6 +94,13 @@ public class ProfileService {
         }
     }
 
+    /**
+     * Set reaction to a profile
+     * @param userId userId
+     * @param targetUserId targetUserId
+     * @param reaction Reaction
+     * @return JsonResponse of Match
+     */
     public JsonResponse reactToProfile(Long userId, Long targetUserId, Reaction reaction) {
         Profile userProfile = profileMapper.findByUserId(userId);
         Profile targetProfile = profileMapper.findByUserId(targetUserId);
@@ -100,6 +122,10 @@ public class ProfileService {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
+    }
 
+    public JsonResponse setAvatarForProfile() {
+        //TODO
+        return null;
     }
 }

@@ -18,10 +18,15 @@ public class LocationService {
     /**
      * Create a location
      * If the location existed, find out the location and return it
-     * @param location
+     * @param location location
      * @return location in database
      */
     public JsonResponse createLocation (Location location) {
+
+        if (hasEmptyField(location)) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Can't have empty field for location");
+        }
+
         Location existedLocation = locationMapper.find(location);
 
         if (existedLocation == null) {
@@ -38,7 +43,7 @@ public class LocationService {
 
     /**
      *
-     * @param locationId
+     * @param locationId locationId
      * @return the location in database
      */
     public JsonResponse getLocationById (long locationId) {
@@ -50,8 +55,8 @@ public class LocationService {
     /**
      * Detailed search for location
      * This search matches all the attributes of this location
-     * @param location
-     * @return location in database
+     * @param location location
+     * @return location in database if found.
      */
     public JsonResponse findLocation (Location location) {
         Location existedlocation = locationMapper.find(location);
@@ -62,11 +67,15 @@ public class LocationService {
     }
 
     /**
-     * Update a location
-     * @param location
+     * Update a location.
+     * @param location location
      * @return new location
      */
     public JsonResponse updateLocation (Location location) {
+        if (hasEmptyField(location)) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Can't have empty field for location");
+        }
+
         Location existedLocation = locationMapper.findById(location.getLocationId());
 
         if (existedLocation == null) {
@@ -87,7 +96,7 @@ public class LocationService {
 
     /**
      * Delete a location
-     * @param locationId
+     * @param locationId locationId
      * @return deleted location
      */
     public JsonResponse deleteLocationById (long locationId) {
@@ -106,5 +115,22 @@ public class LocationService {
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
             }
         }
+    }
+
+    /**
+     * This method won't check locationId
+     */
+    private boolean hasEmptyField(Location location) {
+        String country = location.getCountry();
+        String province = location.getProvince();
+        String city = location.getCity();
+        String street = location.getStreet();
+        String postcode = location.getPostcode();
+
+        if (country == null || province == null || city == null || street == null || postcode == null
+                || country.isEmpty() || province.isEmpty() || city.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

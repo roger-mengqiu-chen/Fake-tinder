@@ -3,6 +3,8 @@ package com.singleparentlife.app.mapper;
 import com.singleparentlife.app.model.Attachment;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface AttachmentMapper {
     /*
@@ -29,6 +31,12 @@ public interface AttachmentMapper {
     })
     Attachment findById(long attachmentId);
 
+    @Select("SELECT attachmentId FROM attachment WHERE attachmentId = #{attachmentId}")
+    Long findIdOfAttachment(long attachmentId);
+
+    @Select("SELECT userId FROM attachment WHERE attachmentId = #{attachmentId}")
+    Long getProfileIdOfAttachment(long attachmentId);
+
     @Select("SELECT * FROM attachment WHERE messageId = #{messageId}")
     @Results({
             @Result(id = true, property = "attachmentId", column = "attachmentId"),
@@ -36,4 +44,22 @@ public interface AttachmentMapper {
             @Result(property = "attachmentContent", column = "attachmentContent")
     })
     Attachment findByMessageId(long messageId);
+
+    @Select("SELECT attachmentId FROM attachment WHERE userId = #{userId}")
+    @Results({
+            @Result(id = true, property = "attachmentId", column = "attachmentId"),
+            @Result(property = "attachmentType", column = "attachmentType"),
+            @Result(property = "attachmentContent", column = "attachmentContent")
+    })
+    List<Long> findByProfileId(long userId);
+
+    @Update("UPDATE attachment " +
+            "SET attachmentType = #{attachmentType}, " +
+            "attachmentContent = #{attachmentContent} " +
+            "WHERE attachmentId = #{attachmentId}")
+    void updateAttachment(Attachment attachment);
+
+    @Delete("DELETE FROM attachment " +
+            "WHERE attachmentId = #{attachmentId}")
+    void delete(Long attachmentId);
 }

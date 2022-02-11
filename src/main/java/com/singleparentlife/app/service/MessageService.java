@@ -1,5 +1,6 @@
 package com.singleparentlife.app.service;
 
+import com.singleparentlife.app.Util.FileUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.AttachmentMapper;
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Service
 @Slf4j
@@ -30,6 +33,9 @@ public class MessageService {
 
     @Autowired
     private AttachmentMapper attachmentMapper;
+
+    @Autowired
+    private FileUtil fileUtil;
 
     public JsonResponse sendMessage (Message message, MultipartFile file) {
         long messageId = messageMapper.save(message);
@@ -46,17 +52,12 @@ public class MessageService {
 
         if (!file.isEmpty()) {
             try {
-                byte[] attachmentContent = file.getBytes();
-                String attachmentType = file.getContentType();
-                Attachment attachment = new Attachment();
+                Attachment attachment = fileUtil.fileToAttachment(file);
                 attachment.setMessageId(messageId);
-                attachment.setAttachmentType(attachmentType);
-                attachment.setAttachmentContent(attachmentContent);
                 long attachmentId = attachmentMapper.saveWithMessage(attachment);
                 message.setAttachmentId(attachmentId);
                 messageMapper.updateAttachmentId(message);
                 messageResponse.setAttachmentId(attachmentId);
-
             } catch (IOException e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");

@@ -20,6 +20,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
     private RoleMapper roleMapper;
     /**
      * We are using fireId as username here. Have to override the method. So can't change the method name
