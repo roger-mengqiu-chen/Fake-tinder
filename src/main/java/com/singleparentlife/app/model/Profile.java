@@ -11,7 +11,7 @@ public class Profile {
 
     private Long avatarId;
 
-    private Short profileImgAmt;
+    private short profileImgAmt;
 
     private String firstname;
 
