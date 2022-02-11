@@ -36,4 +36,10 @@ public interface AttachmentMapper {
             @Result(property = "attachmentContent", column = "attachmentContent")
     })
     Attachment findByMessageId(long messageId);
+
+    @Update("UPDATE attachment " +
+            "SET attachmentType = #{attachmentType}, " +
+            "attachmentContent = #{attachmentContent} " +
+            "WHERE attachmentId = #{attachmentId}")
+    void updateAttachmentForProfile(Attachment attachment);
 }
