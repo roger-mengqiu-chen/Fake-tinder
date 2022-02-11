@@ -1,11 +1,11 @@
 package com.singleparentlife.app.service;
 
 import com.singleparentlife.app.mapper.AttachmentMapper;
-import com.singleparentlife.app.mapper.MessageMapper;
 import com.singleparentlife.app.model.Attachment;
-import com.singleparentlife.app.payload.response.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DownloadService {
@@ -14,8 +14,14 @@ public class DownloadService {
     private AttachmentMapper attachmentMapper;
 
     public Attachment getAttachmentByMessageId(long messageId) {
-
         return attachmentMapper.findByMessageId(messageId);
+    }
 
+    public List<Long> getAttachmentByProfileId(long userId) {
+        return attachmentMapper.findByProfileId(userId);
+    }
+
+    public Attachment getAttachmentById(long attachmentId) {
+        return attachmentMapper.findById(attachmentId);
     }
 }
