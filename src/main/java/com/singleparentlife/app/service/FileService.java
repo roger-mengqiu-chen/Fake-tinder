@@ -52,7 +52,7 @@ public class FileService {
             attachment.setAttachmentId(attachmentId);
             // profile image amount need update
             profile.increaseProfileImgAmt();
-            profileMapper.update(profile);
+            profileMapper.updateProfileImgAmt(profile);
             AttachmentResponse attachmentResponse = new AttachmentResponse();
             BeanUtils.copyProperties(attachment, attachmentResponse);
             return new JsonResponse(Status.SUCCESS, DataType.ATTACHMENT, attachmentResponse);

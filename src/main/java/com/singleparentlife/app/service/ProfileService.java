@@ -64,8 +64,9 @@ public class ProfileService {
         }
         try {
             profileMapper.update(profile);
+            existedProfile = profileMapper.findByUserId(profile.getUserId());
             log.info ("Profile is updated: {}", profile.getUserId());
-            return new JsonResponse(Status.SUCCESS, DataType.PROFILE, profile);
+            return new JsonResponse(Status.SUCCESS, DataType.PROFILE, existedProfile);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
