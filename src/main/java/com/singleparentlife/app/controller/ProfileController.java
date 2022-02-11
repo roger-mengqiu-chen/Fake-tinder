@@ -5,19 +5,16 @@ import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.Location;
 import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.model.User;
 import com.singleparentlife.app.payload.request.LocationRequest;
 import com.singleparentlife.app.payload.request.ProfileRequest;
 import com.singleparentlife.app.payload.request.ReactToProfile;
 import com.singleparentlife.app.payload.response.JsonResponse;
-import com.singleparentlife.app.service.LocationService;
-import com.singleparentlife.app.service.ProfileService;
-import com.singleparentlife.app.service.ReactionService;
+import com.singleparentlife.app.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/profile")
@@ -29,27 +26,41 @@ public class ProfileController {
     @Autowired
     private ReactionService reactionService;
     @Autowired
+    private UserService userService;
+    @Autowired
+    private FileService fileService;
+    @Autowired
     private AuthUtil authUtil;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<JsonResponse> createProfile(@RequestBody ProfileRequest request) {
+        Long userId = authUtil.getCurrentUserId();
+        User user = (User)userService.getUserById(userId).getData();
+        user.setEmail(request.getEmail());
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
+
+        profile.setUserId(userId);
+        profile.setProfileImgAmt((short)0);
         LocationRequest locationRequest = request.getLocation();
+        locationRequest.formatted();
 
         Location location = new Location();
-        location.setCountry(locationRequest.getCountry().trim().toLowerCase());
-        location.setProvince(locationRequest.getCountry().trim().toLowerCase());
-        location.setCity(locationRequest.getCity().trim().toLowerCase());
-        location.setStreet(locationRequest.getStreet().trim().toLowerCase());
-        location.setPostcode(locationRequest.getPostcode().trim().toLowerCase());
+        BeanUtils.copyProperties(locationRequest, location);
 
         // we need the id of location, check it with location service.
         JsonResponse locationResponse = locationService.createLocation(location);
-        Location returnedLocation = (Location) locationResponse.getData();
-        profile.setLocationId(returnedLocation.getLocationId());
-
+        if (locationResponse.getStatus().equals(Status.SUCCESS)) {
+            Location returnedLocation = (Location) locationResponse.getData();
+            profile.setLocationId(returnedLocation.getLocationId());
+        }
+        // if failed, returned the response directly
+        else {
+            return locationResponse.toResponseEntity();
+        }
+        userService.updateUser(user);
         JsonResponse response = profileService.createProfile(profile);
+
         return response.toResponseEntity();
     }
 
@@ -70,6 +81,22 @@ public class ProfileController {
     public ResponseEntity<JsonResponse> updateProfile(@RequestBody ProfileRequest request) {
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
+        LocationRequest locationRequest = request.getLocation();
+        locationRequest.formatted();
+
+        Location location = new Location();
+        BeanUtils.copyProperties(locationRequest, location);
+
+        // we need the id of location, check it with location service.
+        JsonResponse locationResponse = locationService.createLocation(location);
+        if (locationResponse.getStatus().equals(Status.SUCCESS)) {
+            Location returnedLocation = (Location) locationResponse.getData();
+            profile.setLocationId(returnedLocation.getLocationId());
+        }
+        // if failed, returned the response directly
+        else {
+            return locationResponse.toResponseEntity();
+        }
         JsonResponse response = profileService.updateProfile(profile);
 
         return response.toResponseEntity();
