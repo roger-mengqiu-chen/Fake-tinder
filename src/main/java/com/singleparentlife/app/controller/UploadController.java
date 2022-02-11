@@ -1,25 +1,37 @@
 package com.singleparentlife.app.controller;
 
-import com.singleparentlife.app.model.Message;
-import com.singleparentlife.app.payload.request.MessageRequest;
+import com.singleparentlife.app.Util.AuthUtil;
+import com.singleparentlife.app.constants.DataType;
+import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.payload.response.JsonResponse;
-import com.singleparentlife.app.service.UploadService;
+import com.singleparentlife.app.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
-
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
     @Autowired
-    private UploadService uploadService;
+    private FileService fileService;
+    @Autowired
+    private AuthUtil authUtil;
 
     @PostMapping("/profile")
-    public ResponseEntity<JsonResponse> uploadWithProfile(@RequestBody MultipartFile file) {
-        //TODO
-        return null;
+    public ResponseEntity<JsonResponse> uploadWithProfile(@RequestPart("file") MultipartFile file) {
+
+        Long userId = authUtil.getCurrentUserId();
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    new JsonResponse(Status.FAIL, DataType.INVALID_IMAGE, "Image can't be empty")
+            );
+        }
+
+        JsonResponse response = fileService.uploadWithProfile(userId, file);
+
+        return response.toResponseEntity();
     }
+
+
 }
