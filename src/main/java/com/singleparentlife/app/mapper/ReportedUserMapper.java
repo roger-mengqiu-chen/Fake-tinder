@@ -44,6 +44,10 @@ public interface ReportedUserMapper {
     List<ReportedUser> findByReporterId(long reporterId);
 
 
+    /* Update */
+    //general update for reported user reason
+    @Update("UPDATE reportedUser SET reason = #{reason} WHERE userId = #{userId}")
+    int updateReason(long userId);
 
 
 }
