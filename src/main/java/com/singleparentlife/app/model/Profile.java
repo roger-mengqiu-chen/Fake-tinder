@@ -33,4 +33,18 @@ public class Profile {
 
     private Long locationId;
 
+    public void reduceProfileImgAmt() {
+        if (this.profileImgAmt <= 0) {
+            throw new UnsupportedOperationException();
+        }
+        this.profileImgAmt --;
+    }
+
+    public void increaseProfileImgAmt() {
+        if (this.profileImgAmt >= 9) {
+            throw new UnsupportedOperationException();
+        }
+        this.profileImgAmt ++;
+    }
+
 }
