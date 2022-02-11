@@ -79,6 +79,17 @@ public class ProfileController {
 
     @PutMapping()
     public ResponseEntity<JsonResponse> updateProfile(@RequestBody ProfileRequest request) {
+        Long userId = request.getUserId();
+
+        // as email is not part of profile, it should be updated with userService
+        String email = request.getEmail();
+        User user = (User) userService.getUserById(userId).getData();
+        user.setEmail(email);
+        JsonResponse userUpdateResponse = userService.updateUser(user);
+        if (userUpdateResponse.getStatus().equals(Status.FAIL)) {
+            return userUpdateResponse.toResponseEntity();
+        }
+
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
         LocationRequest locationRequest = request.getLocation();
