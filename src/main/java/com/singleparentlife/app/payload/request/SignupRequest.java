@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 public class SignupRequest {
+
+    @JsonProperty
+    private String email;
+    @JsonProperty
+    private String phone;
     @JsonProperty
     private String firstname;
     @JsonProperty
