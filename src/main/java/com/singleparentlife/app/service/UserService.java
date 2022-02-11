@@ -62,6 +62,32 @@ public class UserService {
         }
     }
 
+    public JsonResponse updateUser(User user) {
+        try {
+            userMapper.update(user);
+            SanitizedUser sanitizedUser = sanitizeUser(user);
+            log.info("User updated: {}", user.getUserId());
+            return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse getUserById(Long userId) {
+        User user = userMapper.findById(userId);
+
+        if (user == null) {
+            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null);
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.USER, user);
+    }
+
+    public JsonResponse deleteUser(Long userId) {
+        //TODO
+        return null;
+    }
+
     /*
         When we return user back to front end, we need hide some sensitive data.
      */
