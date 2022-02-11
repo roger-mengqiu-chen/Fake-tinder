@@ -11,8 +11,6 @@ import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.payload.response.SanitizedUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -52,6 +50,7 @@ public class UserService {
             }
             else {
                 user.setLoginTime(LocalDateTime.now());
+                userMapper.update(user);
                 SanitizedUser sanitizedUser = sanitizeUser(user);
                 log.info("User login: {}", fireId);
                 return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
