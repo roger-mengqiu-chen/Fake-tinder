@@ -3,6 +3,8 @@ package com.singleparentlife.app.payload.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class ProfileRequest {
     @JsonProperty
@@ -12,17 +14,20 @@ public class ProfileRequest {
     @JsonProperty
     private String lastname;
     @JsonProperty
-    private Short age;
+    private LocalDate birthday;
     @JsonProperty
     private String gender;
+    @JsonProperty
+    private String showMe;
+    @JsonProperty
+    private String description;
     @JsonProperty
     private String company;
     @JsonProperty
     private String school;
     @JsonProperty
     private String jobTitle;
-    @JsonProperty
-    private String description;
+
     @JsonProperty
     private LocationRequest location;
 }
