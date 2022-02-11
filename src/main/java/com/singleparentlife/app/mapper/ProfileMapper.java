@@ -9,10 +9,10 @@ public interface ProfileMapper {
 
     /* Create */
     @Insert("Insert INTO profile " +
-            "(userId, avatarId, profileImgAmt, firstname, lastname, birthday, gender, showMe, " +
+            "(userId, firstname, lastname, birthday, gender, showMe, " +
             "description, company, jobTitle, school, locationId) " +
             "VALUES " +
-            "(#{userId}, #{avatarId}, #{profileImgAmt}, #{firstname}, #{lastname}, #{birthday}, #{gender}, #{showMe}, " +
+            "(#{userId}, #{firstname}, #{lastname}, #{birthday}, #{gender}, #{showMe}, " +
             "#{description}, #{company}, #{jobTitle}, #{school}, #{locationId})")
     long save(Profile profile);
 
@@ -115,8 +115,7 @@ public interface ProfileMapper {
 
     /* Update */
     @Update("UPDATE profile " +
-            "SET avatarId = #{avatarId}, " +
-            "   profileImgAmt = #{profileImgAmt}, " +
+            "SET " +
             "   firstname = #{firstname}, " +
             "   lastname = #{lastname}, " +
             "   gender = #{gender}, " +
@@ -127,8 +126,13 @@ public interface ProfileMapper {
             "   school = #{school}, " +
             "   locationId = #{locationId} " +
             "WHERE userId = #{userId}")
-    void update(Profile profile);
+    int update(Profile profile);
 
+    @Update("UPDATE profile SET profileImgAmt = #{profileImgAmt}")
+    int updateProfileImgAmt(Profile profile);
+
+    @Update("UPDATE profile SET avatarId = #{avatarId}")
+    int updateProfileAvatarId(Profile profile);
 
     /* Delete */
     //to delete a row within the profile table:
