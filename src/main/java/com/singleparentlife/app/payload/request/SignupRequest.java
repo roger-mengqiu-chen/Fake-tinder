@@ -1,9 +1,11 @@
 package com.singleparentlife.app.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 public class SignupRequest {
 
     @JsonProperty
