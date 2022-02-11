@@ -30,7 +30,7 @@ public interface ReportedUserMapper {
     /* Delete */
     //This is intended to delete, this will delete every report involving this user
     @Delete("DELETE FROM reportedUSer WHERE userId = #{userId}")
-    int delete(ReportedUser reportedUser);
+    int delete(long userId);
 
     //This will find all reports made by a certain reporterId
     @Select("SELECT * FROM reportedUser WHERE reportedId = #{reporterId}")
