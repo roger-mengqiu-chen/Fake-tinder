@@ -29,6 +29,8 @@ public interface MessageMapper {
             "WHERE messageId = #{messageId}")
     int updateAttachmentId(Message message);
 
+
+
     @Delete("DELETE FROM message WHERE messageId = #{messageId}")
     int delete(Message message);
 }
