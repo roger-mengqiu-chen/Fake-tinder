@@ -1,6 +1,7 @@
 package com.singleparentlife.app.Util;
 
 import com.singleparentlife.app.model.Attachment;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,5 +33,13 @@ public class FileUtil {
         } catch (IOException e) {
             throw e;
         }
+    }
+
+    public boolean isValidImage(MultipartFile file) {
+        return file.getContentType().equals(MediaType.IMAGE_GIF_VALUE)
+        || file.getContentType().equals(MediaType.IMAGE_JPEG_VALUE)
+        || file.getContentType().equals(MediaType.IMAGE_PNG_VALUE);
+
+
     }
 }
