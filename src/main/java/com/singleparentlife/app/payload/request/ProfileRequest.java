@@ -14,6 +14,8 @@ public class ProfileRequest {
     @JsonProperty
     private String lastname;
     @JsonProperty
+    private String email;
+    @JsonProperty
     private LocalDate birthday;
     @JsonProperty
     private String gender;
@@ -27,7 +29,6 @@ public class ProfileRequest {
     private String school;
     @JsonProperty
     private String jobTitle;
-
     @JsonProperty
     private LocationRequest location;
 }
