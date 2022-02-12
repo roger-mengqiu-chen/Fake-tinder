@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class PreferenceService {
@@ -17,46 +20,57 @@ public class PreferenceService {
     private PreferenceMapper preferenceMapper;
 
     public JsonResponse createPreference (String preferenceStr) {
-        Preference preference = preferenceMapper.findByContent(preferenceStr);
-        if (preference == null) {
-            try {
-                preference = new Preference(preferenceStr);
-                preferenceMapper.save(preference);
-                // we need the persisted preference with perferenceId
-                preference = preferenceMapper.findByContent(preferenceStr);
-                log.info("Preference is saved: {}", preferenceStr);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-            }
+        Preference p = createPreferenceHelper(preferenceStr);
+        if (p != null) {
+            return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, p);
         }
-        return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
+        else {
+            return new JsonResponse(Status.FAIL, DataType.PREFERENCE_WITH_ERROR, preferenceStr);
+        }
     }
 
     /*
         Create preference for user
         If the preference doesn't exist, create it.
      */
-    public JsonResponse createPreferenceOrTagForUser (long userId, String preferenceStr, DataType dataType) {
+    public JsonResponse createPreferenceOrTagForUser (long userId, List<String> preferenceStr, DataType dataType) {
 
-        JsonResponse response = createPreference(preferenceStr);
-        if (response.getStatus().equals(Status.SUCCESS)) {
-            Preference preference = (Preference)response.getData();
-            if (dataType.equals(DataType.PREFERENCE)) {
-                preferenceMapper.savePreferenceForUser(userId, preference.getPreferenceId());
-            }
-            else if (dataType.equals(DataType.TAG)) {
-                preferenceMapper.saveTagForUser(userId, preference.getPreferenceId());
+        List<Preference> successList = new ArrayList<>();
+        List<String> failedList = new ArrayList<>();
+
+        for (String p : preferenceStr) {
+            Preference createdPreference = createPreferenceHelper(p);
+            if (createdPreference != null) {
+                successList.add(createdPreference);
             }
             else {
-                log.error("Invalid dataType, should be PREFERENCE or TAG");
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Invalid dataType, should be PREFERENCE or TAG");
+                failedList.add(p);
             }
-            log.info("Preference is created: {}", preferenceStr);
-            return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
+        }
+
+        if (dataType.equals(DataType.PREFERENCE)) {
+            successList.forEach(pref
+                    -> preferenceMapper.savePreferenceForUser(userId, pref.getPreferenceId()));
+            if (failedList.size() == 0) {
+                return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, successList);
+            }
+            else {
+                return new JsonResponse(Status.FAIL, DataType.PREFERENCE_WITH_ERROR, failedList);
+            }
+        }
+        else if (dataType.equals(DataType.TAG)) {
+            successList.forEach((pref
+                    -> preferenceMapper.saveTagForUser(userId, pref.getPreferenceId())));
+            if (failedList.size() == 0) {
+                return new JsonResponse(Status.SUCCESS, DataType.TAG, successList);
+            }
+            else {
+                return new JsonResponse(Status.FAIL, DataType.TAG_WITH_ERROR, failedList);
+            }
         }
         else {
-            return response;
+            log.error("Invalid dataType, should be PREFERENCE or TAG");
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Invalid dataType, should be PREFERENCE or TAG");
         }
     }
 
@@ -131,4 +145,19 @@ public class PreferenceService {
         }
     }
 
+    private Preference createPreferenceHelper (String preference) {
+        preference = preference.trim().toLowerCase();
+        Preference p = preferenceMapper.findByContent(preference);
+        if (p == null) {
+            try {
+                Long id = preferenceMapper.save(new Preference(preference));
+                log.info("Preference is saved: {}", preference);
+                return preferenceMapper.findById(id);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                return null;
+            }
+        }
+        return p;
+    }
 }
