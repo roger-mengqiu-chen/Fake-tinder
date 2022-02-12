@@ -10,7 +10,7 @@ public interface MessageMapper {
 
     @Insert("INSERT INTO message (senderId, receiverId, attachmentId, time, content) values " +
             "(#{senderId}, #{receiverId}, #{attachmentId}, #{time}, #{content})")
-    @Options(useGeneratedKeys = true, keyProperty = "messageId")
+    @Options(useGeneratedKeys = true, keyProperty = "messageId", keyColumn = "messageId")
     long save(Message message);
 
     @Select("SELECT * FROM message WHERE messageId = #{messageId}")
