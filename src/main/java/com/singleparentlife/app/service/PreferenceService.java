@@ -35,6 +35,10 @@ public class PreferenceService {
      */
     public JsonResponse createPreferenceOrTagForUser (long userId, List<String> preferenceStr, DataType dataType) {
 
+        if(preferenceStr.size() == 0) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Preference or tag list is empty");
+        }
+
         List<Preference> successList = new ArrayList<>();
         List<String> failedList = new ArrayList<>();
 
