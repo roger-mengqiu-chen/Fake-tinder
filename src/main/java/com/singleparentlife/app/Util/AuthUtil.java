@@ -12,7 +12,7 @@ public class AuthUtil {
     @Autowired
     private UserMapper userMapper;
 
-    public long getCurrentUserId() {
+    public Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String fireId = authentication.getName();
         return userMapper.getUserIdByFireId(fireId);

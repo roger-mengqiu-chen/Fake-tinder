@@ -11,7 +11,7 @@ public interface UserMapper {
     @Insert("INSERT INTO user (fireId, email, password, startDate, loginTime, roleId, isActive, isSuspended) VALUES " +
             "(#{fireId}, #{email}, #{password}, #{startDate}, #{loginTime}, #{roleId}, #{isActive}, #{isSuspended})")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    long save(User user);
+    Long save(User user);
 
     /* Read */
     //searching user table using email
@@ -95,7 +95,7 @@ public interface UserMapper {
             @Result(property = "isActive", column = "isActive"),
             @Result(property = "isSuspended", column = "isSuspended")
     })
-    long getUserIdByFireId(String fireId);
+    Long getUserIdByFireId(String fireId);
 
     /* Update */
     //This will update any changes to a user row in the user table

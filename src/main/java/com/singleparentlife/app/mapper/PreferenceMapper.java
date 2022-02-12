@@ -10,7 +10,7 @@ public interface PreferenceMapper {
     //This will be used to add a  preference row to the preference table
     @Insert("INSERT INTO preference (content) VALUES (#{content}) ")
     @Options(useGeneratedKeys = true, keyProperty = "preferenceId")
-    long save(Preference preference);
+    Long save(Preference preference);
 
     //This will save a preferenceId and userId to the bridging table userPreference
     @Insert("INSERT INTO userPreference (userId, preferenceId) VALUES (#{userId}, #{preferenceId}")
