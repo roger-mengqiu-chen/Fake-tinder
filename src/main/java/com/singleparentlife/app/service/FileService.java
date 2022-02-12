@@ -48,8 +48,8 @@ public class FileService {
             // create attachment object
             Attachment attachment = fileUtil.fileToAttachment(file);
             attachment.setUserId(userId);
-            Long attachmentId = attachmentMapper.saveWithProfile(attachment);
-            attachment.setAttachmentId(attachmentId);
+            attachmentMapper.saveWithProfile(attachment);
+            attachment.setAttachmentId(attachment.getAttachmentId());
             // profile image amount need update
             profile.increaseProfileImgAmt();
             profileMapper.updateProfileImgAmt(profile);

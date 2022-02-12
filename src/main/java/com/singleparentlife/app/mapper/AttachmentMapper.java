@@ -20,7 +20,7 @@ public interface AttachmentMapper {
      */
     @Insert("INSERT INTO attachment (messageId, userId, attachmentType, attachmentContent) VALUES " +
             "(null, #{userId}, #{attachmentType}, #{attachmentContent})")
-    @Options(useGeneratedKeys = true, keyProperty = "attachmentId")
+    @Options(useGeneratedKeys = true, keyProperty = "attachmentId", keyColumn = "attachmentId")
     long saveWithProfile(Attachment attachment);
 
     @Select("SELECT * FROM attachment WHERE attachmentId = #{attachmentId}")

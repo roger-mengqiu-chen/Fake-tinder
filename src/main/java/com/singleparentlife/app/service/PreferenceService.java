@@ -154,7 +154,9 @@ public class PreferenceService {
         Preference p = preferenceMapper.findByContent(preference);
         if (p == null) {
             try {
-                Long id = preferenceMapper.save(new Preference(preference));
+                Preference newPreference = new Preference(preference);
+                preferenceMapper.save(newPreference);
+                long id = newPreference.getPreferenceId();
                 log.info("Preference is saved: {}", preference);
                 return preferenceMapper.findById(id);
             } catch (Exception e) {

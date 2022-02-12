@@ -38,8 +38,8 @@ public class MessageService {
     private FileUtil fileUtil;
 
     public JsonResponse sendMessage (Message message, MultipartFile file) {
-        long messageId = messageMapper.save(message);
-        message.setMessageId(messageId);
+        messageMapper.save(message);
+        message.setMessageId(message.getMessageId());
 
         Profile sender = profileMapper.findByUserId(message.getSenderId());
         Profile receiver = profileMapper.findByUserId(message.getReceiverId());
@@ -53,11 +53,11 @@ public class MessageService {
         if (!file.isEmpty()) {
             try {
                 Attachment attachment = fileUtil.fileToAttachment(file);
-                attachment.setMessageId(messageId);
-                long attachmentId = attachmentMapper.saveWithMessage(attachment);
-                message.setAttachmentId(attachmentId);
+                attachment.setMessageId(message.getMessageId());
+                attachmentMapper.saveWithMessage(attachment);
+                message.setAttachmentId(message.getMessageId());
                 messageMapper.updateAttachmentId(message);
-                messageResponse.setAttachmentId(attachmentId);
+                messageResponse.setAttachmentId(message.getAttachmentId());
             } catch (IOException e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");
