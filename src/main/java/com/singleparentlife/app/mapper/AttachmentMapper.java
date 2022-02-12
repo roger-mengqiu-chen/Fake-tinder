@@ -12,7 +12,7 @@ public interface AttachmentMapper {
      */
     @Insert("INSERT INTO attachment (messageId, attachmentType, attachmentContent) " +
             "values (#{messageId}, #{attachmentType}, #{attachmentContent})")
-    @Options(useGeneratedKeys = true, keyProperty = "attachmentId")
+    @Options(useGeneratedKeys = true, keyProperty = "attachmentId", keyColumn = "attachmentId")
     long saveWithMessage(Attachment attachment);
 
     /*

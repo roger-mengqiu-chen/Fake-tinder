@@ -10,8 +10,8 @@ public interface UserMapper {
     /* Create */
     @Insert("INSERT INTO user (fireId, email, password, startDate, loginTime, roleId, isActive, isSuspended) VALUES " +
             "(#{fireId}, #{email}, #{password}, #{startDate}, #{loginTime}, #{roleId}, #{isActive}, #{isSuspended})")
-    @Options(useGeneratedKeys = true, keyProperty = "userId")
-    Long save(User user);
+    @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")
+    long save(User user);
 
     /* Read */
     //searching user table using email

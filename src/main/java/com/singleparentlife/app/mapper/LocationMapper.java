@@ -10,7 +10,7 @@ public interface LocationMapper {
     //This will insert a location into the location table
     @Insert("INSERT INTO location (country, province, city, street, postcode) VALUES " +
     "(#{country}, #{province}, #{city}, #{street}, #{postcode})")
-    @Options(useGeneratedKeys = true, keyProperty = "locationId")
+    @Options(useGeneratedKeys = true, keyProperty = "locationId", keyColumn = "locationId")
     long save(Location location);
 
 

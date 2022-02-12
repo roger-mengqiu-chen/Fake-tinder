@@ -8,16 +8,16 @@ public interface PreferenceMapper {
 
     /*Create */
     //This will be used to add a  preference row to the preference table
-    @Insert("INSERT INTO preference (content) VALUES (#{content}) ")
-    @Options(useGeneratedKeys = true, keyProperty = "preferenceId")
-    Long save(Preference preference);
+    @Insert("INSERT INTO preference (content) VALUES (#{content})")
+    @Options(useGeneratedKeys = true, keyProperty = "preferenceId", keyColumn = "preferenceId")
+    long save(Preference preference);
 
     //This will save a preferenceId and userId to the bridging table userPreference
-    @Insert("INSERT INTO userPreference (userId, preferenceId) VALUES (#{userId}, #{preferenceId}")
+    @Insert("INSERT INTO userPreference (userId, preferenceId) VALUES (#{userId}, #{preferenceId})")
     long savePreferenceForUser(long userId, long preferenceId);
 
     //This will save a userId and preferenceId to the userTag table
-    @Insert("INSERT INTO userTag (userId, preferenceId) VALUES (#{userId}, #{preferenceId}")
+    @Insert("INSERT INTO userTag (userId, preferenceId) VALUES (#{userId}, #{preferenceId})")
     long saveTagForUser(long userId, long preferenceId);
 
     /* Read */
