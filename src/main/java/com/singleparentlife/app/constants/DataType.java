@@ -5,7 +5,9 @@ public enum DataType {
 
     /* Object types */
     PREFERENCE,
+    PREFERENCE_WITH_ERROR,
     TAG,
+    TAG_WITH_ERROR,
     LOCATION,
     MESSAGE,
     USER,
