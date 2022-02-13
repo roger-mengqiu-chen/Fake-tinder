@@ -21,8 +21,8 @@ public class EventInvitationService {
     private EventInvitationMapper eventInvitationMapper;
     public JsonResponse  getEventInvitation(long targetUserId){
         List<EventInvitation> eventInvitationL = eventInvitationMapper.findByTargetUserId(targetUserId);
-        if (eventInvitationL == null) {
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event Invitation");
+        if (eventInvitationL.size() == 0) {
+            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event invitation record.");
         } else
         {
             //return the List<EventInvitation> object
@@ -41,7 +41,7 @@ public class EventInvitationService {
     public JsonResponse deleteEventInviataion(long eventId, long targetUserId) {
         EventInvitation eventInvitation = eventInvitationMapper.findByEventIdAndTargetUserId(eventId, targetUserId);
         if (eventInvitation == null) {
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event Invitation");
+            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event invitation record.");
         } else
         {
             eventInvitationMapper.deleteByEventInvitationId(eventInvitation.getEventInvitationId());
@@ -53,7 +53,7 @@ public class EventInvitationService {
     {
         EventInvitation eventInvitation = eventInvitationMapper.findByEventIdAndTargetUserId(eventId, targetUserId);
         if (eventInvitation == null) {
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event Invitation");
+            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event invitation record.");
         } else
         {
             eventInvitationMapper.updateReactionId(eventInvitation.getEventInvitationId(), reactionId);
