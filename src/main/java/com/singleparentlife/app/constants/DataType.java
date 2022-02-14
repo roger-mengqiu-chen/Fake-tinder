@@ -17,6 +17,8 @@ public enum DataType {
     REACTION,
     ATTACHMENT,
     ATTACHMENT_IDS,
+    EVENT_INVITATION,
+    LIST_OF_EVENT_INVITATION,
 
     STATUS_MESSAGE,
 
@@ -42,4 +44,6 @@ public enum DataType {
     ATTACHMENT_NOT_FOUND,
     TOO_MANY_PROFILE_IMG,
     INVALID_IMAGE,
+
 }
+

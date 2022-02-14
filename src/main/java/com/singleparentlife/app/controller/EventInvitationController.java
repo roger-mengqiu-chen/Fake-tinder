@@ -19,18 +19,13 @@ public class EventInvitationController {
     @Autowired
     EventInvitationService eventInvitationService;
 
-    /*
-    @PostMapping("/send/{userId}")
-    public ResponseEntity<JsonResponse> sendInvitationToUser(@PathVariable Long userId) {
-        //TODO
-        return null;
-    }
-    */
     @PostMapping("/send")
     public ResponseEntity<JsonResponse> sendEventInvitation(@RequestBody EventInvitation eventInvitation){
-        System.out.println(eventInvitation.getEventId());
-        System.out.println(eventInvitation.getTargetUserId());
+        // Json file might not contains all data field of EventInvitation
+        // @RequestBody will put the matched data field into the eventInvitation instance.
 
+        // service should return a result(JSON response) because it is responsible for business logic.
+        // controller only match service and return the result.
         JsonResponse response = eventInvitationService.createEventInvitation(eventInvitation.getEventId(),
                 eventInvitation.getTargetUserId());
         if (response.getStatus().equals(Status.SUCCESS))
@@ -38,33 +33,49 @@ public class EventInvitationController {
         else
             return ResponseEntity.status(401).body(response);
     }
-    @GetMapping()
-    public ResponseEntity<JsonResponse> getInvitations() {
+    @GetMapping("/get/{targetUserId}")
+    public ResponseEntity<JsonResponse> getInvitations(@PathVariable Long targetUserId) {
+        //LIST
+        JsonResponse response = eventInvitationService.getEventInvitation(targetUserId);
+        if (response.getStatus().equals(Status.SUCCESS))
+            return ResponseEntity.ok().body(response);
+        else
+            return ResponseEntity.status(401).body(response);
+    }
+    @PutMapping("/react")
+    public ResponseEntity<JsonResponse> updateInvitation(@RequestBody EventInvitationRequest request) {
+        JsonResponse response = eventInvitationService.updateReactionId(request.getEventId(),
+                request.getTargetUserId(), request.getReactionId());
+        if (response.getStatus().equals(Status.SUCCESS))
+            return ResponseEntity.ok().body(response);
+        else
+            return ResponseEntity.status(401).body(response);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<JsonResponse> deleteInvitation(@RequestBody EventInvitation request) {
+        JsonResponse response = eventInvitationService.deleteEventInviataion(request.getEventId(),request.getTargetUserId());
+        if (response.getStatus().equals(Status.SUCCESS))
+            return ResponseEntity.ok().body(response);
+        else
+            return ResponseEntity.status(401).body(response);
+    }
+
+    /*
+    @PostMapping("/send/{userId}")
+    public ResponseEntity<JsonResponse> sendInvitationToUser(@PathVariable Long userId) {
         //TODO
         return null;
     }
-
     @GetMapping("/{invitationId}")
     public ResponseEntity<JsonResponse> getInvitationById(@PathVariable Long eventInvitationId) {
         //TODO
         return null;
     }
-
-    @PutMapping()
-    public ResponseEntity<JsonResponse> updateInvitation(@RequestBody EventInvitationRequest request) {
-        //TODO
-        return null;
-    }
-
-    @DeleteMapping("/{eventInvitationId}")
-    public ResponseEntity<JsonResponse> deleteInvitation(@PathVariable Long eventInvitationId) {
-        //TODO
-        return null;
-    }
-
     @PostMapping("/react/{eventInvitationId}")
     public ResponseEntity<JsonResponse> reactToInvitation(@PathVariable Long eventInvitationId) {
         //TODO
         return null;
     }
+    */
 }

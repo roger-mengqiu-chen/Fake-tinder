@@ -23,6 +23,7 @@ public interface EventInvitationMapper {
             @Result(property = "reactionId", column = "reactionId")
     })
     EventInvitation findByEventInvitationId(long eventInvitationId);
+
     /* Search by eventId */
     @Select("SELECT * FROM eventInvitation WHERE eventId = #{eventId}")
     @Results({
@@ -32,6 +33,7 @@ public interface EventInvitationMapper {
             @Result(property = "reactionId", column = "reactionId")
     })
     List<EventInvitation> findByEventId(long eventId);
+
     /* Search by targetUserId */
     @Select("SELECT * FROM eventInvitation WHERE targetUserId = #{targetUserId}")
     @Results({
@@ -41,6 +43,17 @@ public interface EventInvitationMapper {
             @Result(property = "reactionId", column = "reactionId")
     })
     List<EventInvitation> findByTargetUserId(long targetUserId);
+
+    /* Search by eventId and targetUserId  */
+    @Select("SELECT * FROM eventInvitation WHERE eventId = #{eventId} AND targetUserId = #{targetUserId}")
+    @Results({
+            @Result(id = true, property = "eventInvitationId", column = "eventInvitationId"),
+            @Result(property = "eventId", column = "eventId"),
+            @Result(property = "targetUserId", column = "targetUserId"),
+            @Result(property = "reactionId", column = "reactionId")
+    })
+    EventInvitation findByEventIdAndTargetUserId(long eventId, long targetUserId);
+
     /* Search by reactionId */
     @Select("SELECT * FROM eventInvitation WHERE reactionId = #{reactionId}")
     @Results({
@@ -53,7 +66,10 @@ public interface EventInvitationMapper {
 
     /* Update */
     @Update("UPDATE eventInvitation SET reactionId = #{reactionId} WHERE eventInvitationId = #{eventInvitationId}")
-    int updateReactionId(EventInvitation eventInvitation);
+    int updateReactionId(long eventInvitationId, short reactionId);
 
+    /* Delete */
+    @Delete("DELETE FROM eventInvitation WHERE eventInvitationId = #{eventInvitationId}")
+    int deleteByEventInvitationId(long eventInvitationId);
 
 }
