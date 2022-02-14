@@ -64,6 +64,7 @@ security:
       - X-Xsrf-Token
       - Cache-Control
       - Id-Token
+      - X-Authorization-Firebase
     allowed-public-apis:
       - /favicon.ico
       - /session/login
