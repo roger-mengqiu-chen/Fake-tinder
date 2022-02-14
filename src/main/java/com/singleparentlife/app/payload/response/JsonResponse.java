@@ -33,6 +33,12 @@ public class JsonResponse {
         return dataType;
     }
 
+    /**
+     * This return ResponseEntity according to the Error/Data type
+     * If it's server error then return internalServerError
+     * If not, then return badRequest
+     * @return ResponseEntity
+     */
     public ResponseEntity<JsonResponse> toResponseEntity() {
         if (this.status.equals(Status.FAIL)) {
             if (!this.dataType.equals(DataType.SERVER_ERROR)) {

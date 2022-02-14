@@ -2,18 +2,26 @@ package com.singleparentlife.app.model;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class Profile {
 
     private Long userId;
 
+    private Long avatarId;
+
+    private short profileImgAmt;
+
     private String firstname;
 
     private String lastname;
 
-    private Short age;
+    private LocalDate birthday;
 
-    private Character gender;
+    private String gender;
+
+    private String showMe;
 
     private String description;
 
@@ -24,5 +32,19 @@ public class Profile {
     private String school;
 
     private Long locationId;
+
+    public void reduceProfileImgAmt() {
+        if (this.profileImgAmt <= 0) {
+            throw new UnsupportedOperationException();
+        }
+        this.profileImgAmt --;
+    }
+
+    public void increaseProfileImgAmt() {
+        if (this.profileImgAmt >= 9) {
+            throw new UnsupportedOperationException();
+        }
+        this.profileImgAmt ++;
+    }
 
 }

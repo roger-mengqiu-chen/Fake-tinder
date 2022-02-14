@@ -8,8 +8,12 @@ import org.apache.ibatis.annotations.*;
 public interface ProfileMapper {
 
     /* Create */
-    @Insert("Insert INTO profile (userId, avatarId, firstname, lastname, age, gender, description, locationId) VALUES " +
-    "(#{userId}, #{avatarId}, #{firstname}, #{lastname}, #{age}, #{gender}, #{description}, #{locationId})")
+    @Insert("Insert INTO profile " +
+            "(userId, firstname, lastname, birthday, gender, showMe, " +
+            "description, company, jobTitle, school, locationId) " +
+            "VALUES " +
+            "(#{userId}, #{firstname}, #{lastname}, #{birthday}, #{gender}, #{showMe}, " +
+            "#{description}, #{company}, #{jobTitle}, #{school}, #{locationId})")
     long save(Profile profile);
 
     /* Read */
@@ -20,9 +24,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByUserId in service class
@@ -35,9 +43,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByFirstname in service class
@@ -50,9 +62,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByLastname in service class
@@ -65,9 +81,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByFirstLastname in service class
@@ -80,9 +100,13 @@ public interface ProfileMapper {
             @Result(property = "avatarId", column = "avatarId"),
             @Result(property = "firstname", column = "firstname"),
             @Result(property = "lastname", column = "lastname"),
-            @Result(property = "age", column = "age"),
-            @Result(property = "gender", column = "age"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showMe", column = "showMe"),
             @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByGender in service class
@@ -90,34 +114,25 @@ public interface ProfileMapper {
 
 
     /* Update */
-    //update firstname in profile table
-    @Update("UPDATE profile SET firstname = #{firstname} WHERE userId = #{userId}")
-    int updateFirstname(Profile profile);
+    @Update("UPDATE profile " +
+            "SET " +
+            "   firstname = #{firstname}, " +
+            "   lastname = #{lastname}, " +
+            "   gender = #{gender}, " +
+            "   showMe = #{showMe}, " +
+            "   description = #{description}, " +
+            "   company = #{company}, " +
+            "   jobTitle = #{jobTitle}, " +
+            "   school = #{school}, " +
+            "   locationId = #{locationId} " +
+            "WHERE userId = #{userId}")
+    int update(Profile profile);
 
-    //update lastname in profile table
-    @Update("UPDATE profile SET lastname = #{lastname} WHERE userId = #{userId}")
-    int updateLastname(Profile profile);
+    @Update("UPDATE profile SET profileImgAmt = #{profileImgAmt}")
+    int updateProfileImgAmt(Profile profile);
 
-    //update description in profile table
-    @Update("UPDATE profile SET description = #{description} WHERE userId = #{userId}")
-    int updateDescription(Profile profile);
-
-    //update locationId in profile table
-    @Update("UPDATE profile SET locationId = #{locationId} WHERE userId = #{userId}")
-    int updateLocationId(Profile profile);
-
-    //update age in profile table
-    @Update("UPDATE profile SET age = #{age} WHERE userId = #{userId}")
-    int updateAge(Profile profile);
-
-    //update gender in profile table
-    @Update("UPDATE profile SET gender = #{gender} WHERE userId = #{userId}")
-    int updateGender(Profile profile);
-
-    //update avatarId in profile table
-    @Update("UPDATE profile SET avatarId = #{avatarId} WHERE userId = #{userId}")
-    int updateAvatarId(Profile profile);
-
+    @Update("UPDATE profile SET avatarId = #{avatarId}")
+    int updateProfileAvatarId(Profile profile);
 
     /* Delete */
     //to delete a row within the profile table:

@@ -38,19 +38,11 @@ CREATE TABLE IF NOT EXISTS role (
     PRIMARY KEY (roleId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
-INSERT INTO role VALUES (1, "ADMIN");
-INSERT INTO role VALUES (2, "FREE_USER");
-INSERT INTO role VALUES (3, "PREMIUM_USER");
-
 CREATE TABLE IF NOT EXISTS reaction (
     reactionId tinyint AUTO_INCREMENT,
     reactionType varchar(10) NOT NULL,
     PRIMARY KEY (reactionId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
-
-INSERT INTO reaction VALUES(1, "ACCEPT");
-INSERT INTO reaction VALUES(2, "REJECT");
-INSERT INTO reaction VALUES(3, "PENDING");
 
 CREATE TABLE IF NOT EXISTS preference (
     preferenceId bigint AUTO_INCREMENT,
@@ -97,10 +89,12 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS profile (
     userId bigint,
     avatarId bigint,
+    profileImgAmt int(1),
     firstname varchar(255) NOT NULL,
     lastname varchar(255) NOT NULL,
-    age tinyint NOT NULL,
-    gender char(1) NOT NULL,
+    birthday Date NOT NULL,
+    gender varchar(10) NOT NULL,
+    showMe varchar(10) NOT NULL,
     description text NOT NULL,
     company varchar(255),
     jobTitle varchar(255),
@@ -157,7 +151,7 @@ CREATE TABLE IF NOT EXISTS attachment (
     attachmentId bigint AUTO_INCREMENT,
     messageId bigint,
     userId bigint,
-    attachmentType varchar(10) NOT NULL,
+    attachmentType varchar(255) NOT NULL,
     attachmentContent mediumBlob NOT NULL,
     PRIMARY KEY (attachmentId),
     FOREIGN KEY (messageId) REFERENCES message (messageId) ON DELETE CASCADE,

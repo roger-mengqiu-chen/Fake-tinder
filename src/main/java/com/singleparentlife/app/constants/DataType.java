@@ -44,4 +44,6 @@ public enum DataType {
     ATTACHMENT_NOT_FOUND,
     TOO_MANY_PROFILE_IMG,
     INVALID_IMAGE,
+
 }
+
