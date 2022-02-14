@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.singleparentlife.app.constants.SecurityConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,8 @@ import java.io.IOException;
 public class FirebaseFilter extends BasicAuthenticationFilter {
 
     private final UserDetailsServiceImp userService;
+
+    Logger log = LoggerFactory.getLogger(FirebaseFilter.class);
 
     public FirebaseFilter(AuthenticationManager authenticationManager, UserDetailsServiceImp userService) {
         super(authenticationManager);
@@ -45,7 +49,7 @@ public class FirebaseFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (FirebaseAuthException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }
