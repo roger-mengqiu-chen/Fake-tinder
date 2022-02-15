@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)
+
 @RestController
 @RequestMapping("/location")
 public class LocationController {

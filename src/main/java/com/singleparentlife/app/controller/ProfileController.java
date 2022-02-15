@@ -1,6 +1,7 @@
 package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
+import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.Location;
 import com.singleparentlife.app.model.Profile;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
@@ -85,6 +85,9 @@ public class ProfileController {
         // as email is not part of profile, it should be updated with userService
         String email = request.getEmail();
         User user = (User) userService.getUserById(userId).getData();
+        if (user == null) {
+            return ResponseEntity.badRequest().header("Access-Control-Allow-Origin", "*").body(new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null));
+        }
         user.setEmail(email);
         JsonResponse userUpdateResponse = userService.updateUser(user);
         if (userUpdateResponse.getStatus().equals(Status.FAIL)) {
@@ -132,6 +135,6 @@ public class ProfileController {
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
         JsonResponse response = profileService.reactToProfile(userId, targetId, reaction);
-        return null;
+        return response.toResponseEntity();
     }
 }

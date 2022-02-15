@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/enter")
 public class LoginController {
@@ -22,10 +21,10 @@ public class LoginController {
 
         JsonResponse responseOfLogin = userService.login(token);
         if (responseOfLogin.getStatus().equals(Status.SUCCESS)) {
-            return ResponseEntity.ok().body(responseOfLogin);
+            return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(responseOfLogin);
         }
         else {
-            return ResponseEntity.status(401).body(responseOfLogin);
+            return ResponseEntity.status(401).header("Access-Control-Allow-Origin", "*").body(responseOfLogin);
         }
     }
 
