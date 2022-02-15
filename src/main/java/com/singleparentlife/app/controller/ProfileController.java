@@ -76,9 +76,15 @@ public class ProfileController {
 
     @GetMapping()
     public ResponseEntity<JsonResponse> getCurrentUserProfile() {
-        long userId = authUtil.getCurrentUserId();
-        JsonResponse response = profileService.getProfileOfUser(userId);
-        return response.toResponseEntity();
+        try {
+            long userId = authUtil.getCurrentUserId();
+            JsonResponse response = profileService.getProfileOfUser(userId);
+            return response.toResponseEntity();
+        } catch (NullPointerException e) {
+
+            return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null));
+        }
+
     }
 
     @GetMapping("/{userId}")
@@ -95,7 +101,7 @@ public class ProfileController {
         String email = request.getEmail();
         User user = (User) userService.getUserById(userId).getData();
         if (user == null) {
-            return ResponseEntity.badRequest().header("Access-Control-Allow-Origin", "*").body(new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null));
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null));
         }
         user.setEmail(email);
         JsonResponse userUpdateResponse = userService.updateUser(user);
