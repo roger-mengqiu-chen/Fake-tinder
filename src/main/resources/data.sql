@@ -14,3 +14,13 @@ INSERT INTO profile (userId, firstname, lastname, birthday, gender, showMe, desc
 
 INSERT INTO profile (userId, firstname, lastname, birthday, gender, showMe, description)
     VALUES (2, "Rose", "R", "1980-1-1", "FEMALE", "MALE", "This is test female user");
+
+INSERT INTO location (country, province, city, street, postcode)
+    VALUES ('Canada', 'Alberta', 'Calgary', '2000 10 Ave', 'T2M 0A0');
+INSERT INTO location (country, province, city, street, postcode)
+    VALUES ('Canada', 'British Columbia', 'Vancouver', '1501 13 St', 'B2C 1D3');
+
+INSERT INTO event (eventName, eventTime, locationId, eventDescription, eventLink)
+    VALUES ('Business chat', '2020-10-10 10:10:10',1,'Simple event','no link');
+INSERT INTO event (eventName, eventTime, locationId, eventDescription, eventLink)
+    VALUES ('Business chat', '2020-11-11 11:11:11',2,'Simple event','no link');
