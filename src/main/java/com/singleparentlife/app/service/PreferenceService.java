@@ -83,6 +83,11 @@ public class PreferenceService {
         return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, preference);
     }
 
+    public JsonResponse getPreferenceByUserId(long userId){
+        List<Long> preferencesIds = preferenceMapper.getPreferenceId(userId);
+        return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE_IDS, preferencesIds);
+    }
+
     public JsonResponse updatePreferenceByContent (String content, String updatedContent) {
         try {
             Preference preference = preferenceMapper.findByContent(content);
