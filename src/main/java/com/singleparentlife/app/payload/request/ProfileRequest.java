@@ -31,4 +31,6 @@ public class ProfileRequest {
     private String jobTitle;
     @JsonProperty
     private LocationRequest location;
+    @JsonProperty
+    private PreferenceRequest preferences;
 }
