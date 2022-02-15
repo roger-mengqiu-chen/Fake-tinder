@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS eventInvitation (
     reactionId tinyint,
     PRIMARY KEY (eventInvitationId),
     FOREIGN KEY (eventId) REFERENCES event (eventId) ON DELETE CASCADE,
-    FOREIGN KEY (targetUserId) REFERENCES event (eventId) ON DELETE CASCADE
+    FOREIGN KEY (targetUserId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userEvent (
