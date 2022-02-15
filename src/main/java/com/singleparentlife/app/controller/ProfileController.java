@@ -3,11 +3,9 @@ package com.singleparentlife.app.controller;
 import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
-import com.singleparentlife.app.model.Location;
-import com.singleparentlife.app.model.Profile;
-import com.singleparentlife.app.model.Reaction;
-import com.singleparentlife.app.model.User;
+import com.singleparentlife.app.model.*;
 import com.singleparentlife.app.payload.request.LocationRequest;
+import com.singleparentlife.app.payload.request.PreferenceRequest;
 import com.singleparentlife.app.payload.request.ProfileRequest;
 import com.singleparentlife.app.payload.request.ReactToProfile;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -16,6 +14,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/profile")
@@ -31,6 +31,8 @@ public class ProfileController {
     @Autowired
     private FileService fileService;
     @Autowired
+    private PreferenceService preferenceService;
+    @Autowired
     private AuthUtil authUtil;
 
     @PostMapping()
@@ -45,6 +47,13 @@ public class ProfileController {
         profile.setProfileImgAmt((short)0);
         LocationRequest locationRequest = request.getLocation();
         locationRequest.formatted();
+
+        List<String> preferences = request.getPreferences().getTagNames();
+        JsonResponse preferenceResponse = preferenceService.createPreferenceOrTagForUser(userId, preferences, DataType.PREFERENCE);
+
+        if (preferenceResponse.getStatus().equals(Status.FAIL)) {
+            return preferenceResponse.toResponseEntity();
+        }
 
         Location location = new Location();
         BeanUtils.copyProperties(locationRequest, location);
