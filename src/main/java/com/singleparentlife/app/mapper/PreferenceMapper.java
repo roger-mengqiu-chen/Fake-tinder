@@ -46,6 +46,7 @@ public interface PreferenceMapper {
     })
     List<Long> getPreferenceId(long userId);
 
+
     /* Update */
     //This will update a preference in the preference table
     @Update("UPDATE preference SET content = #{content} WHERE preferenceId = #{preferenceId")
@@ -63,5 +64,13 @@ public interface PreferenceMapper {
     //This will delete a user tag from the userTag table
     @Delete("DELETE FROM userTag WHERE userID = #{userId} AND preferenceId = #{preferenceId")
     int deleteUserTag(long userId, long preferenceId);
+
+    //This will delete all user specific preferences
+    @Delete("DELETE FROM userPreference WHERE userId = #{userId}")
+    int deleteAllUserPreference(long userId);
+
+    //This will delete all user specific tags
+    @Delete("DELETE FROM userTag WHERE userId = #{userId}")
+    int deleteAllUserTag(long userId);
 
 }
