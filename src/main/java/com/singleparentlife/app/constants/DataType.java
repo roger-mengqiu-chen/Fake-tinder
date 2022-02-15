@@ -19,7 +19,7 @@ public enum DataType {
     ATTACHMENT_IDS,
     EVENT_INVITATION,
     LIST_OF_EVENT_INVITATION,
-
+    PREFERENCE_IDS,
     STATUS_MESSAGE,
 
     /* Error types */
