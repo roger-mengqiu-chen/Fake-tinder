@@ -3,6 +3,8 @@ package com.singleparentlife.app.mapper;
 import com.singleparentlife.app.model.Preference;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface PreferenceMapper {
 
@@ -36,6 +38,13 @@ public interface PreferenceMapper {
             @Result(property = "content", column = "content")
     })
     Preference findById(long preferenceId);
+
+    //This will find a preference by using the userId
+    @Select("SELECT preferenceId FROM userPreference WHERE userId = #{userId}")
+    @Results({
+            @Result(property = "preferenceId", column = "preferenceId")
+    })
+    List<Long> getPreferenceId(long userId);
 
     /* Update */
     //This will update a preference in the preference table
