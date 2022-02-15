@@ -5,6 +5,7 @@ import com.singleparentlife.app.payload.response.JsonResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {

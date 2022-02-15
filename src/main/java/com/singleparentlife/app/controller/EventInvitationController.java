@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/eventInvitation")
 public class EventInvitationController {

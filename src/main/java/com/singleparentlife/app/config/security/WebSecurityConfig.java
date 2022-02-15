@@ -56,23 +56,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
+
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(restSecProps.getAllowedOrigins());
-        configuration.setAllowedMethods(restSecProps.getAllowedMethods());
-        configuration.setAllowedHeaders(restSecProps.getAllowedHeaders());
-        configuration.setAllowCredentials(restSecProps.isAllowCredentials());
-        configuration.setExposedHeaders(restSecProps.getExposedHeaders());
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-                .cors().configurationSource(corsConfigurationSource())
+                .cors()
                 .and()
                 .csrf().disable()
                 .httpBasic().disable()

@@ -4,6 +4,7 @@ import com.singleparentlife.app.model.Message;
 import com.singleparentlife.app.payload.request.MessageRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.MessageService;
+import com.singleparentlife.app.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
-
+@CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/message")
 public class MessageController {
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @PostMapping()
     public ResponseEntity<JsonResponse>sendMessage (@RequestPart("message") MessageRequest message, @RequestPart("file")MultipartFile file){

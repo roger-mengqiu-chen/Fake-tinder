@@ -39,9 +39,8 @@ security:
       path: /
     allow-credentials: true
     allowed-origins:
-      - https://${DOMAIN}
-      - http://localhost:3000
-      - http://localhost:8080
+      - http://localhost:3000/
+      - http://localhost:8080/
     allowed-methods:
       - GET
       - POST
@@ -64,6 +63,7 @@ security:
       - X-Xsrf-Token
       - Cache-Control
       - Id-Token
+      - X-Authorization-Firebase
     allowed-public-apis:
       - /favicon.ico
       - /session/login

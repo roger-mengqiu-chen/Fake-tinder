@@ -21,10 +21,10 @@ public class LoginController {
 
         JsonResponse responseOfLogin = userService.login(token);
         if (responseOfLogin.getStatus().equals(Status.SUCCESS)) {
-            return ResponseEntity.ok().body(responseOfLogin);
+            return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(responseOfLogin);
         }
         else {
-            return ResponseEntity.status(401).body(responseOfLogin);
+            return ResponseEntity.status(401).header("Access-Control-Allow-Origin", "*").body(responseOfLogin);
         }
     }
 

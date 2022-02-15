@@ -45,11 +45,11 @@ public class JsonResponse {
                 return ResponseEntity.badRequest().body(this);
             }
             else{
-                return ResponseEntity.internalServerError().body(this);
+                return ResponseEntity.internalServerError().header("Access-Control-Allow-Origin", "*").body(this);
             }
         }
         else {
-            return ResponseEntity.ok(this);
+            return ResponseEntity.ok().header("Access-Control-Allow-Origin", "*").body(this);
         }
     }
 }

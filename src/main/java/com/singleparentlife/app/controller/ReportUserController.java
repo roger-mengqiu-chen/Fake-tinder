@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/reportUser")
 public class ReportUserController {
@@ -21,7 +22,7 @@ public class ReportUserController {
         Long userId = request.getUserId();
 
         if (userId == null) {
-            return ResponseEntity.badRequest().body(
+            return ResponseEntity.badRequest().header("Access-Control-Allow-Origin", "*").body(
                     new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "UserId can't be null"));
         }
         String reason = request.getReason();
@@ -33,7 +34,7 @@ public class ReportUserController {
     @GetMapping("/{reportedUserId}")
     public ResponseEntity<JsonResponse> getReportedUser(@PathVariable Long reportedUserId) {
         if (reportedUserId == null) {
-            return ResponseEntity.badRequest().body(
+            return ResponseEntity.badRequest().header("Access-Control-Allow-Origin", "*").body(
                     new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "ReportedUserId can't be null"));
         }
         JsonResponse response = reportUserService.getReportedUserById(reportedUserId);
@@ -45,7 +46,7 @@ public class ReportUserController {
     @DeleteMapping("/{reportedUserId}")
     public ResponseEntity<JsonResponse> deleteReportedUser(@PathVariable Long reportedUserId) {
         if (reportedUserId == null) {
-            return ResponseEntity.badRequest().body(
+            return ResponseEntity.badRequest().header("Access-Control-Allow-Origin", "*").body(
                     new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "ReportedUserId can't be null"));
         }
         JsonResponse response = reportUserService.deleteReportedUser(reportedUserId);
