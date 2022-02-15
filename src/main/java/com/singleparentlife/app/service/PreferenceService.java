@@ -154,6 +154,31 @@ public class PreferenceService {
         }
     }
 
+    public JsonResponse deleteAllPreferenceOrTagForUser(long userId, DataType dataType){
+        List<Long> preferenceIds = preferenceMapper.getPreferenceId(userId);
+        if (preferenceIds == null || preferenceIds.size() == 0){
+            log.error("User Id preferences not found : {}", userId);
+            return new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, null);
+        }
+        try{
+            if (dataType.equals(DataType.PREFERENCE)){
+                preferenceMapper.deleteAllUserPreference(userId);
+                return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE_IDS, preferenceIds);
+            }
+            else if(dataType.equals(DataType.TAG)){
+                preferenceMapper.deleteAllUserTag(userId);
+                return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE_IDS, preferenceIds);
+            }
+            else{
+                log.error("Invalid dataType, should be PREFERENCE or TAG");
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "Invalid dataType, should be PREFERENCE or TAG");
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
     private Preference createPreferenceHelper (String preference) {
         preference = preference.trim().toLowerCase();
         Preference p = preferenceMapper.findByContent(preference);
