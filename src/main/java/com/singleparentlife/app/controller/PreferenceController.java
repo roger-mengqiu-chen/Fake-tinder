@@ -35,7 +35,7 @@ public class PreferenceController {
         else{
            List<String> tags = request.getTagNames();
            JsonResponse response = preferenceService.createPreferenceOrTagForUser(userId, tags, DataType.PREFERENCE);
-            return response.toResponseEntity();
+            return ResponseEntity.ok(response);
         }
     }
     @GetMapping("/myTags")
@@ -43,7 +43,7 @@ public class PreferenceController {
         try{
             long userId = authUtil.getCurrentUserId();
             JsonResponse response = preferenceService.getPreferenceByUserId(userId);
-            return response.toResponseEntity();
+            return ResponseEntity.ok(response);
         } catch (NullPointerException e){
             return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, null));
         }
@@ -55,7 +55,7 @@ public class PreferenceController {
         long userId = authUtil.getCurrentUserId();
         long preferenceId = tagId;
         JsonResponse response = preferenceService.deletePreferenceOrTagForUser(userId, preferenceId, DataType.TAG);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/myPreferences")
@@ -66,7 +66,7 @@ public class PreferenceController {
         }
         List<String> preferences = request.getTagNames();
         JsonResponse response = preferenceService.createPreferenceOrTagForUser(userId, preferences, DataType.PREFERENCE);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/myPreferences")
@@ -74,7 +74,7 @@ public class PreferenceController {
         try{
             long userId = authUtil.getCurrentUserId();
             JsonResponse response = preferenceService.getPreferenceByUserId(userId);
-            return response.toResponseEntity();
+            return ResponseEntity.ok(response);
         } catch (NullPointerException e){
             return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.PREFERENCE_NOT_FOUND, null));
         }
@@ -85,20 +85,20 @@ public class PreferenceController {
         long userId = authUtil.getCurrentUserId();
         long tagId = preferenceId;
         JsonResponse response = preferenceService.deletePreferenceOrTagForUser(userId, tagId, DataType.PREFERENCE);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/myPreferences")
     public ResponseEntity<JsonResponse> deleteAllPreferenceByUserId(){
         long userId = authUtil.getCurrentUserId();
         JsonResponse response = preferenceService.deleteAllPreferenceOrTagForUser(userId, DataType.PREFERENCE);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/myTags")
     public ResponseEntity<JsonResponse> deleteAllTagsByUserId(){
         long userId =  authUtil.getCurrentUserId();
         JsonResponse response = preferenceService.deleteAllPreferenceOrTagForUser(userId, DataType.TAG);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 }

@@ -36,7 +36,7 @@ public class MessageController {
 
         JsonResponse response = messageService.sendMessage(msg, file);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{userId}")

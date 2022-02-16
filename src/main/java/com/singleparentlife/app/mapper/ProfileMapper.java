@@ -139,6 +139,4 @@ public interface ProfileMapper {
     @Delete("DELETE FROM profile WHERE userId = #{userId}")
     int delete(Profile profile);
 
-
-
 }

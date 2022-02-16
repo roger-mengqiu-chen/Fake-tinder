@@ -31,7 +31,7 @@ public class UploadController {
 
         JsonResponse response = fileService.uploadWithProfile(userId, file);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
 

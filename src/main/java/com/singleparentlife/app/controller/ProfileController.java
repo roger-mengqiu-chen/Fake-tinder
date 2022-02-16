@@ -57,7 +57,7 @@ public class ProfileController {
         JsonResponse preferenceResponse = preferenceService.createPreferenceOrTagForUser(userId, preferences, DataType.PREFERENCE);
 
         if (preferenceResponse.getStatus().equals(Status.FAIL)) {
-            return preferenceResponse.toResponseEntity();
+            return ResponseEntity.ok(preferenceResponse);
         }
 
         Location location = locationUtil.GPSToLocation(lat, lon);
@@ -74,7 +74,7 @@ public class ProfileController {
         userService.updateUser(user);
         JsonResponse response = profileService.createProfile(profile);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping()
@@ -93,7 +93,7 @@ public class ProfileController {
     @GetMapping("/{userId}")
     public ResponseEntity<JsonResponse> getProfile(@PathVariable Long userId) {
         JsonResponse response = profileService.getProfileOfUser(userId);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping()
@@ -109,7 +109,7 @@ public class ProfileController {
         user.setEmail(email);
         JsonResponse userUpdateResponse = userService.updateUser(user);
         if (userUpdateResponse.getStatus().equals(Status.FAIL)) {
-            return userUpdateResponse.toResponseEntity();
+            return ResponseEntity.ok(userUpdateResponse);
         }
 
         Profile profile = new Profile();
@@ -134,11 +134,11 @@ public class ProfileController {
         }
         // if failed, returned the response directly
         else {
-            return locationResponse.toResponseEntity();
+            return ResponseEntity.ok(locationResponse);
         }
         JsonResponse response = profileService.updateProfile(profile);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("")
@@ -146,7 +146,7 @@ public class ProfileController {
 
         Long userId = authUtil.getCurrentUserId();
         JsonResponse response = profileService.deleteProfileOfUser(userId);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/react")
@@ -155,10 +155,10 @@ public class ProfileController {
         Long targetId = request.getTargetId();
         JsonResponse reactionResponse = reactionService.getReactionByName(request.getReaction());
         if (reactionResponse.getStatus().equals(Status.FAIL)) {
-            return reactionResponse.toResponseEntity();
+            return ResponseEntity.ok(reactionResponse);
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
         JsonResponse response = profileService.reactToProfile(userId, targetId, reaction);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 }

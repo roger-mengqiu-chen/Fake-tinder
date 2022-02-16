@@ -28,7 +28,7 @@ public class ReportUserController {
         String reason = request.getReason();
 
         JsonResponse response = reportUserService.reportUser(userId, reason);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{reportedUserId}")
@@ -39,7 +39,7 @@ public class ReportUserController {
         }
         JsonResponse response = reportUserService.getReportedUserById(reportedUserId);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
 
     }
 
@@ -51,7 +51,7 @@ public class ReportUserController {
         }
         JsonResponse response = reportUserService.deleteReportedUser(reportedUserId);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
 }
