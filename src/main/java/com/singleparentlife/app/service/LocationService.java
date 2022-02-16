@@ -22,16 +22,19 @@ public class LocationService {
      * @return location in database
      */
     public JsonResponse createLocation (Location location) {
+        if (location != null) {
+            Location existedLocation = locationMapper.find(location);
 
-        Location existedLocation = locationMapper.find(location);
-
-        if (existedLocation == null) {
-            locationMapper.save(location);
-            log.info("New location saved: {}", location.toString());
-            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
+            if (existedLocation == null) {
+                locationMapper.save(location);
+                log.info("New location saved: {}", location.toString());
+                return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
+            } else {
+                return new JsonResponse(Status.SUCCESS, DataType.LOCATION, existedLocation);
+            }
         }
         else {
-            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, existedLocation);
+            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, null);
         }
     }
 

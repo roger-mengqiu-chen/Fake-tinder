@@ -95,7 +95,7 @@ public class PreferenceController {
         return response.toResponseEntity();
     }
 
-    @DeleteMapping("/myPreferences")
+    @DeleteMapping("/myTags")
     public ResponseEntity<JsonResponse> deleteAllTagsByUserId(){
         long userId =  authUtil.getCurrentUserId();
         JsonResponse response = preferenceService.deleteAllPreferenceOrTagForUser(userId, DataType.TAG);

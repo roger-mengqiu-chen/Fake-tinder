@@ -52,9 +52,6 @@ public class ProfileController {
 
         Double lat = locationRequest.getLat();
         Double lon = locationRequest.getLon();
-        if (lat == null || lon == null) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
-        }
 
         List<String> preferences = request.getPreferences().getTagNames();
         JsonResponse preferenceResponse = preferenceService.createPreferenceOrTagForUser(userId, preferences, DataType.PREFERENCE);
@@ -64,20 +61,16 @@ public class ProfileController {
         }
 
         Location location = locationUtil.GPSToLocation(lat, lon);
-        if (location == null) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
-        }
 
         // we need the id of location, check it with location service.
         JsonResponse locationResponse = locationService.createLocation(location);
         if (locationResponse.getStatus().equals(Status.SUCCESS)) {
             Location returnedLocation = (Location) locationResponse.getData();
-            profile.setLocationId(returnedLocation.getLocationId());
+            if (returnedLocation != null) {
+                profile.setLocationId(returnedLocation.getLocationId());
+            }
         }
-        // if failed, returned the response directly
-        else {
-            return locationResponse.toResponseEntity();
-        }
+
         userService.updateUser(user);
         JsonResponse response = profileService.createProfile(profile);
 
@@ -89,7 +82,7 @@ public class ProfileController {
         try {
             long userId = authUtil.getCurrentUserId();
             JsonResponse response = profileService.getProfileOfUser(userId);
-            return response.toResponseEntity();
+            return ResponseEntity.ok(response);
         } catch (NullPointerException e) {
 
             return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null));
