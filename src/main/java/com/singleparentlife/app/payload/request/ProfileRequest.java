@@ -20,7 +20,7 @@ public class ProfileRequest {
     @JsonProperty
     private String gender;
     @JsonProperty
-    private String showMe;
+    private String showme;
     @JsonProperty
     private String description;
     @JsonProperty

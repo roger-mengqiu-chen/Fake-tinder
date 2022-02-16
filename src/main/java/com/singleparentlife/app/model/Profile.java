@@ -21,7 +21,7 @@ public class Profile {
 
     private String gender;
 
-    private String showMe;
+    private String showme;
 
     private String description;
 

@@ -9,10 +9,10 @@ public interface ProfileMapper {
 
     /* Create */
     @Insert("Insert INTO profile " +
-            "(userId, firstname, lastname, birthday, gender, showMe, " +
+            "(userId, firstname, lastname, birthday, gender, showme, " +
             "description, company, jobTitle, school, locationId) " +
             "VALUES " +
-            "(#{userId}, #{firstname}, #{lastname}, #{birthday}, #{gender}, #{showMe}, " +
+            "(#{userId}, #{firstname}, #{lastname}, #{birthday}, #{gender}, #{showme}, " +
             "#{description}, #{company}, #{jobTitle}, #{school}, #{locationId})")
     long save(Profile profile);
 
@@ -26,7 +26,7 @@ public interface ProfileMapper {
             @Result(property = "lastname", column = "lastname"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "gender", column = "gender"),
-            @Result(property = "showMe", column = "showMe"),
+            @Result(property = "showme", column = "showme"),
             @Result(property = "description", column = "description"),
             @Result(property = "company", column = "company"),
             @Result(property = "school", column = "school"),
@@ -45,7 +45,7 @@ public interface ProfileMapper {
             @Result(property = "lastname", column = "lastname"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "gender", column = "gender"),
-            @Result(property = "showMe", column = "showMe"),
+            @Result(property = "showme", column = "showme"),
             @Result(property = "description", column = "description"),
             @Result(property = "company", column = "company"),
             @Result(property = "school", column = "school"),
@@ -64,7 +64,7 @@ public interface ProfileMapper {
             @Result(property = "lastname", column = "lastname"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "gender", column = "gender"),
-            @Result(property = "showMe", column = "showMe"),
+            @Result(property = "showme", column = "showme"),
             @Result(property = "description", column = "description"),
             @Result(property = "company", column = "company"),
             @Result(property = "school", column = "school"),
@@ -83,7 +83,7 @@ public interface ProfileMapper {
             @Result(property = "lastname", column = "lastname"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "gender", column = "gender"),
-            @Result(property = "showMe", column = "showMe"),
+            @Result(property = "showme", column = "showme"),
             @Result(property = "description", column = "description"),
             @Result(property = "company", column = "company"),
             @Result(property = "school", column = "school"),
@@ -102,7 +102,7 @@ public interface ProfileMapper {
             @Result(property = "lastname", column = "lastname"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "gender", column = "gender"),
-            @Result(property = "showMe", column = "showMe"),
+            @Result(property = "showme", column = "showme"),
             @Result(property = "description", column = "description"),
             @Result(property = "company", column = "company"),
             @Result(property = "school", column = "school"),
@@ -119,7 +119,7 @@ public interface ProfileMapper {
             "   firstname = #{firstname}, " +
             "   lastname = #{lastname}, " +
             "   gender = #{gender}, " +
-            "   showMe = #{showMe}, " +
+            "   showme = #{showme}, " +
             "   description = #{description}, " +
             "   company = #{company}, " +
             "   jobTitle = #{jobTitle}, " +
