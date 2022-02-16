@@ -1,4 +1,4 @@
-#Fake-Tinder
+# Fake-Tinder
 
 This is the backend of an application that mocks up the basic functionalities of social networking. 
 
