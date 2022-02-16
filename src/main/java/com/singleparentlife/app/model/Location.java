@@ -7,6 +7,10 @@ public class Location {
 
     private Long locationId;
 
+    private Double lat;
+
+    private Double lon;
+
     private String country;
 
     private String province;

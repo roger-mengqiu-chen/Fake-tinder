@@ -1,6 +1,7 @@
 package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
+import com.singleparentlife.app.Util.LocationUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.*;
@@ -34,6 +35,8 @@ public class ProfileController {
     private PreferenceService preferenceService;
     @Autowired
     private AuthUtil authUtil;
+    @Autowired
+    private LocationUtil locationUtil;
 
     @PostMapping()
     public ResponseEntity<JsonResponse> createProfile(@RequestBody ProfileRequest request) {
@@ -46,7 +49,12 @@ public class ProfileController {
         profile.setUserId(userId);
         profile.setProfileImgAmt((short)0);
         LocationRequest locationRequest = request.getLocation();
-        locationRequest.formatted();
+
+        Double lat = locationRequest.getLat();
+        Double lon = locationRequest.getLon();
+        if (lat == null || lon == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
+        }
 
         List<String> preferences = request.getPreferences().getTagNames();
         JsonResponse preferenceResponse = preferenceService.createPreferenceOrTagForUser(userId, preferences, DataType.PREFERENCE);
@@ -55,8 +63,10 @@ public class ProfileController {
             return preferenceResponse.toResponseEntity();
         }
 
-        Location location = new Location();
-        BeanUtils.copyProperties(locationRequest, location);
+        Location location = locationUtil.GPSToLocation(lat, lon);
+        if (location == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
+        }
 
         // we need the id of location, check it with location service.
         JsonResponse locationResponse = locationService.createLocation(location);
@@ -112,11 +122,17 @@ public class ProfileController {
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
         LocationRequest locationRequest = request.getLocation();
-        locationRequest.formatted();
 
-        Location location = new Location();
-        BeanUtils.copyProperties(locationRequest, location);
+        Double lat = locationRequest.getLat();
+        Double lon = locationRequest.getLon();
+        if (lat == null || lon == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
+        }
 
+        Location location = locationUtil.GPSToLocation(lat, lon);
+        if (location == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
+        }
         // we need the id of location, check it with location service.
         JsonResponse locationResponse = locationService.createLocation(location);
         if (locationResponse.getStatus().equals(Status.SUCCESS)) {

@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/test/**", "/profile/**", "/upload/**", "/preference/**", "/download/**").authenticated()//.hasAnyAuthority(RoleString.ADMIN, RoleString.FREE_USER, RoleString.PREMIUM_USER)
+                .antMatchers("/profile/**", "/upload/**", "/preference/**", "/download/**").authenticated()//.hasAnyAuthority(RoleString.ADMIN, RoleString.FREE_USER, RoleString.PREMIUM_USER)
                 .antMatchers("/enter/**").permitAll()
                 .and()
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

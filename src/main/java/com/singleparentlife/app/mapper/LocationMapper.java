@@ -8,8 +8,8 @@ public interface LocationMapper {
 
     /* Create */
     //This will insert a location into the location table
-    @Insert("INSERT INTO location (country, province, city, street, postcode) VALUES " +
-    "(#{country}, #{province}, #{city}, #{street}, #{postcode})")
+    @Insert("INSERT INTO location (lat, lon, country, province, city, street, postcode) VALUES " +
+    "(#{lat}, #{lon}, #{country}, #{province}, #{city}, #{street}, #{postcode})")
     @Options(useGeneratedKeys = true, keyProperty = "locationId", keyColumn = "locationId")
     long save(Location location);
 
@@ -20,6 +20,8 @@ public interface LocationMapper {
     "AND street = #{street} AND postcode = #{postcode}")
     @Results ({
             @Result(id = true, property = "locationId", column = "locationId"),
+            @Result(property = "lat", column = "lat"),
+            @Result(property = "lon", column = "lon"),
             @Result(property = "country",  column = "country"),
             @Result(property = "province", column = "province"),
             @Result(property = "city", column = "city"),
@@ -32,6 +34,8 @@ public interface LocationMapper {
     @Select("SELECT * FROM location WHERE locationId = #{locationId}")
     @Results ({
             @Result(id = true, property = "locationId", column = "locationId"),
+            @Result(property = "lat", column = "lat"),
+            @Result(property = "lon", column = "lon"),
             @Result(property = "country",  column = "country"),
             @Result(property = "province", column = "province"),
             @Result(property = "city", column = "city"),
@@ -48,7 +52,12 @@ public interface LocationMapper {
     /* Update */
     //This will be used to update a location in the location table using the locationId
     @Update("UPDATE location " +
-            "SET country = #{country}, province = #{province}, city = #{city}, street = #{street}, " +
+            "SET country = #{country}, " +
+            "lat = #{lat} " +
+            "lon = #{lon} " +
+            "province = #{province}, " +
+            "city = #{city}, " +
+            "street = #{street}, " +
             "postcode = #{postcode}  " +
             "WHERE locationId = #{locationId}")
     int update(Location location);
