@@ -1,5 +1,6 @@
 package com.singleparentlife.app.controller;
 
+import com.singleparentlife.app.Util.LocationUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.Location;
@@ -19,15 +20,23 @@ public class LocationController {
 
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private LocationUtil locationUtil;
 
     @PostMapping("")
     public ResponseEntity<JsonResponse> createLocation(@RequestBody LocationRequest request) {
         // format request to trim the input and convert all of them to lower case
-        request.formatted();
+        Double lat = request.getLat();
+        Double lon = request.getLon();
 
-        Location location = new Location();
+        if (lat == null || lon == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
+        }
+        Location location = locationUtil.GPSToLocation(lat, lon);
 
-        BeanUtils.copyProperties(request, location);
+        if (location == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
+        }
         JsonResponse response = locationService.createLocation(location);
 
         return response.toResponseEntity();
@@ -45,12 +54,18 @@ public class LocationController {
 
     @PutMapping()
     public ResponseEntity<JsonResponse> updateLocation(@RequestBody LocationRequest request) {
-        request.formatted();
+        Double lat = request.getLat();
+        Double lon = request.getLon();
 
-        Location location = new Location();
+        if (lat == null || lon == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
+        }
 
-        BeanUtils.copyProperties(request, location);
-
+        Location location = locationUtil.GPSToLocation(lat, lon);
+        if (location == null) {
+            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
+        }
+        location.setLocationId(request.getLocationId());
         JsonResponse response = locationService.updateLocation(location);
 
         return response.toResponseEntity();

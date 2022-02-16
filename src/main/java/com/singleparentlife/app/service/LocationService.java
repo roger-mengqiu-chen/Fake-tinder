@@ -23,27 +23,15 @@ public class LocationService {
      */
     public JsonResponse createLocation (Location location) {
 
-        if (hasEmptyField(location)) {
-            return new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Can't have empty field for location");
-        }
-
         Location existedLocation = locationMapper.find(location);
 
         if (existedLocation == null) {
-            long locationId = locationMapper.save(location);
-            location.setLocationId(locationId);
+            locationMapper.save(location);
             log.info("New location saved: {}", location.toString());
             return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
         }
         else {
-            try {
-                locationMapper.update(location);
-                log.info("Location is updated: {}", location.getLocationId());
-                return new JsonResponse(Status.SUCCESS, DataType.LOCATION, location);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-            }
+            return new JsonResponse(Status.SUCCESS, DataType.LOCATION, existedLocation);
         }
     }
 
@@ -61,6 +49,7 @@ public class LocationService {
     /**
      * Detailed search for location
      * This search matches all the attributes of this location
+     * Not recommended for searching location due to bad performance
      * @param location location
      * @return location in database if found.
      */
@@ -78,9 +67,6 @@ public class LocationService {
      * @return new location
      */
     public JsonResponse updateLocation (Location location) {
-        if (hasEmptyField(location)) {
-            return new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Can't have empty field for location");
-        }
 
         Location existedLocation = locationMapper.findById(location.getLocationId());
 
@@ -123,20 +109,4 @@ public class LocationService {
         }
     }
 
-    /**
-     * This method won't check locationId
-     */
-    private boolean hasEmptyField(Location location) {
-        String country = location.getCountry();
-        String province = location.getProvince();
-        String city = location.getCity();
-        String street = location.getStreet();
-        String postcode = location.getPostcode();
-
-        if (country == null || province == null || city == null || street == null || postcode == null
-                || country.isEmpty() || province.isEmpty() || city.isEmpty() || street.isEmpty() || postcode.isEmpty()) {
-            return true;
-        }
-        return false;
-    }
 }
