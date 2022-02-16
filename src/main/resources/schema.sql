@@ -52,11 +52,13 @@ CREATE TABLE IF NOT EXISTS preference (
 
 CREATE TABLE IF NOT EXISTS location (
     locationId bigint AUTO_INCREMENT,
-    country varchar(50) NOT NULL,
-    province varchar(50) NOT NULL,
-    city varchar(50) NOT NULL,
-    street varchar(255) NOT NULL,
-    postcode varchar(10) NOT NULL,
+    lat decimal(13,10),
+    lon decimal(13,10),
+    country varchar(50),
+    province varchar(50),
+    city varchar(50),
+    street varchar(255),
+    postcode varchar(10),
     PRIMARY KEY (locationId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
