@@ -3,6 +3,8 @@ package com.singleparentlife.app.mapper;
 import com.singleparentlife.app.model.Preference;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface PreferenceMapper {
 
@@ -37,6 +39,14 @@ public interface PreferenceMapper {
     })
     Preference findById(long preferenceId);
 
+    //This will find a preference by using the userId
+    @Select("SELECT preferenceId FROM userPreference WHERE userId = #{userId}")
+    @Results({
+            @Result(property = "preferenceId", column = "preferenceId")
+    })
+    List<Long> getPreferenceId(long userId);
+
+
     /* Update */
     //This will update a preference in the preference table
     @Update("UPDATE preference SET content = #{content} WHERE preferenceId = #{preferenceId")
@@ -54,5 +64,13 @@ public interface PreferenceMapper {
     //This will delete a user tag from the userTag table
     @Delete("DELETE FROM userTag WHERE userID = #{userId} AND preferenceId = #{preferenceId")
     int deleteUserTag(long userId, long preferenceId);
+
+    //This will delete all user specific preferences
+    @Delete("DELETE FROM userPreference WHERE userId = #{userId}")
+    int deleteAllUserPreference(long userId);
+
+    //This will delete all user specific tags
+    @Delete("DELETE FROM userTag WHERE userId = #{userId}")
+    int deleteAllUserTag(long userId);
 
 }
