@@ -128,10 +128,10 @@ public interface ProfileMapper {
             "WHERE userId = #{userId}")
     int update(Profile profile);
 
-    @Update("UPDATE profile SET profileImgAmt = #{profileImgAmt}")
+    @Update("UPDATE profile SET profileImgAmt = #{profileImgAmt} WHERE userId = #{userId}")
     int updateProfileImgAmt(Profile profile);
 
-    @Update("UPDATE profile SET avatarId = #{avatarId}")
+    @Update("UPDATE profile SET avatarId = #{avatarId} WHERE userId = #{userId}")
     int updateProfileAvatarId(Profile profile);
 
     /* Delete */
