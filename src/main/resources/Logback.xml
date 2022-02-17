@@ -1,7 +1,8 @@
 <configuration>
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmm"/>
     <appender name="FileLogger" class="ch.qos.logback.core.FileAppender" target="System.err">
-        <file>app.log</file>
-        <append>false</append>
+        <file>app-${bySecond}.log</file>
+        <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
