@@ -39,7 +39,7 @@ public class LocationController {
         }
         JsonResponse response = locationService.createLocation(location);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{locationId}")
@@ -68,7 +68,7 @@ public class LocationController {
         location.setLocationId(request.getLocationId());
         JsonResponse response = locationService.updateLocation(location);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{locationId}")
@@ -78,6 +78,6 @@ public class LocationController {
                     new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "LocationId can't be null"));
         }
         JsonResponse response = locationService.deleteLocationById(locationId);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 }

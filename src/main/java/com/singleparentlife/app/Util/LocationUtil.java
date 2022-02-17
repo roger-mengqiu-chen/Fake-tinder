@@ -39,8 +39,10 @@ public class LocationUtil {
      * @param lon longitude
      * @return Location detailed address with lat and lon
      */
-    public Location GPSToLocation(double lat, double lon) {
-
+    public Location GPSToLocation(Double lat, Double lon) {
+        if (lat == null || lon == null) {
+            return null;
+        }
         try {
             String uri = String.format("https://nominatim.openstreetmap.org/search.php?q=%.10f%%2C+%.10f&format=jsonv2", lat, lon);
             RestTemplate restTemplate = new RestTemplate();

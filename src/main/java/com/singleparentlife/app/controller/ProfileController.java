@@ -42,7 +42,12 @@ public class ProfileController {
     public ResponseEntity<JsonResponse> createProfile(@RequestBody ProfileRequest request) {
         Long userId = authUtil.getCurrentUserId();
         User user = (User)userService.getUserById(userId).getData();
-        user.setEmail(request.getEmail());
+        String email = request.getEmail();
+        if (email != null && !validEmail(email)) {
+            return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Invalid email format"));
+        }
+
+        user.setEmail(email);
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
 
@@ -52,36 +57,29 @@ public class ProfileController {
 
         Double lat = locationRequest.getLat();
         Double lon = locationRequest.getLon();
-        if (lat == null || lon == null) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
-        }
 
         List<String> preferences = request.getPreferences().getTagNames();
         JsonResponse preferenceResponse = preferenceService.createPreferenceOrTagForUser(userId, preferences, DataType.PREFERENCE);
 
         if (preferenceResponse.getStatus().equals(Status.FAIL)) {
-            return preferenceResponse.toResponseEntity();
+            return ResponseEntity.ok(preferenceResponse);
         }
 
         Location location = locationUtil.GPSToLocation(lat, lon);
-        if (location == null) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
-        }
 
         // we need the id of location, check it with location service.
         JsonResponse locationResponse = locationService.createLocation(location);
         if (locationResponse.getStatus().equals(Status.SUCCESS)) {
             Location returnedLocation = (Location) locationResponse.getData();
-            profile.setLocationId(returnedLocation.getLocationId());
+            if (returnedLocation != null) {
+                profile.setLocationId(returnedLocation.getLocationId());
+            }
         }
-        // if failed, returned the response directly
-        else {
-            return locationResponse.toResponseEntity();
-        }
+
         userService.updateUser(user);
         JsonResponse response = profileService.createProfile(profile);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping()
@@ -89,7 +87,7 @@ public class ProfileController {
         try {
             long userId = authUtil.getCurrentUserId();
             JsonResponse response = profileService.getProfileOfUser(userId);
-            return response.toResponseEntity();
+            return ResponseEntity.ok(response);
         } catch (NullPointerException e) {
 
             return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null));
@@ -100,7 +98,7 @@ public class ProfileController {
     @GetMapping("/{userId}")
     public ResponseEntity<JsonResponse> getProfile(@PathVariable Long userId) {
         JsonResponse response = profileService.getProfileOfUser(userId);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping()
@@ -116,7 +114,7 @@ public class ProfileController {
         user.setEmail(email);
         JsonResponse userUpdateResponse = userService.updateUser(user);
         if (userUpdateResponse.getStatus().equals(Status.FAIL)) {
-            return userUpdateResponse.toResponseEntity();
+            return ResponseEntity.ok(userUpdateResponse);
         }
 
         Profile profile = new Profile();
@@ -141,11 +139,11 @@ public class ProfileController {
         }
         // if failed, returned the response directly
         else {
-            return locationResponse.toResponseEntity();
+            return ResponseEntity.ok(locationResponse);
         }
         JsonResponse response = profileService.updateProfile(profile);
 
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("")
@@ -153,7 +151,7 @@ public class ProfileController {
 
         Long userId = authUtil.getCurrentUserId();
         JsonResponse response = profileService.deleteProfileOfUser(userId);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/react")
@@ -162,10 +160,14 @@ public class ProfileController {
         Long targetId = request.getTargetId();
         JsonResponse reactionResponse = reactionService.getReactionByName(request.getReaction());
         if (reactionResponse.getStatus().equals(Status.FAIL)) {
-            return reactionResponse.toResponseEntity();
+            return ResponseEntity.ok(reactionResponse);
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
         JsonResponse response = profileService.reactToProfile(userId, targetId, reaction);
-        return response.toResponseEntity();
+        return ResponseEntity.ok(response);
+    }
+
+    private boolean validEmail(String email) {
+        return email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
     }
 }

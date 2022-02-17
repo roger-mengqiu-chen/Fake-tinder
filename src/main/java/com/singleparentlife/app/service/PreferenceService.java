@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,14 @@ public class PreferenceService {
 
         if (dataType.equals(DataType.PREFERENCE)) {
             successList.forEach(pref
-                    -> preferenceMapper.savePreferenceForUser(userId, pref.getPreferenceId()));
+                    -> {
+                    try {
+                        preferenceMapper.savePreferenceForUser(userId, pref.getPreferenceId());
+                    } catch (Exception e) {
+                        log.error("User preference existed");
+                    }
+                }
+            );
             if (failedList.size() == 0) {
                 return new JsonResponse(Status.SUCCESS, DataType.PREFERENCE, successList);
             }
@@ -63,8 +71,15 @@ public class PreferenceService {
             }
         }
         else if (dataType.equals(DataType.TAG)) {
-            successList.forEach((pref
-                    -> preferenceMapper.saveTagForUser(userId, pref.getPreferenceId())));
+            successList.forEach(pref
+                    -> {
+                        try {
+                            preferenceMapper.savePreferenceForUser(userId, pref.getPreferenceId());
+                        } catch (Exception e) {
+                            log.error("User preference existed");
+                        }
+                    }
+            );
             if (failedList.size() == 0) {
                 return new JsonResponse(Status.SUCCESS, DataType.TAG, successList);
             }
