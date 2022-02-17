@@ -42,7 +42,12 @@ public class ProfileController {
     public ResponseEntity<JsonResponse> createProfile(@RequestBody ProfileRequest request) {
         Long userId = authUtil.getCurrentUserId();
         User user = (User)userService.getUserById(userId).getData();
-        user.setEmail(request.getEmail());
+        String email = request.getEmail();
+        if (email != null && !validEmail(email)) {
+            return ResponseEntity.ok(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Invalid email format"));
+        }
+
+        user.setEmail(email);
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
 
@@ -160,5 +165,9 @@ public class ProfileController {
         Reaction reaction = (Reaction) reactionResponse.getData();
         JsonResponse response = profileService.reactToProfile(userId, targetId, reaction);
         return ResponseEntity.ok(response);
+    }
+
+    private boolean validEmail(String email) {
+        return email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
     }
 }
