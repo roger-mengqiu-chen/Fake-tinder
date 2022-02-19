@@ -12,15 +12,19 @@ Project progress:
 
 - [x] Login
 - [x] Registration
+  - [x] Registration of different devices
 - [x] Basic authentication with Firebase
-- [ ] Profile creation
+- [x] Profile creation
   - [x] Preferences/passion of user
-  - [ ] Location service with Geo coordinates
-- [x] Upload images to profile
+  - [x] Location service with Geo coordinates
+  - [x] Upload images to profile
 - [ ] Event service
   - [ ] Event CRUD
   - [ ] Send event invitations to other user
 - [ ] Message service
 - [ ] Notification 
+  - [x] Push notification to front end
+  - [ ] Notification message queue
 - [ ] Matching two profiles according to location and preference
-- 
+- [ ] User management
+- [ ] Swagger documentation
