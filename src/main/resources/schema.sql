@@ -207,10 +207,10 @@ CREATE TABLE IF NOT EXISTS userTag (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userDevice (
-    deviceId bigint,
+    deviceId bigint AUTO_INCREMENT,
     userId bigint,
-    deviceToken varchar(255),
+    deviceToken varchar(255) UNIQUE,
     registerTime datetime,
-    PRIMARY KEY (deviceToken),
+    PRIMARY KEY (deviceId),
     FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
