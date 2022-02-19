@@ -6,7 +6,9 @@ import com.google.firebase.auth.FirebaseToken;
 import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import com.singleparentlife.app.mapper.DeviceMapper;
 import com.singleparentlife.app.mapper.UserMapper;
+import com.singleparentlife.app.model.Device;
 import com.singleparentlife.app.model.Location;
 import com.singleparentlife.app.model.User;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -24,7 +26,10 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public JsonResponse login (String token) {
+    @Autowired
+    private DeviceMapper deviceMapper;
+
+    public JsonResponse login (String token, String deviceToken) {
         FirebaseToken decodedToken = null;
 
         try {
@@ -36,6 +41,9 @@ public class UserService {
         if (decodedToken != null) {
             String fireId = decodedToken.getUid();
             User user = userMapper.findByFireId(fireId);
+            Device device = new Device();
+            device.setDeviceToken(deviceToken);
+            device.setRegisterTime(LocalDateTime.now());
 
             if (user == null) {
                 User newUser = new User();
@@ -46,15 +54,28 @@ public class UserService {
                 newUser.setActive(true);
                 newUser.setSuspended(false);
                 userMapper.save(newUser);
+
+                device.setUserId(newUser.getUserId());
+                deviceMapper.save(device);
+
                 SanitizedUser sanitizedUser = sanitizeUser(newUser);
                 log.info("New user registered: {}", fireId);
+                log.info("New device registered with user {}: {}", newUser.getUserId(), device.getDeviceId());
                 return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
             }
             else {
                 user.setLoginTime(LocalDateTime.now());
                 userMapper.update(user);
+                device.setUserId(user.getUserId());
+
+                Device existedDevice = deviceMapper.getDeviceByToken(deviceToken);
+                if (existedDevice == null) {
+                    deviceMapper.save(device);
+                    log.info("New device registered with user {}: {}", user.getUserId(), device.getDeviceId());
+                }
+
                 SanitizedUser sanitizedUser = sanitizeUser(user);
-                log.info("User login: {}", fireId);
+                log.info("User login: {} with device {}", fireId, existedDevice.getDeviceId());
                 return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
             }
         } else {
@@ -105,12 +126,16 @@ public class UserService {
 
      /*
      * Names of the methods to work on */
-    public  void upgrade(User user){}
-    public  void  downgrade(User user){}
+    public  void upgrade(User user){
+
+    }
+    public  void  downgrade(User user){
+
+    }
 
     public  JsonResponse  delete(User user){
         if (user == null) {
-            log.error("user invalid: {}", user.getUserId());
+            log.error("Null user");
             return new JsonResponse(Status.FAIL, DataType.INVALID_USER, user.getUserId());
         }
 

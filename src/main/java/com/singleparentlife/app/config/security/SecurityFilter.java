@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.singleparentlife.app.constants.SecurityConstant;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -42,9 +44,10 @@ public class SecurityFilter extends OncePerRequestFilter {
                 decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
                 uid = decodedToken.getUid();
                 type = Credentials.CredentialType.ID_TOKEN;
+                log.info("User enter: {}", uid);
             }
         } catch (FirebaseAuthException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         if (uid != null) {
             UserDetails user = userDetailsServiceImp.loadUserByUsername(uid);

@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/notification")
 public class NotificationController {
 
-    @PostMapping("/send/{userId}")
-    public ResponseEntity<JsonResponse> sendNotificationToUser(Long userId){
+    @GetMapping()
+    public ResponseEntity<JsonResponse> getNotifications(){
         //TODO
         return null;
     }
 
-    @GetMapping()
-    public ResponseEntity<JsonResponse> getNotifications(){
+    public ResponseEntity<JsonResponse> getNotificationById(Long notificationId) {
         //TODO
         return null;
     }
@@ -35,6 +34,12 @@ public class NotificationController {
 
     @DeleteMapping("/{notificationId}")
     public ResponseEntity<JsonResponse> deleteNotification(@PathVariable Long notificationId) {
+        //TODO
+        return null;
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<JsonResponse> deleteAllNotification() {
         //TODO
         return null;
     }

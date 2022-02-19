@@ -21,6 +21,7 @@ public enum DataType {
     LIST_OF_EVENT_INVITATION,
     PREFERENCE_IDS,
     STATUS_MESSAGE,
+    NOTIFICATION,
 
     /* Error types */
     SERVER_ERROR,
@@ -44,6 +45,8 @@ public enum DataType {
     ATTACHMENT_NOT_FOUND,
     TOO_MANY_PROFILE_IMG,
     INVALID_IMAGE,
+
+    NOTIFICATION_NOT_FOUND,
 
 }
 

@@ -7,4 +7,6 @@ import lombok.Data;
 public class LoginRequest {
     @JsonProperty
     private String token;
+    @JsonProperty
+    private String deviceToken;
 }

@@ -18,8 +18,9 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<JsonResponse> login(@RequestBody LoginRequest request){
         String token = request.getToken();
+        String deviceToken = request.getDeviceToken();
 
-        JsonResponse responseOfLogin = userService.login(token);
+        JsonResponse responseOfLogin = userService.login(token, deviceToken);
         if (responseOfLogin.getStatus().equals(Status.SUCCESS)) {
             return ResponseEntity.ok().body(responseOfLogin);
         }

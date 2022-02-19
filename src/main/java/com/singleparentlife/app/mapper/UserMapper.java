@@ -1,6 +1,5 @@
 package com.singleparentlife.app.mapper;
 
-import com.singleparentlife.app.model.Role;
 import com.singleparentlife.app.model.User;
 import org.apache.ibatis.annotations.*;
 
@@ -82,19 +81,7 @@ public interface UserMapper {
     User findByPhone(String phone);
 
     //This will find a user by using the fireId
-    @Select("SELECT * FROM user WHERE fireId = #{fireId}")
-    @Results ({
-            @Result(id = true, property = "userId", column = "userId"),
-            @Result(property = "fireId", column = "fireId"),
-            @Result(property = "email", column = "email"),
-            @Result(property = "phone", column = "phone"),
-            @Result(property = "password", column = "password"),
-            @Result(property = "startDate", column = "startDate"),
-            @Result(property = "loginTime", column = "loginTime"),
-            @Result(property = "roleId", column = "roleId"),
-            @Result(property = "isActive", column = "isActive"),
-            @Result(property = "isSuspended", column = "isSuspended")
-    })
+    @Select("SELECT userId FROM user WHERE fireId = #{fireId}")
     Long getUserIdByFireId(String fireId);
 
     /* Update */
