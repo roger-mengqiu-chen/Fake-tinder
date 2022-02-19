@@ -33,6 +33,15 @@ public interface DeviceMapper {
     })
     Device getDeviceById(Long deviceId);
 
+    @Select("SELECT * FROM userDevice WHERE deviceToken = #{deviceToken}")
+    @Results ({
+            @Result(id = true, column = "deviceId", property = "deviceId"),
+            @Result(column = "userId", property = "userId"),
+            @Result(column = "deviceToken", property = "deviceToken"),
+            @Result(column = "registerTime", property = "registerTime")
+    })
+    Device getDeviceByToken(String deviceToken);
+
     @Delete("DELETE FROM userDevice WHERE deviceId = #{deviceId}")
     int deleteDeviceById(Long deviceId);
 
