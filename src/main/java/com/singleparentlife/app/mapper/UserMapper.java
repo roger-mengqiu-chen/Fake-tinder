@@ -3,8 +3,6 @@ package com.singleparentlife.app.mapper;
 import com.singleparentlife.app.model.User;
 import org.apache.ibatis.annotations.*;
 
-import java.util.List;
-
 @Mapper
 public interface UserMapper {
 
@@ -85,9 +83,6 @@ public interface UserMapper {
     //This will find a user by using the fireId
     @Select("SELECT userId FROM user WHERE fireId = #{fireId}")
     Long getUserIdByFireId(String fireId);
-
-    @Select("SELECT fcmToken FROM userDevice WHERE userId = #{userId}")
-    List<String> getFcmTokensByUserId(Long userId);
 
     /* Update */
     //This will update any changes to a user row in the user table

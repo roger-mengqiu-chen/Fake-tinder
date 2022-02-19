@@ -3,6 +3,7 @@ package com.singleparentlife.app.service;
 import com.google.firebase.messaging.*;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import com.singleparentlife.app.mapper.DeviceMapper;
 import com.singleparentlife.app.mapper.NotificationMapper;
 import com.singleparentlife.app.mapper.UserMapper;
 import com.singleparentlife.app.model.AppNotification;
@@ -24,9 +25,11 @@ public class NotificationService {
     private NotificationMapper notificationMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private DeviceMapper deviceMapper;
 
     public JsonResponse sendNotification(Long userId, NotificationRequest notificationRequest) {
-        List<String> devices = userMapper.getFcmTokensByUserId(userId);
+        List<String> devices = deviceMapper.getAllDeviceTokensOfUser(userId);
         MulticastMessage multicastMessage =
                 MulticastMessage.builder()
                         .addAllTokens(devices)

@@ -207,6 +207,7 @@ CREATE TABLE IF NOT EXISTS userTag (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
 
 CREATE TABLE IF NOT EXISTS userDevice (
+    deviceId bigint,
     userId bigint,
     deviceToken varchar(255),
     registerTime datetime,
