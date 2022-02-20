@@ -21,6 +21,8 @@ public enum DataType {
     LIST_OF_EVENT_INVITATION,
     PREFERENCE_IDS,
     STATUS_MESSAGE,
+    EVENT,
+    LIST_OF_EVENT,
 
     /* Error types */
     SERVER_ERROR,
