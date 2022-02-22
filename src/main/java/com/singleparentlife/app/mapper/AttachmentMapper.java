@@ -23,6 +23,12 @@ public interface AttachmentMapper {
     @Options(useGeneratedKeys = true, keyProperty = "attachmentId", keyColumn = "attachmentId")
     long saveWithProfile(Attachment attachment);
 
+    /**
+     * Find attachment by id
+     * USE WITH CAUTION; CAN CAUSE LARGE MEMORY USAGE
+     * @param attachmentId
+     * @return
+     */
     @Select("SELECT * FROM attachment WHERE attachmentId = #{attachmentId}")
     @Results({
             @Result(id = true, property = "attachmentId", column = "attachmentId"),
