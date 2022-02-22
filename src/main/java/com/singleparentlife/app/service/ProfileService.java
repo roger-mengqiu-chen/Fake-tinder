@@ -95,35 +95,7 @@ public class ProfileService {
         }
     }
 
-    /**
-     * Set reaction to a profile
-     * @param userId userId
-     * @param targetUserId targetUserId
-     * @param reaction Reaction
-     * @return JsonResponse of Match
-     */
-    public JsonResponse reactToProfile(Long userId, Long targetUserId, Reaction reaction) {
-        Profile userProfile = profileMapper.findByUserId(userId);
-        Profile targetProfile = profileMapper.findByUserId(targetUserId);
 
-        if (userProfile == null || targetProfile == null) {
-            log.error("Profile not found for {} or {} or both", userId, targetUserId);
-            return new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null);
-        }
-
-        Match match = new Match();
-        match.setUserId(userId);
-        match.setTargetId(targetUserId);
-        match.setReactionId(reaction.getReactionId());
-        try {
-            matchMapper.save(match);
-            log.info("Created a match: {} -> {}", userId, targetUserId);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-        }
-    }
 
     public JsonResponse setAvatarForProfile() {
         //TODO

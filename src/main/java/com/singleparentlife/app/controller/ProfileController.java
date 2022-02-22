@@ -163,7 +163,7 @@ public class ProfileController {
             return ResponseEntity.ok(reactionResponse);
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
-        JsonResponse response = profileService.reactToProfile(userId, targetId, reaction);
+        JsonResponse response = reactionService.reactToProfile(userId, targetId, reaction);
         return ResponseEntity.ok(response);
     }
 
