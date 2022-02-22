@@ -52,7 +52,7 @@ public interface ProfileMapper {
             @Result(property = "locationId", column = "locationId")
     })
     //need to implement findByUserId in service class
-    Profile findByUserId(long userId);
+    Profile findByUserId(Long userId);
 
     //Searching using first name
     @Select("SELECT * FROM profile WHERE firstname = #{firstname}")

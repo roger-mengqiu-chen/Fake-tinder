@@ -2,11 +2,10 @@ package com.singleparentlife.app.service;
 
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import com.singleparentlife.app.mapper.AttachmentMapper;
 import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Match;
 import com.singleparentlife.app.model.Profile;
-import com.singleparentlife.app.model.Reaction;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ public class ProfileService {
     private ProfileMapper profileMapper;
     @Autowired
     private MatchMapper matchMapper;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
 
     /**
      * Create a new profile
@@ -95,10 +96,34 @@ public class ProfileService {
         }
     }
 
+    public JsonResponse setAvatarForProfile(Long userId, Long avatarId) {
+        Profile profile = profileMapper.findByUserId(userId);
+        if (profile == null) {
+            return new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null);
+        }
+        // check if the image exists
+        Long attachmentId = attachmentMapper.findIdOfAttachment(avatarId);
+        if (attachmentId == null) {
+            return new JsonResponse(Status.FAIL, DataType.ATTACHMENT_NOT_FOUND, null);
+        }
+        // check existence of profile
+        Long profileId = attachmentMapper.getProfileIdOfAttachment(attachmentId);
+        if (profileId == null) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_IMAGE, "Not a profile image");
+        }
+        // check if the user has this image
+        else if (profileId.longValue() != userId.longValue()) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_IMAGE, "The image does not belong to this user");
+        }
 
-
-    public JsonResponse setAvatarForProfile() {
-        //TODO
-        return null;
+        profile.setAvatarId(avatarId);
+        try {
+            profileMapper.updateProfileAvatarId(profile);
+            log.info("Profile avatar updated: {}", userId);
+            return new JsonResponse(Status.SUCCESS, DataType.PROFILE, profile);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
     }
 }
