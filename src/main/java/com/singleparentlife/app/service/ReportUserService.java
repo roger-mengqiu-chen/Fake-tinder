@@ -26,7 +26,7 @@ public class ReportUserService {
     @Autowired
     private AuthUtil authUtil;
 
-    public JsonResponse reportUser(long userId, String reason) {
+    public JsonResponse reportUser(Long userId, String reason) {
 
         User user = userMapper.findById(userId);
         if (user == null) {
@@ -59,7 +59,7 @@ public class ReportUserService {
         }
     }
 
-    public JsonResponse deleteReportedUser (long userId) {
+    public JsonResponse deleteReportedUser (Long userId) {
         List<ReportedUser> reportedUsers = reportedUserMapper.findById(userId);
         if (reportedUsers.size() == 0) {
             log.error("User id not found");
@@ -77,7 +77,7 @@ public class ReportUserService {
         }
     }
 
-    public JsonResponse getReportedUserById(long userId) {
+    public JsonResponse getReportedUserById(Long userId) {
         List<ReportedUser> reportedUsers = reportedUserMapper.findById(userId);
         if (reportedUsers.size() == 0) {
             return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, "ReportedUser id not found");
