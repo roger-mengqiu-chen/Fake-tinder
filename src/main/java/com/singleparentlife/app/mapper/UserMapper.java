@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.*;
 public interface UserMapper {
 
     /* Create */
-    @Insert("INSERT INTO user (fireId, email, password, startDate, loginTime, roleId, isActive, isSuspended) VALUES " +
-            "(#{fireId}, #{email}, #{password}, #{startDate}, #{loginTime}, #{roleId}, #{isActive}, #{isSuspended})")
+    @Insert("INSERT INTO user (fireId, email, startDate, loginTime, roleId, isActive, isSuspended) VALUES " +
+            "(#{fireId}, #{email}, #{startDate}, #{loginTime}, #{roleId}, #{isActive}, #{isSuspended})")
     @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")
     long save(User user);
 
@@ -37,7 +37,6 @@ public interface UserMapper {
             @Result(property = "fireId", column = "fireId"),
             @Result(property = "email", column = "email"),
             @Result(property = "phone", column = "phone"),
-            @Result(property = "password", column = "password"),
             @Result(property = "startDate", column = "startDate"),
             @Result(property = "loginTime", column = "loginTime"),
             @Result(property = "roleId", column = "roleId"),
@@ -54,7 +53,6 @@ public interface UserMapper {
             @Result(property = "fireId", column = "fireId"),
             @Result(property = "email", column = "email"),
             @Result(property = "phone", column = "phone"),
-            @Result(property = "password", column = "password"),
             @Result(property = "startDate", column = "startDate"),
             @Result(property = "loginTime", column = "loginTime"),
             @Result(property = "roleId", column = "roleId"),
@@ -71,7 +69,6 @@ public interface UserMapper {
             @Result(property = "fireId", column = "fireId"),
             @Result(property = "email", column = "email"),
             @Result(property = "phone", column = "phone"),
-            @Result(property = "password", column = "password"),
             @Result(property = "startDate", column = "startDate"),
             @Result(property = "loginTime", column = "loginTime"),
             @Result(property = "roleId", column = "roleId"),
@@ -86,7 +83,7 @@ public interface UserMapper {
 
     /* Update */
     //This will update any changes to a user row in the user table
-    @Update("UPDATE user SET fireId = #{fireId}, email = #{email}, phone = #{phone}, password = #{password}, " +
+    @Update("UPDATE user SET fireId = #{fireId}, email = #{email}, phone = #{phone}, " +
             "startDate = #{startDate}, loginTime = #{loginTime}, roleId = #{roleId}, isActive = #{isActive}, isSuspended = #{isSuspended} " +
             "WHERE userId = #{userId}")
     int update(User user);
