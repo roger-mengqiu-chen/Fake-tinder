@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -29,6 +30,12 @@ public class UserService {
     @Autowired
     private DeviceMapper deviceMapper;
 
+    /**
+     * This method create user and attach device with this user
+     * @param token
+     * @param deviceToken
+     * @return
+     */
     public JsonResponse login (String token, String deviceToken) {
         FirebaseToken decodedToken = null;
 
@@ -98,69 +105,65 @@ public class UserService {
 
     public JsonResponse getUserById(Long userId) {
         User user = userMapper.findById(userId);
-
-        if (user == null) {
-            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null);
-        }
         return new JsonResponse(Status.SUCCESS, DataType.USER, user);
     }
 
+    public JsonResponse getAllUser() {
+        List<User> users = userMapper.findAll();
+        return new JsonResponse(Status.SUCCESS, DataType.USER, users);
+    }
+
     public JsonResponse deleteUser(Long userId) {
-        //TODO
-        return null;
+        User user = userMapper.findById(userId);
+        if (user == null) {
+            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null);
+        }
+        try {
+            userMapper.delete(userId);
+            return new JsonResponse(Status.SUCCESS, DataType.USER, user);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse upgradeOrDowngrade(User user, boolean isUpgrade){
+        User existedUser = userMapper.findById(user.getUserId());
+        if (existedUser == null) {
+            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null);
+        }
+
+        if (isUpgrade) {
+            user.setRoleId(3);
+        }
+        else {
+            user.setRoleId(2);
+        }
+
+        try {
+            userMapper.update(user);
+            return new JsonResponse(Status.SUCCESS, DataType.USER, user);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
     }
 
     /*
-        When we return user back to front end, we need hide some sensitive data.
-     */
+       When we return user back to front end, we need hide some sensitive data.
+    */
     private SanitizedUser sanitizeUser (User user) {
         SanitizedUser sanitizedUser = new SanitizedUser();
         sanitizedUser.setUserId(user.getUserId());
         sanitizedUser.setEmail(user.getEmail());
         sanitizedUser.setPhone(user.getPhone());
         sanitizedUser.setFireId(user.getFireId());
+        switch (user.getUserId().intValue()) {
+            case 1: sanitizedUser.setRole("Administrator"); break;
+            case 2: sanitizedUser.setRole("Free User"); break;
+            case 3: sanitizedUser.setRole("Premium User"); break;
+        }
         return sanitizedUser;
     }
-
-
-
-     /*
-     * Names of the methods to work on */
-    public  void upgrade(User user){
-
-    }
-    public  void  downgrade(User user){
-
-    }
-
-    public  JsonResponse  delete(User user){
-        if (user == null) {
-            log.error("Null user");
-            return new JsonResponse(Status.FAIL, DataType.INVALID_USER, user.getUserId());
-        }
-
-        else{
-            try {
-
-                //could be better to use getCurrent UserId from AuthUtil but willl do this for now
-                userMapper.delete(user.getUserId());
-               //might not show up these because user is already deleted
-                log.info("User is deleted {}", user.getUserId());
-                return new JsonResponse(Status.SUCCESS, DataType.USER, user.getUserId());
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-            }
-
-    }}
-    //to delete all voids with response, just keeping these for now to not get any error
-    public  void updatePassword(User user, String password){
-
-    }
-    public  void  updateFirstName(User user, String firstName ){}
-    public  void  updateLastName(User user, String lastName){}
-    public  void  updateProfileImg(User user, Long profileImgID){}
-    public  void  updateDescription(User user, String description){}
-    public  void  updateLocation(User user, Location location){}
 
 }
