@@ -148,7 +148,8 @@ public class ProfileController {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<JsonResponse> updateAvatar(Long avatarId) {
+    @PutMapping("/avatar/{avatarId}")
+    public ResponseEntity<JsonResponse> updateAvatar(@PathVariable Long avatarId) {
         Long userId = authUtil.getCurrentUserId();
         JsonResponse response = profileService.setAvatarForProfile(userId, avatarId);
         return ResponseEntity.ok(response);
