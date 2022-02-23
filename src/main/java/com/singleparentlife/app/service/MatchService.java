@@ -132,4 +132,18 @@ public class MatchService {
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
+
+    /**
+     * Check match between user and target
+     * We should get 2 matches as matching is bilateral
+     * If 2 matches both have non-reject reactions, we can say two users are matched
+     * @param userId
+     * @param targetUserId
+     * @return
+     */
+    public boolean isMatched(Long userId, Long targetUserId) {
+        Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
+        Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
+        return match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId()> 1;
+    }
 }
