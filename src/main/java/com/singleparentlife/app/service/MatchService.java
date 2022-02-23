@@ -99,7 +99,7 @@ public class MatchService {
     public JsonResponse getAllMatchesCreatedByUser(Long userId) {
         try {
             List<Match> matches = matchMapper.findMatchOfUser(userId);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, matches);
+            return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_MATCH, matches);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
@@ -109,7 +109,7 @@ public class MatchService {
     public JsonResponse getFailedMatchOfUser(Long userId) {
         try {
             List<Match> matches = matchMapper.findFailedMatchOfUser(userId);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, matches);
+            return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_MATCH, matches);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
