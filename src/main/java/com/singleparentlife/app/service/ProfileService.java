@@ -2,11 +2,10 @@ package com.singleparentlife.app.service;
 
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import com.singleparentlife.app.mapper.AttachmentMapper;
 import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Match;
 import com.singleparentlife.app.model.Profile;
-import com.singleparentlife.app.model.Reaction;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ public class ProfileService {
     private ProfileMapper profileMapper;
     @Autowired
     private MatchMapper matchMapper;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
 
     /**
      * Create a new profile
@@ -95,38 +96,34 @@ public class ProfileService {
         }
     }
 
-    /**
-     * Set reaction to a profile
-     * @param userId userId
-     * @param targetUserId targetUserId
-     * @param reaction Reaction
-     * @return JsonResponse of Match
-     */
-    public JsonResponse reactToProfile(Long userId, Long targetUserId, Reaction reaction) {
-        Profile userProfile = profileMapper.findByUserId(userId);
-        Profile targetProfile = profileMapper.findByUserId(targetUserId);
-
-        if (userProfile == null || targetProfile == null) {
-            log.error("Profile not found for {} or {} or both", userId, targetUserId);
+    public JsonResponse setAvatarForProfile(Long userId, Long avatarId) {
+        Profile profile = profileMapper.findByUserId(userId);
+        if (profile == null) {
             return new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null);
         }
+        // check if the image exists
+        Long attachmentId = attachmentMapper.findIdOfAttachment(avatarId);
+        if (attachmentId == null) {
+            return new JsonResponse(Status.FAIL, DataType.ATTACHMENT_NOT_FOUND, null);
+        }
+        // check existence of profile
+        Long profileId = attachmentMapper.getProfileIdOfAttachment(attachmentId);
+        if (profileId == null) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_IMAGE, "Not a profile image");
+        }
+        // check if the user has this image
+        else if (profileId.longValue() != userId.longValue()) {
+            return new JsonResponse(Status.FAIL, DataType.INVALID_IMAGE, "The image does not belong to this user");
+        }
 
-        Match match = new Match();
-        match.setUserId(userId);
-        match.setTargetId(targetUserId);
-        match.setReactionId(reaction.getReactionId());
+        profile.setAvatarId(avatarId);
         try {
-            matchMapper.save(match);
-            log.info("Created a match: {} -> {}", userId, targetUserId);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+            profileMapper.updateProfileAvatarId(profile);
+            log.info("Profile avatar updated: {}", userId);
+            return new JsonResponse(Status.SUCCESS, DataType.PROFILE, profile);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
-    }
-
-    public JsonResponse setAvatarForProfile() {
-        //TODO
-        return null;
     }
 }

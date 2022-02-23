@@ -17,8 +17,6 @@ public class User implements Serializable {
 
     private String phone;
 
-    private String password;
-
     private LocalDate startDate;
 
     private LocalDateTime loginTime;

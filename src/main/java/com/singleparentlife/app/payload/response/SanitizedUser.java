@@ -9,6 +9,8 @@ public class SanitizedUser {
 
     private String fireId;
 
+    private String role;
+
     private String email;
 
     private String phone;

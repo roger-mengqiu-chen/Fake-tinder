@@ -51,5 +51,7 @@ public enum DataType {
 
     NOTIFICATION_NOT_FOUND,
 
+    MATCH_NOT_FOUND,
+
 }
 

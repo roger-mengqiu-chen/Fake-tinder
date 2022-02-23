@@ -78,7 +78,6 @@ CREATE TABLE IF NOT EXISTS user (
     fireId varchar(255),
     email varchar(255),
     phone varchar(20),
-    password varchar(255),
     startDate date,
     loginTime datetime,
     roleId tinyInt NOT NULL,

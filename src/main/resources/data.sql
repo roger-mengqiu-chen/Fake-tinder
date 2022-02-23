@@ -2,9 +2,9 @@ INSERT INTO role VALUES (1, "ADMIN");
 INSERT INTO role VALUES (2, "FREE_USER");
 INSERT INTO role VALUES (3, "PREMIUM_USER");
 
-INSERT INTO reaction VALUES(1, "ACCEPT");
-INSERT INTO reaction VALUES(2, "REJECT");
-INSERT INTO reaction VALUES(3, "PEND");
+INSERT INTO reaction VALUES(1, "REJECT");
+INSERT INTO reaction VALUES(2, "ACCEPT");
+INSERT INTO reaction VALUES(3, "SUPER");
 
 INSERT INTO user (userId, roleId, isActive, isSuspended) VALUES (1,2,true, false);
 INSERT INTO user (userId, roleId, isActive, isSuspended) VALUES (2,2,true, false);

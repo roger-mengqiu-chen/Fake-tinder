@@ -28,6 +28,8 @@ public class ProfileController {
     @Autowired
     private ReactionService reactionService;
     @Autowired
+    private MatchService matchService;
+    @Autowired
     private UserService userService;
     @Autowired
     private FileService fileService;
@@ -146,6 +148,13 @@ public class ProfileController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/avatar/{avatarId}")
+    public ResponseEntity<JsonResponse> updateAvatar(@PathVariable Long avatarId) {
+        Long userId = authUtil.getCurrentUserId();
+        JsonResponse response = profileService.setAvatarForProfile(userId, avatarId);
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("")
     public ResponseEntity<JsonResponse> deleteProfile() {
 
@@ -163,7 +172,7 @@ public class ProfileController {
             return ResponseEntity.ok(reactionResponse);
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
-        JsonResponse response = profileService.reactToProfile(userId, targetId, reaction);
+        JsonResponse response = matchService.reactToProfile(userId, targetId, reaction);
         return ResponseEntity.ok(response);
     }
 

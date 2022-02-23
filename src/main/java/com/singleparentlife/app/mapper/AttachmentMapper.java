@@ -23,19 +23,25 @@ public interface AttachmentMapper {
     @Options(useGeneratedKeys = true, keyProperty = "attachmentId", keyColumn = "attachmentId")
     long saveWithProfile(Attachment attachment);
 
+    /**
+     * Find attachment by id
+     * USE WITH CAUTION; CAN CAUSE LARGE MEMORY USAGE
+     * @param attachmentId
+     * @return
+     */
     @Select("SELECT * FROM attachment WHERE attachmentId = #{attachmentId}")
     @Results({
             @Result(id = true, property = "attachmentId", column = "attachmentId"),
             @Result(property = "attachmentType", column = "attachmentType"),
             @Result(property = "attachmentContent", column = "attachmentContent")
     })
-    Attachment findById(long attachmentId);
+    Attachment findById(Long attachmentId);
 
     @Select("SELECT attachmentId FROM attachment WHERE attachmentId = #{attachmentId}")
-    Long findIdOfAttachment(long attachmentId);
+    Long findIdOfAttachment(Long attachmentId);
 
     @Select("SELECT userId FROM attachment WHERE attachmentId = #{attachmentId}")
-    Long getProfileIdOfAttachment(long attachmentId);
+    Long getProfileIdOfAttachment(Long attachmentId);
 
     @Select("SELECT * FROM attachment WHERE messageId = #{messageId}")
     @Results({
@@ -43,7 +49,7 @@ public interface AttachmentMapper {
             @Result(property = "attachmentType", column = "attachmentType"),
             @Result(property = "attachmentContent", column = "attachmentContent")
     })
-    Attachment findByMessageId(long messageId);
+    Attachment findByMessageId(Long messageId);
 
     @Select("SELECT attachmentId FROM attachment WHERE userId = #{userId}")
     @Results({
@@ -51,7 +57,7 @@ public interface AttachmentMapper {
             @Result(property = "attachmentType", column = "attachmentType"),
             @Result(property = "attachmentContent", column = "attachmentContent")
     })
-    List<Long> findByProfileId(long userId);
+    List<Long> findByProfileId(Long userId);
 
     @Update("UPDATE attachment " +
             "SET attachmentType = #{attachmentType}, " +

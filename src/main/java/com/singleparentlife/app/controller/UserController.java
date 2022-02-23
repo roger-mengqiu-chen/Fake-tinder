@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @PostMapping()
-    public ResponseEntity<JsonResponse> createUser(@RequestBody UserRequest request) {
-        //TODO
-        return null;
-    }
-
     @GetMapping("/{userId}")
     public ResponseEntity<JsonResponse> getUser(@PathVariable Long userId) {
         //TODO

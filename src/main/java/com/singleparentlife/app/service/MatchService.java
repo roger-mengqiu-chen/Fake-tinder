@@ -1,0 +1,95 @@
+package com.singleparentlife.app.service;
+
+import com.singleparentlife.app.constants.DataType;
+import com.singleparentlife.app.constants.Status;
+import com.singleparentlife.app.mapper.MatchMapper;
+import com.singleparentlife.app.mapper.ProfileMapper;
+import com.singleparentlife.app.model.Match;
+import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.payload.response.JsonResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class MatchService {
+    @Autowired
+    private ProfileMapper profileMapper;
+    @Autowired
+    private MatchMapper matchMapper;
+
+    /**
+     * Set reaction to a profile
+     * @param userId userId
+     * @param targetUserId targetUserId
+     * @param reaction Reaction
+     * @return JsonResponse of Match
+     */
+    public JsonResponse reactToProfile(Long userId, Long targetUserId, Reaction reaction) {
+        Profile userProfile = profileMapper.findByUserId(userId);
+        Profile targetProfile = profileMapper.findByUserId(targetUserId);
+
+        if (userProfile == null || targetProfile == null) {
+            log.error("Profile not found for {} or {} or both", userId, targetUserId);
+            return new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null);
+        }
+
+        Match match = new Match();
+        match.setUserId(userId);
+        match.setTargetId(targetUserId);
+        match.setReactionId(reaction.getReactionId());
+        try {
+            matchMapper.save(match);
+            log.info("Created a match: {} -> {}", userId, targetUserId);
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    /**
+     * Update a match
+     * It can be used with rewind functionality.
+     * @param userId
+     * @param targetUserId
+     * @param reaction
+     * @return JsonResponse of updating
+     */
+    public JsonResponse updateMatch(Long userId, Long targetUserId, Reaction reaction) {
+        Match match = matchMapper.findMatchBetweenUsers(userId, targetUserId);
+        if (match == null) {
+            return new JsonResponse(Status.FAIL, DataType.MATCH_NOT_FOUND, null);
+        }
+        try {
+            match.setReactionId(reaction.getReactionId());
+            matchMapper.update(match);
+            log.info("Match is updated: {} <-> {}", match.getUserId(), match.getTargetId());
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse getAllMatchedUsers(Long userId) {
+        //TODO
+        return null;
+    }
+
+    /**
+     * Check match between user and target
+     * We should get 2 matches as matching is bilateral
+     * If 2 matches both have non-reject reactions, we can say two users are matched
+     * @param userId
+     * @param targetUserId
+     * @return
+     */
+    public boolean isMatched(Long userId, Long targetUserId) {
+        Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
+        Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
+        return match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId()> 1;
+    }
+}
