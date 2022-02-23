@@ -16,56 +16,57 @@ import java.util.List;
 public class EventService {
     @Autowired
     private EventMapper eventMapper;
-    public JsonResponse getEventByEventId(long eventId){
+
+    public JsonResponse getEventByEventId(Long eventId){
         Event event = eventMapper.getByEventId(eventId);
-        if (event == null){
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event record.");
+        if (event == null) {
+            return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, "Event not found: " + eventId);
         }
         else {
             return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
         }
     }
-    public JsonResponse getEventByLocationId(long locationId){
+
+    public JsonResponse getEventByLocationId(Long locationId){
         List<Event> eventL = eventMapper.getByLocationId(locationId);
         if (eventL.size() == 0){
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event record.");
+            return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
         else {
             return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_EVENT, eventL);
         }
     }
+
     public JsonResponse getAllEvent() {
         List<Event> eventL = eventMapper.getAll();
         if (eventL.size() == 0){
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event record.");
+            return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
         else {
             return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_EVENT, eventL);
         }
     }
+
     public JsonResponse createEvent(Event event) {
-        try{
+        try {
             eventMapper.save(event);
-            log.info("New location created");
-            return new JsonResponse(Status.SUCCESS,DataType.EVENT, event);
+            log.info("New event created");
+            return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
     public JsonResponse updateEvent(Event event) {
         Event eventRecord = eventMapper.getByEventId(event.getEventId());
-        if (eventRecord == null)
-        {
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event record.");
+        if (eventRecord == null) {
+            return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
-        else
-        {
+        else {
             try {
                 eventMapper.update(event);
-                //return the eventInvitation object
+                //return the event object
                 log.info("Event is updated {}", event.getEventId());
                 return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
             }
@@ -75,15 +76,12 @@ public class EventService {
             }
         }
     }
-    public JsonResponse deleteEvent(Long eventId)
-    {
+    public JsonResponse deleteEvent(Long eventId) {
         Event eventRecord = eventMapper.getByEventId(eventId);
-        if (eventRecord == null)
-        {
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Cannot find event record.");
+        if (eventRecord == null) {
+            return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
-        else
-        {
+        else {
             try {
                 eventMapper.delete(eventId);
                 //return the eventInvitation object
@@ -97,4 +95,14 @@ public class EventService {
         }
     }
 
+    public JsonResponse getAllEventOfUser(Long userId) {
+        try {
+            List<Event> events = eventMapper.getAllByUserId(userId);
+            return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_EVENT, events);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+
+    }
 }
