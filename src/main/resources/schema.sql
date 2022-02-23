@@ -1,5 +1,5 @@
 
-
+DROP TABLE IF EXISTS userDevice;
 DROP TABLE IF EXISTS userTag;
 DROP TABLE IF EXISTS userPreference;
 DROP TABLE IF EXISTS userEvent;
@@ -131,7 +131,10 @@ CREATE TABLE IF NOT EXISTS reportedUser (
 CREATE TABLE IF NOT EXISTS notification (
     notificationId bigint AUTO_INCREMENT,
     userId bigint NOT NULL,
+    topic varchar(255) NOT NULL,
+    title varchar(255) NOT NULL,
     content text NOT NULL,
+    time datetime,
     isRead boolean,
     PRIMARY KEY (notificationId),
     FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
@@ -201,4 +204,13 @@ CREATE TABLE IF NOT EXISTS userTag (
     PRIMARY KEY (userId, preferenceId),
     FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
     FOREIGN KEY (preferenceId) REFERENCES preference (preferenceId) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
+
+CREATE TABLE IF NOT EXISTS userDevice (
+    deviceId bigint AUTO_INCREMENT,
+    userId bigint,
+    deviceToken varchar(255) UNIQUE,
+    registerTime datetime,
+    PRIMARY KEY (deviceId),
+    FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
