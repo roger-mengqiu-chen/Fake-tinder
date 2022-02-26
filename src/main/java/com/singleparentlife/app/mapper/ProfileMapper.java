@@ -35,6 +35,23 @@ public interface ProfileMapper {
             @Result(property = "locationId", column = "locationId")
     })
     List<Profile> findAll();
+
+    @Select("SELECT * FROM profile WHERE userId != #{userId}")
+    @Results({
+            @Result(id = true, property = "userId", column = "userId"),
+            @Result(property = "avatarId", column = "avatarId"),
+            @Result(property = "firstname", column = "firstname"),
+            @Result(property = "lastname", column = "lastname"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "gender", column = "gender"),
+            @Result(property = "showme", column = "showme"),
+            @Result(property = "description", column = "description"),
+            @Result(property = "company", column = "company"),
+            @Result(property = "school", column = "school"),
+            @Result(property = "jobTitle", column = "jobTitle"),
+            @Result(property = "locationId", column = "locationId")
+    })
+    List<Profile> findAllButUser(Long userId);
     //Searching using userId
     @Select("SELECT * FROM profile WHERE userId = #{userId}")
     @Results({

@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class ProfileService {
@@ -125,5 +127,10 @@ public class ProfileService {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
+    }
+
+    public JsonResponse getAllProfiles(Long userId) {
+        List<Profile> profiles = profileMapper.findAllButUser(userId);
+        return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE, profiles);
     }
 }
