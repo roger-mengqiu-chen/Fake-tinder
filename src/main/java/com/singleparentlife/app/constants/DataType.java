@@ -13,6 +13,7 @@ public enum DataType {
     USER,
     REPORTED_USER,
     PROFILE,
+    LIST_OF_PROFILE,
     MATCH,
     LIST_OF_MATCH,
     REACTION,
