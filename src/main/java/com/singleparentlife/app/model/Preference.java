@@ -14,4 +14,8 @@ public class Preference {
     public Preference(String content) {
         this.content = content;
     }
+
+    public boolean equalsTo(Preference p) {
+        return this.content.equals(p.getContent());
+    }
 }

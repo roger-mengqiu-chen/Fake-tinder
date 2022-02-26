@@ -46,6 +46,9 @@ public interface PreferenceMapper {
     })
     List<Long> getPreferenceId(long userId);
 
+    @Select("SELECT preferenceId, content FROM userPreference up JOIN preference p " +
+            "ON up.preferenceId = p.preferenceId WHERE up.userId = #{userId}")
+    List<Preference> getPreferencesOfUser(Long userId);
 
     /* Update */
     //This will update a preference in the preference table

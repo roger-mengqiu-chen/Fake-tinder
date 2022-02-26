@@ -4,6 +4,7 @@ import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
+import com.singleparentlife.app.mapper.ReactionMapper;
 import com.singleparentlife.app.model.Match;
 import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.model.Reaction;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class MatchService {
@@ -19,6 +22,8 @@ public class MatchService {
     private ProfileMapper profileMapper;
     @Autowired
     private MatchMapper matchMapper;
+    @Autowired
+    private ReactionMapper reactionMapper;
 
     /**
      * Set reaction to a profile
@@ -55,14 +60,21 @@ public class MatchService {
      * It can be used with rewind functionality.
      * @param userId
      * @param targetUserId
-     * @param reaction
+     * @param reactionStr
      * @return JsonResponse of updating
      */
-    public JsonResponse updateMatch(Long userId, Long targetUserId, Reaction reaction) {
+    public JsonResponse updateMatch(Long userId, Long targetUserId, String reactionStr) {
         Match match = matchMapper.findMatchBetweenUsers(userId, targetUserId);
         if (match == null) {
             return new JsonResponse(Status.FAIL, DataType.MATCH_NOT_FOUND, null);
         }
+
+        Reaction reaction = reactionMapper.findByName(reactionStr);
+        if (reaction == null) {
+            log.error("Reaction name not found: {}", reactionStr);
+            return new JsonResponse(Status.FAIL, DataType.REACTION_NOT_FOUND, null);
+        }
+
         try {
             match.setReactionId(reaction.getReactionId());
             matchMapper.update(match);
@@ -75,8 +87,50 @@ public class MatchService {
     }
 
     public JsonResponse getAllMatchedUsers(Long userId) {
-        //TODO
-        return null;
+        try {
+            List<Match> matches = matchMapper.findOutMatchOfUser(userId);
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, matches);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse getAllMatchesCreatedByUser(Long userId) {
+        try {
+            List<Match> matches = matchMapper.findMatchOfUser(userId);
+            return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_MATCH, matches);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse getFailedMatchOfUser(Long userId) {
+        try {
+            List<Match> matches = matchMapper.findFailedMatchOfUser(userId);
+            return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_MATCH, matches);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse rewindMatch(Long userId, Long targetId) {
+        Match match = matchMapper.findMatchBetweenUsers(userId, targetId);
+        if (match == null) {
+            log.error("Match between user {} and {} not found", userId, targetId);
+            return new JsonResponse(Status.FAIL, DataType.MATCH_NOT_FOUND, null);
+        }
+
+        try {
+            matchMapper.delete(match);
+            log.info("Match between {} and {} is dropped", match.getUserId(), match.getTargetId());
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
     }
 
     /**

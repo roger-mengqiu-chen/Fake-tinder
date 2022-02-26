@@ -42,6 +42,17 @@ public interface EventMapper {
     })
     List<Event> getByLocationId(Long locationId);
 
+    @Select("SELECT * FROM event e JOIN userEvent ue ON e.eventId = ue.eventId AND ue.userId = #{userId}")
+    @Results({
+            @Result(id = true, property = "eventId", column = "eventId"),
+            @Result(property = "eventName", column = "eventName"),
+            @Result(property = "eventTime", column = "eventTime"),
+            @Result(property = "locationId", column = "locationId"),
+            @Result(property = "eventDescription", column = "eventDescription"),
+            @Result(property = "eventLink", column = "eventLink"),
+    })
+    List<Event> getAllByUserId(Long userId);
+
     /* Create */
     @Insert("INSERT INTO event (eventName, eventTime, locationId, eventDescription, eventLink) VALUES " +
             "(#{eventName}, #{eventTime}, #{locationId}, #{eventDescription}, #{eventLink})")
@@ -56,4 +67,6 @@ public interface EventMapper {
     /* Delete */
     @Delete("DELETE FROM event WHERE eventId = #{eventId}")
     int delete(long eventId);
+
+
 }

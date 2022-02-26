@@ -13,7 +13,9 @@ public enum DataType {
     USER,
     REPORTED_USER,
     PROFILE,
+    LIST_OF_PROFILE,
     MATCH,
+    LIST_OF_MATCH,
     REACTION,
     ATTACHMENT,
     ATTACHMENT_IDS,
@@ -53,5 +55,6 @@ public enum DataType {
 
     MATCH_NOT_FOUND,
 
+    EVENT_NOT_FOUND,
 }
 
