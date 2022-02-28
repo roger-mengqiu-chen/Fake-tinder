@@ -10,7 +10,7 @@ public interface EventInvitationMapper {
     /* Create */
     @Insert("INSERT INTO eventInvitation (eventId, targetUserId, reactionId) VALUES " +
             "(#{eventId}, #{targetUserId}, #{reactionId})")
-    @Options(useGeneratedKeys = true, keyProperty = "eventInvitationId")
+    @Options(useGeneratedKeys = true, keyProperty = "eventInvitationId", keyColumn = "eventInvitationId")
     int save(EventInvitation eventInvitation);
 
     /* Read */
@@ -22,7 +22,7 @@ public interface EventInvitationMapper {
             @Result(property = "targetUserId", column = "targetUserId"),
             @Result(property = "reactionId", column = "reactionId")
     })
-    EventInvitation findByEventInvitationId(long eventInvitationId);
+    EventInvitation findByEventInvitationId(Long eventInvitationId);
 
     /* Search by eventId */
     @Select("SELECT * FROM eventInvitation WHERE eventId = #{eventId}")
@@ -32,7 +32,7 @@ public interface EventInvitationMapper {
             @Result(property = "targetUserId", column = "targetUserId"),
             @Result(property = "reactionId", column = "reactionId")
     })
-    List<EventInvitation> findByEventId(long eventId);
+    List<EventInvitation> findByEventId(Long eventId);
 
     /* Search by targetUserId */
     @Select("SELECT * FROM eventInvitation WHERE targetUserId = #{targetUserId}")
@@ -42,7 +42,7 @@ public interface EventInvitationMapper {
             @Result(property = "targetUserId", column = "targetUserId"),
             @Result(property = "reactionId", column = "reactionId")
     })
-    List<EventInvitation> findByTargetUserId(long targetUserId);
+    List<EventInvitation> findByTargetUserId(Long targetUserId);
 
     /* Search by eventId and targetUserId  */
     @Select("SELECT * FROM eventInvitation WHERE eventId = #{eventId} AND targetUserId = #{targetUserId}")
@@ -52,7 +52,7 @@ public interface EventInvitationMapper {
             @Result(property = "targetUserId", column = "targetUserId"),
             @Result(property = "reactionId", column = "reactionId")
     })
-    EventInvitation findByEventIdAndTargetUserId(long eventId, long targetUserId);
+    EventInvitation findByEventIdAndTargetUserId(Long eventId, Long targetUserId);
 
     /* Search by reactionId */
     @Select("SELECT * FROM eventInvitation WHERE reactionId = #{reactionId}")
@@ -62,14 +62,14 @@ public interface EventInvitationMapper {
             @Result(property = "targetUserId", column = "targetUserId"),
             @Result(property = "reactionId", column = "reactionId")
     })
-    List<EventInvitation> findByReactionId(short reactionId);
+    List<EventInvitation> findByReactionId(Short reactionId);
 
     /* Update */
     @Update("UPDATE eventInvitation SET reactionId = #{reactionId} WHERE eventInvitationId = #{eventInvitationId}")
-    int updateReactionId(long eventInvitationId, short reactionId);
+    int updateReactionId(Long eventInvitationId, Short reactionId);
 
     /* Delete */
     @Delete("DELETE FROM eventInvitation WHERE eventInvitationId = #{eventInvitationId}")
-    int deleteByEventInvitationId(long eventInvitationId);
+    int deleteByEventInvitationId(Long eventInvitationId);
 
 }

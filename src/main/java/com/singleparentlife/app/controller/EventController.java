@@ -1,7 +1,6 @@
 package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
-import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.Event;
 import com.singleparentlife.app.payload.request.EventRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -21,8 +20,8 @@ public class EventController {
     private AuthUtil authUtil;
 
     @PostMapping()
-    public ResponseEntity<JsonResponse> createEvent(@RequestBody Event event){
-        JsonResponse response = eventService.createEvent(event);
+    public ResponseEntity<JsonResponse> createEvent(@RequestBody EventRequest request){
+        JsonResponse response = eventService.createEvent(request);
         return ResponseEntity.ok(response);
     }
 
@@ -32,6 +31,7 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping()
     public ResponseEntity<JsonResponse> getAllEventCreatedByUser() {
         Long userId = authUtil.getCurrentUserId();
         JsonResponse response = eventService.getAllEventOfUser(userId);
