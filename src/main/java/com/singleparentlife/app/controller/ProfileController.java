@@ -5,10 +5,7 @@ import com.singleparentlife.app.Util.LocationUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.model.*;
-import com.singleparentlife.app.payload.request.LocationRequest;
-import com.singleparentlife.app.payload.request.PreferenceRequest;
-import com.singleparentlife.app.payload.request.ProfileRequest;
-import com.singleparentlife.app.payload.request.ReactToProfile;
+import com.singleparentlife.app.payload.request.*;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.*;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +32,8 @@ public class ProfileController {
     private FileService fileService;
     @Autowired
     private PreferenceService preferenceService;
+    @Autowired
+    private NotificationService notificationService;
     @Autowired
     private AuthUtil authUtil;
     @Autowired
@@ -173,6 +172,18 @@ public class ProfileController {
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
         JsonResponse response = matchService.reactToProfile(userId, targetId, reaction);
+        if (matchService.isMatched(userId, targetId)) {
+            Profile targetProfile =(Profile)profileService.getProfileOfUser(targetId).getData();
+            String targetName = targetProfile.getFirstname();
+            NotificationRequest notification = new NotificationRequest();
+            notification.setTopic("Match");
+            notification.setTitle("You have a matched profile");
+            notification.setBody("You have matched with " + targetName);
+            JsonResponse notificationResponse = notificationService.sendNotification(userId, notification);
+            if (notificationResponse.getStatus().equals(Status.FAIL)) {
+                return ResponseEntity.ok(notificationResponse);
+            }
+        }
         return ResponseEntity.ok(response);
     }
 
