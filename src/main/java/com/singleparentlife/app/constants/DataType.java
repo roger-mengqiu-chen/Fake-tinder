@@ -36,7 +36,6 @@ public enum DataType {
     PREFERENCE_NOT_FOUND,
 
     USER_NOT_FOUND,
-    INVALID_USER,
 
     LOCATION_EXISTED,
     LOCATION_NOT_FOUND,
@@ -56,5 +55,7 @@ public enum DataType {
     MATCH_NOT_FOUND,
 
     EVENT_NOT_FOUND,
+
+    EVENT_INVITATION_NOT_FOUND,
 }
 
