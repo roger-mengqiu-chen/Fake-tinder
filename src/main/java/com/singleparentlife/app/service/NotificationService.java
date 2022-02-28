@@ -142,7 +142,6 @@ public class NotificationService {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
-
     }
 
     public JsonResponse getAllNotificationOfUser(Long userId) {
@@ -152,6 +151,19 @@ public class NotificationService {
         } catch ( Exception e) {
             log.error(e.getMessage());
             return  new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse getNotificationById(Long notificationId) {
+        try {
+            AppNotification notification = notificationMapper.getNotificationById(notificationId);
+            if (notification == null) {
+                return new JsonResponse(Status.FAIL, DataType.NOTIFICATION_NOT_FOUND, null);
+            }
+            return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, notification);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
 
