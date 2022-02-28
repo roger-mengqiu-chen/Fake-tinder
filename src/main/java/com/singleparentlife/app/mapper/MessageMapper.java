@@ -24,6 +24,17 @@ public interface MessageMapper {
     })
     Message getMessageById(Long messageId);
 
+    @Select("SELET * FROM message WHERE senderId = #{senderId} AND receiverId = #{receiverId}")
+    @Results({
+            @Result(id = true, property = "messageId", column = "messageId"),
+            @Result(property = "senderId", column = "senderId"),
+            @Result(property = "receiverId", column = "receiverId"),
+            @Result(property = "attachmentId", column = "attachmentId"),
+            @Result(property = "time", column = "time"),
+            @Result(property = "content", column = "content")
+    })
+    Message getCombinedMessage(long senderId, long receiverId);
+
     @Update("UPDATE message " +
             "SET attachmentId = #{attachmentId} " +
             "WHERE messageId = #{messageId}")
@@ -33,4 +44,6 @@ public interface MessageMapper {
 
     @Delete("DELETE FROM message WHERE messageId = #{messageId}")
     int delete(Message message);
+
+
 }
