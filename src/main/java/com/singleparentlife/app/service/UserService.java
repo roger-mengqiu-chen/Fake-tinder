@@ -43,7 +43,7 @@ public class UserService {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
         } catch (FirebaseAuthException e) {
             log.error("Error with validating Firebase token: {}", e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Invalid token");
+            return new JsonResponse(Status.FAIL, DataType.INVALID_TOKEN, null);
         }
         if (decodedToken != null) {
             String fireId = decodedToken.getUid();
@@ -87,7 +87,7 @@ public class UserService {
             }
         } else {
             log.error("Invalid token");
-            return new JsonResponse(Status.FAIL, DataType.STATUS_MESSAGE, "Invalid token");
+            return new JsonResponse(Status.FAIL, DataType.INVALID_TOKEN, null);
         }
     }
 

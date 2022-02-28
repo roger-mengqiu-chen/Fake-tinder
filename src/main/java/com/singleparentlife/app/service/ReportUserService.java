@@ -8,7 +8,9 @@ import com.singleparentlife.app.mapper.UserMapper;
 import com.singleparentlife.app.model.ReportedUser;
 import com.singleparentlife.app.model.User;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import com.singleparentlife.app.payload.response.SanitizedUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,13 +65,16 @@ public class ReportUserService {
         List<ReportedUser> reportedUsers = reportedUserMapper.findById(userId);
         if (reportedUsers.size() == 0) {
             log.error("User id not found");
-            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, "ReportedUser id not found");
+            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, "ReportedUser not found");
         }
         else {
             try {
+                User user = userMapper.findById(userId);
+                SanitizedUser sanitizedUser = new SanitizedUser();
+                BeanUtils.copyProperties(user, sanitizedUser);
                 reportedUserMapper.delete(userId);
                 log.info("ReportedUser is deleted: {}", userId);
-                return new JsonResponse(Status.SUCCESS, DataType.STATUS_MESSAGE, "ReportedUser is deleted");
+                return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
             } catch (Exception e) {
                 log.error(e.getMessage());
                 return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
