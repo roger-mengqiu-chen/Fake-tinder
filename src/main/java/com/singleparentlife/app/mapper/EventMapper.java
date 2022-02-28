@@ -56,7 +56,7 @@ public interface EventMapper {
     /* Create */
     @Insert("INSERT INTO event (eventName, eventTime, locationId, eventDescription, eventLink) VALUES " +
             "(#{eventName}, #{eventTime}, #{locationId}, #{eventDescription}, #{eventLink})")
-    @Options(useGeneratedKeys = true, keyProperty = "eventId")
+    @Options(useGeneratedKeys = true, keyProperty = "eventId", keyColumn = "eventId")
     int save(Event event);
 
     /* Update */
