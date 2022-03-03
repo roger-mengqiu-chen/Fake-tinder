@@ -24,7 +24,8 @@ public interface MessageMapper {
     })
     Message getMessageById(Long messageId);
 
-    @Select("SELET * FROM message WHERE senderId = #{senderId} AND receiverId = #{receiverId}")
+    @Select("SELECT * FROM message senderId = #{user1} AND receiverID = #{user2} OR senderId = #{user2} AND receiverId = #{user1} " +
+            "ORDER by time")
     @Results({
             @Result(id = true, property = "messageId", column = "messageId"),
             @Result(property = "senderId", column = "senderId"),
@@ -33,7 +34,7 @@ public interface MessageMapper {
             @Result(property = "time", column = "time"),
             @Result(property = "content", column = "content")
     })
-    Message getCombinedMessage(long senderId, long receiverId);
+    List<Message> getCombinedMessage(long user1, long user2);
 
     @Update("UPDATE message " +
             "SET attachmentId = #{attachmentId} " +
