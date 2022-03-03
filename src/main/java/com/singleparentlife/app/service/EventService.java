@@ -62,20 +62,29 @@ public class EventService {
     public JsonResponse createEvent(EventRequest request) {
 
         LocationRequest locationRequest = request.getLocation();
+        Location location = null;
 
-        Location location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
-        Location existedLocation = locationMapper.find(location);
-        if (existedLocation == null) {
-            locationMapper.save(location);
+        if (locationRequest != null) {
+            location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
+            if (location == null) {
+                return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, "There's no such location");
+            }
+            Location existedLocation = locationMapper.find(location);
+
+            if (existedLocation == null) {
+                locationMapper.save(location);
+            } else {
+                location.setLocationId(existedLocation.getLocationId());
+            }
         }
-        else {
-            location.setLocationId(existedLocation.getLocationId());
-        }
+
         Event event = new Event();
         event.setEventName(request.getEventName());
         event.setEventDescription(request.getEventDescription());
         event.setEventTime(request.getEventTime());
-        event.setLocationId(location.getLocationId());
+        if (location != null) {
+            event.setLocationId(location.getLocationId());
+        }
         try {
             eventMapper.save(event);
             event.setEventLink(linkUtil.generateEventLink(event.getEventId()));
@@ -88,23 +97,45 @@ public class EventService {
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
     }
-    public JsonResponse updateEvent(Event event) {
-        Event eventRecord = eventMapper.getByEventId(event.getEventId());
+    public JsonResponse updateEvent(EventRequest eventRequest) {
+        Event eventRecord = eventMapper.getByEventId(eventRequest.getEventId());
         if (eventRecord == null) {
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
-        else {
-            try {
-                eventMapper.update(event);
-                //return the event object
-                log.info("Event is updated {}", event.getEventId());
-                return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
+
+        LocationRequest locationRequest = eventRequest.getLocation();
+        Location location = null;
+
+        if (locationRequest != null) {
+            location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
+            if (location == null) {
+                return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, "There's no such location");
             }
-            catch (Exception e){
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+            Location existedLocation = locationMapper.find(location);
+
+            if (existedLocation == null) {
+                locationMapper.save(location);
+            } else {
+                location.setLocationId(existedLocation.getLocationId());
             }
         }
+        if (location != null) {
+            eventRecord.setLocationId(location.getLocationId());
+        }
+        eventRecord.setEventTime(eventRequest.getEventTime());
+        eventRecord.setEventName(eventRequest.getEventName());
+        eventRecord.setEventDescription(eventRequest.getEventDescription());
+        try {
+            eventMapper.update(eventRecord);
+            //return the event object
+            log.info("Event is updated {}", eventRecord.getEventId());
+            return new JsonResponse(Status.SUCCESS, DataType.EVENT, eventRecord);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+
     }
 
     public JsonResponse deleteEvent(Long eventId) {

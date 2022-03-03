@@ -51,8 +51,8 @@ public class EventController {
     }
 
     @PutMapping()
-    public ResponseEntity<JsonResponse> updateEvent(@RequestBody Event event) {
-        JsonResponse response = eventService.updateEvent(event);
+    public ResponseEntity<JsonResponse> updateEvent(@RequestBody EventRequest eventRequest) {
+        JsonResponse response = eventService.updateEvent(eventRequest);
         return ResponseEntity.ok(response);
     }
 
