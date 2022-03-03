@@ -41,6 +41,7 @@ public class LocationUtil {
      */
     public Location GPSToLocation(Double lat, Double lon) {
         if (lat == null || lon == null) {
+            log.error("lat or lon can't be null");
             return null;
         }
         try {
@@ -52,6 +53,7 @@ public class LocationUtil {
                 JSONObject obj = new JSONObject(res);
                 String address = obj.getString("display_name");
                 if (address == null) {
+                    log.error("No location for given GPS");
                     return null;
                 }
                 String[] addressArr = address.split(", ");
