@@ -36,6 +36,7 @@ public class RecommendationController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/preference")
     public ResponseEntity<JsonResponse> getRecommendationsBasedOnPreferences() {
         Long userId = authUtil.getCurrentUserId();
         JsonResponse response = recommendationService.getRecommendationBasedOnMatchedPreference(userId);
