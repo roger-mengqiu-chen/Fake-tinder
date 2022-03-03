@@ -46,5 +46,7 @@ public interface MessageMapper {
     @Delete("DELETE FROM message WHERE messageId = #{messageId}")
     int delete(Message message);
 
+    @Delete("DELETE FROM message WHERE senderId = #{userId} AND receiverId = #{userId}")
+    int deleteAll(long userId);
 
 }
