@@ -50,21 +50,21 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{messageId}")
-    public ResponseEntity<JsonResponse> deleteMessage(@PathVariable Long messageId) {
+    //@DeleteMapping("/{messageId}")
+    //public ResponseEntity<JsonResponse> deleteMessage(@PathVariable Long messageId) {
         //TODO
-        return null;
-    }
+      //  return null;
+    //}
 
-    @DeleteMapping("/user-{userId}")
-    public ResponseEntity<JsonResponse> deleteChatHistoryWithUser(@PathVariable Long userId) {
-        //TODO
-        return null;
-    }
+  //  @DeleteMapping("/user-{userId}")
+    //public ResponseEntity<JsonResponse> deleteChatHistoryWithUser(@PathVariable Long userId) {
+     //   JsonResponse response = messageService.deleteChatHistoryWithUser(userId);
+       // return null;
+   // }
 
     @DeleteMapping("/allmessage")
-    public ResponseEntity<JsonResponse> deleteAllMessageOfUser() {
-        //TODO
+    public ResponseEntity<JsonResponse> deleteAllMessageOfUser(@PathVariable long userId) {
+        JsonResponse response = messageService.deleteChatHistoryWithUser(userId);
         return null;
     }
 }
