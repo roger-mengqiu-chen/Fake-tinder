@@ -84,4 +84,9 @@ public class MessageService {
         return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, messageHistory);
 
     }
+
+    public JsonResponse deleteChatHistoryWithUser(long userId){
+        messageMapper.deleteAll(userId);
+        return new JsonResponse(Status.SUCCESS, null, null);
+    }
 }
