@@ -1,5 +1,6 @@
 package com.singleparentlife.app.controller;
 
+import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.model.Message;
 import com.singleparentlife.app.payload.request.MessageRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -22,6 +23,9 @@ public class MessageController {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private AuthUtil authUtil;
+
     @PostMapping()
     public ResponseEntity<JsonResponse>sendMessage (@RequestPart("message") MessageRequest message, @RequestPart("file")MultipartFile file){
 
@@ -41,8 +45,9 @@ public class MessageController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<JsonResponse> getChatHistoryWithUser(@PathVariable Long userId) {
-        //TODO
-        return null;
+        long currentUser = authUtil.getCurrentUserId();
+        JsonResponse response = messageService.getCombinedMessageHistory(currentUser, userId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{messageId}")
