@@ -37,6 +37,8 @@ public enum DataType {
 
     USER_NOT_FOUND,
 
+    DEVICE_NOT_FOUND,
+
     LOCATION_EXISTED,
     LOCATION_NOT_FOUND,
 
