@@ -59,6 +59,9 @@ public interface EventMapper {
     @Options(useGeneratedKeys = true, keyProperty = "eventId", keyColumn = "eventId")
     int save(Event event);
 
+    @Insert("INSERT INTO userEvent VALUES (#{userId}, #{eventId}) ")
+    int saveUserEvent(Long userId, Long eventId);
+
     /* Update */
     @Update("UPDATE event SET eventName = #{eventName}, eventTime = #{eventTime}, locationId = #{locationId}" +
             ", eventDescription = #{eventDescription}, eventLink = #{eventLink} WHERE eventId = #{eventId}")
