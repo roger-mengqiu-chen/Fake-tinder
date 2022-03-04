@@ -2,8 +2,8 @@ package com.singleparentlife.app.Util;
 
 import com.singleparentlife.app.model.Location;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -106,22 +106,30 @@ public class LocationUtil {
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForEntity(new URI(uri), String.class).getBody();
 
-            JSONObject obj = new JSONObject(result);
-            JSONObject addressObj = obj.getJSONObject("address");
+            JSONArray arr = new JSONArray(result);
+            if (arr.isEmpty()) {
+                log.error("No location for given address");
+                return null;
+            }
+            JSONObject addObj = arr.getJSONObject(0);
+            String address = addObj.getString("display_name");
 
-            street = addressObj.getString("road");
-            city = addressObj.getString("city");
-            province = addressObj.getString("state");
-            country = addressObj.getString("country");
+            String[] addArr = address.split(", ");
+
+            street = addArr[0];
+            city = addArr[2];
+            province = addArr[3];
             String postCode = "";
-            try {
-                postCode = addressObj.getString("postcode");
-            } catch (Exception e) {
-                // Sometimes response doesn't have postcode, if so, ignore it.
+            if (addArr.length > 5) {
+                country = addArr[5];
+                postCode = addArr[4];
+            }
+            else {
+                country = addArr[4];
             }
 
-            String latStr = obj.getString("lat");
-            String lonStr = obj.getString("lon");
+            String latStr = addObj.getString("lat");
+            String lonStr = addObj.getString("lon");
             double lat = Double.parseDouble(latStr);
             double lon = Double.parseDouble(lonStr);
 
