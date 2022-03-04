@@ -19,6 +19,7 @@ public enum DataType {
     REACTION,
     ATTACHMENT,
     ATTACHMENT_IDS,
+    ATTACHMENT_LINKS,
     PREFERENCE_IDS,
     NOTIFICATION,
     EVENT,

@@ -48,10 +48,10 @@ public class DownloadController {
                     new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "UserId can't be empty")
             );
         }
-        List<Long> attachmentIds = fileService.getAttachmentByProfileId(userId);
+        List<String> attachmentLinks = fileService.getAttachmentByProfileId(userId);
 
         return ResponseEntity.ok().body(
-                new JsonResponse(Status.SUCCESS, DataType.ATTACHMENT_IDS, attachmentIds)
+                new JsonResponse(Status.SUCCESS, DataType.ATTACHMENT_LINKS, attachmentLinks)
         );
     }
 
