@@ -158,7 +158,7 @@ public class UserService {
         sanitizedUser.setEmail(user.getEmail());
         sanitizedUser.setPhone(user.getPhone());
         sanitizedUser.setFireId(user.getFireId());
-        switch (user.getUserId().intValue()) {
+        switch (user.getRoleId()) {
             case 1: sanitizedUser.setRole("Administrator"); break;
             case 2: sanitizedUser.setRole("Free User"); break;
             case 3: sanitizedUser.setRole("Premium User"); break;
