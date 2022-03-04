@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -67,5 +68,25 @@ public class MessageService {
             }
         }
         return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, messageResponse);
+    }
+
+    public JsonResponse getCombinedMessageHistory(long currentUser, long otherUser){
+        List<Message> messageHistory = messageMapper.getCombinedMessage(currentUser, otherUser);
+
+        if (messageHistory.equals(null) || messageHistory.isEmpty()){
+            try {
+                throw new IOException();
+            } catch (IOException e){
+                log.error((e.getMessage()));
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");
+            }
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, messageHistory);
+
+    }
+
+    public JsonResponse deleteChatHistoryWithUser(long userId){
+        messageMapper.deleteAll(userId);
+        return new JsonResponse(Status.SUCCESS, null, null);
     }
 }
