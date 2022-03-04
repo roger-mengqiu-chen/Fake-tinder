@@ -58,6 +58,56 @@ public class LocationUtil {
                 }
                 String[] addressArr = address.split(", ");
 
+                String latStr = obj.getString("lat");
+                String lonStr = obj.getString("lon");
+                lat = Double.parseDouble(latStr);
+                lon = Double.parseDouble(lonStr);
+
+                Location location = new Location();
+                location.setLat(lat);
+                location.setLon(lon);
+                location.setCountry(addressArr[5]);
+                location.setProvince(addressArr[3]);
+                location.setCity(addressArr[2]);
+                location.setStreet(addressArr[0]);
+                location.setPostcode(addressArr[4]);
+
+                return location;
+            }
+        } catch (URISyntaxException e ) {
+            log.error(e.getMessage());
+        } catch (Exception e1) {
+            log.error(e1.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Convert address to GPS
+     * @param address detailed address
+     * @return Location that is store in database
+     */
+    public Location AddressToGPS (String address) {
+        address = address.replaceAll("\\s", "+");
+        try {
+            String uri = String.format("https://nominatim.openstreetmap.org/search.php?q=%s&format=jsonv2", address);
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForEntity(new URI(uri), String.class).getBody();
+            String res = result.substring(1, result.length()-1);
+            if (res.length() > 0) {
+                JSONObject obj = new JSONObject(res);
+                address = obj.getString("display_name");
+                if (address == null) {
+                    log.error("No location for given GPS");
+                    return null;
+                }
+                String[] addressArr = address.split(", ");
+
+                String latStr = obj.getString("lat");
+                String lonStr = obj.getString("lon");
+                double lat = Double.parseDouble(latStr);
+                double lon = Double.parseDouble(lonStr);
+
                 Location location = new Location();
                 location.setLat(lat);
                 location.setLon(lon);
