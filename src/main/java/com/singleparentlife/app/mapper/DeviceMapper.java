@@ -47,4 +47,7 @@ public interface DeviceMapper {
 
     @Delete("DELETE FROM userDevice WHERE userId = #{userId}")
     int deleteAllDevicesOfUser(Long userId);
+
+    @Delete("DELETE FROM userDevice WHERE deviceId = #{deviceId}")
+    int deleteDevice(Device device);
 }

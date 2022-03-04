@@ -149,6 +149,26 @@ public class UserService {
         }
     }
 
+    public JsonResponse logout (Long userId, String deviceToken) {
+        User user = userMapper.findById(userId);
+        if (user == null) {
+            return new JsonResponse(Status.FAIL, DataType.USER_NOT_FOUND, null);
+        }
+        Device device = deviceMapper.getDeviceByToken(deviceToken);
+        if (device == null) {
+            return new JsonResponse(Status.FAIL, DataType.DEVICE_NOT_FOUND, null);
+        }
+        try {
+            deviceMapper.deleteDevice(device);
+            SanitizedUser sanitizedUser = sanitizeUser(user);
+            log.info("User logged out: {}", user.getUserId());
+            return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
     /*
        When we return user back to front end, we need hide some sensitive data.
     */
