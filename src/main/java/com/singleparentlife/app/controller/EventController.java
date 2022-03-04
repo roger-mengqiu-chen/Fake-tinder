@@ -1,8 +1,8 @@
 package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
-import com.singleparentlife.app.model.Event;
 import com.singleparentlife.app.payload.request.EventRequest;
+import com.singleparentlife.app.payload.request.EventRequestWithAddress;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,18 @@ public class EventController {
     @Autowired
     private AuthUtil authUtil;
 
-    @PostMapping()
-    public ResponseEntity<JsonResponse> createEvent(@RequestBody EventRequest request){
-        JsonResponse response = eventService.createEvent(request);
+    @PostMapping("/gps")
+    public ResponseEntity<JsonResponse> createEventWithGPS(@RequestBody EventRequest request){
+        Long userId = authUtil.getCurrentUserId();
+        JsonResponse response = eventService.createEvent(userId, request);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/address")
+    public ResponseEntity<JsonResponse> createEventWithAddress(@RequestBody EventRequestWithAddress request) {
+        Long userId = authUtil.getCurrentUserId();
+        JsonResponse response = eventService.createEventWithAddress(userId, request);
+        return  ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
@@ -51,8 +59,8 @@ public class EventController {
     }
 
     @PutMapping()
-    public ResponseEntity<JsonResponse> updateEvent(@RequestBody Event event) {
-        JsonResponse response = eventService.updateEvent(event);
+    public ResponseEntity<JsonResponse> updateEvent(@RequestBody EventRequest eventRequest) {
+        JsonResponse response = eventService.updateEvent(eventRequest);
         return ResponseEntity.ok(response);
     }
 

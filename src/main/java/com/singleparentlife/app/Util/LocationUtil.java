@@ -2,8 +2,8 @@ package com.singleparentlife.app.Util;
 
 import com.singleparentlife.app.model.Location;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,32 +41,109 @@ public class LocationUtil {
      */
     public Location GPSToLocation(Double lat, Double lon) {
         if (lat == null || lon == null) {
+            log.error("lat or lon can't be null");
             return null;
         }
         try {
-            String uri = String.format("https://nominatim.openstreetmap.org/search.php?q=%.10f%%2C+%.10f&format=jsonv2", lat, lon);
+            String uri = String.format("https://nominatim.openstreetmap.org/reverse.php?lat=%.10f&lon=%.10f&zoom=18&format=jsonv2", lat, lon);
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForEntity(new URI(uri), String.class).getBody();
-            String res = result.substring(1, result.length()-1);
-            if (res.length() > 0) {
-                JSONObject obj = new JSONObject(res);
-                String address = obj.getString("display_name");
-                if (address == null) {
-                    return null;
-                }
-                String[] addressArr = address.split(", ");
+            //String res = result.substring(1, result.length()-1);
 
-                Location location = new Location();
-                location.setLat(lat);
-                location.setLon(lon);
-                location.setCountry(addressArr[5]);
-                location.setProvince(addressArr[3]);
-                location.setCity(addressArr[2]);
-                location.setStreet(addressArr[0]);
-                location.setPostcode(addressArr[4]);
+            JSONObject obj = new JSONObject(result);
 
-                return location;
+            JSONObject addressObj = obj.getJSONObject("address");
+
+            String road = addressObj.getString("road");
+            String city = addressObj.getString("city");
+            String province = addressObj.getString("state");
+            String country = addressObj.getString("country");
+            String postCode = "";
+            try {
+                postCode = addressObj.getString("postcode");
+            } catch (Exception e) {
+                // Sometimes response doesn't have postcode, if so, ignore it.
             }
+
+            String latStr = obj.getString("lat");
+            String lonStr = obj.getString("lon");
+            lat = Double.parseDouble(latStr);
+            lon = Double.parseDouble(lonStr);
+
+            Location location = new Location();
+            location.setLat(lat);
+            location.setLon(lon);
+            location.setCountry(country);
+            location.setProvince(province);
+            location.setCity(city);
+            location.setStreet(road);
+            location.setPostcode(postCode);
+
+            return location;
+
+        } catch (URISyntaxException e ) {
+            log.error(e.getMessage());
+        } catch (Exception e1) {
+            log.error(e1.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Convert address to GPS
+     *
+     * @return Location that is store in database
+     */
+    public Location AddressToGPS (String street, String city, String province, String country) {
+        street = street.replaceAll("\\s", "+");
+        city = city.replaceAll("\\s", "+");
+        province = province.replaceAll("\\s", "+");
+        country = country.replaceAll("\\s", "+");
+
+        try {
+            String uri = String.format("https://nominatim.openstreetmap.org/search.php?street=%s&city=%s&state=%s&country=%s&format=jsonv2",
+                    street, city, province, country);
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForEntity(new URI(uri), String.class).getBody();
+
+            JSONArray arr = new JSONArray(result);
+            if (arr.isEmpty()) {
+                log.error("No location for given address");
+                return null;
+            }
+            JSONObject addObj = arr.getJSONObject(0);
+            String address = addObj.getString("display_name");
+
+            String[] addArr = address.split(", ");
+
+            street = addArr[0];
+            city = addArr[2];
+            province = addArr[3];
+            String postCode = "";
+            if (addArr.length > 5) {
+                country = addArr[5];
+                postCode = addArr[4];
+            }
+            else {
+                country = addArr[4];
+            }
+
+            String latStr = addObj.getString("lat");
+            String lonStr = addObj.getString("lon");
+            double lat = Double.parseDouble(latStr);
+            double lon = Double.parseDouble(lonStr);
+
+            Location location = new Location();
+            location.setLat(lat);
+            location.setLon(lon);
+            location.setCountry(country);
+            location.setProvince(province);
+            location.setCity(city);
+            location.setStreet(street);
+            location.setPostcode(postCode);
+
+            return location;
+
         } catch (URISyntaxException e ) {
             log.error(e.getMessage());
         } catch (Exception e1) {

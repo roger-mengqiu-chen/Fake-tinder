@@ -8,7 +8,9 @@ import com.singleparentlife.app.mapper.EventMapper;
 import com.singleparentlife.app.mapper.LocationMapper;
 import com.singleparentlife.app.model.Event;
 import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.payload.request.AddressRequest;
 import com.singleparentlife.app.payload.request.EventRequest;
+import com.singleparentlife.app.payload.request.EventRequestWithAddress;
 import com.singleparentlife.app.payload.request.LocationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -59,52 +61,114 @@ public class EventService {
         }
     }
 
-    public JsonResponse createEvent(EventRequest request) {
+    public JsonResponse createEvent(Long userId, EventRequest request) {
 
         LocationRequest locationRequest = request.getLocation();
+        Location location = null;
 
-        Location location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
-        Location existedLocation = locationMapper.find(location);
-        if (existedLocation == null) {
-            locationMapper.save(location);
+        if (locationRequest != null) {
+            location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
+            if (location == null) {
+                return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, "There's no such location");
+            }
+            Location existedLocation = locationMapper.find(location);
+
+            if (existedLocation == null) {
+                locationMapper.save(location);
+            } else {
+                location.setLocationId(existedLocation.getLocationId());
+            }
         }
-        else {
-            location.setLocationId(existedLocation.getLocationId());
+
+        Event event = new Event();
+        event.setEventName(request.getEventName());
+        event.setEventDescription(request.getEventDescription());
+        event.setEventTime(request.getEventTime());
+
+        try {
+            saveEventAtLocation(userId, event, location);
+            return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+    }
+
+    public JsonResponse createEventWithAddress(Long userId, EventRequestWithAddress request) {
+        AddressRequest addressRequest = request.getLocation();
+        Location location = null;
+
+        if (addressRequest != null) {
+            location = locationUtil.AddressToGPS(
+                    addressRequest.getStreet(),
+                    addressRequest.getCity(),
+                    addressRequest.getProvince(),
+                    addressRequest.getCountry());
+            if (location == null) {
+                return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, "There's no such location");
+            }
+            Location existedLocation = locationMapper.find(location);
+
+            if (existedLocation == null) {
+                locationMapper.save(location);
+            } else {
+                location.setLocationId(existedLocation.getLocationId());
+            }
         }
         Event event = new Event();
         event.setEventName(request.getEventName());
         event.setEventDescription(request.getEventDescription());
         event.setEventTime(request.getEventTime());
-        event.setLocationId(location.getLocationId());
+
         try {
-            eventMapper.save(event);
-            event.setEventLink(linkUtil.generateEventLink(event.getEventId()));
-            eventMapper.update(event);
-            log.info("New event created");
+            saveEventAtLocation(userId, event, location);
             return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
+
     }
-    public JsonResponse updateEvent(Event event) {
-        Event eventRecord = eventMapper.getByEventId(event.getEventId());
+
+    public JsonResponse updateEvent(EventRequest eventRequest) {
+        Event eventRecord = eventMapper.getByEventId(eventRequest.getEventId());
         if (eventRecord == null) {
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
-        else {
-            try {
-                eventMapper.update(event);
-                //return the event object
-                log.info("Event is updated {}", event.getEventId());
-                return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
+
+        LocationRequest locationRequest = eventRequest.getLocation();
+        Location location = null;
+
+        if (locationRequest != null) {
+            location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
+            if (location == null) {
+                return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, "There's no such location");
             }
-            catch (Exception e){
-                log.error(e.getMessage());
-                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+            Location existedLocation = locationMapper.find(location);
+
+            if (existedLocation == null) {
+                locationMapper.save(location);
+            } else {
+                location.setLocationId(existedLocation.getLocationId());
             }
         }
+        if (location != null) {
+            eventRecord.setLocationId(location.getLocationId());
+        }
+        eventRecord.setEventTime(eventRequest.getEventTime());
+        eventRecord.setEventName(eventRequest.getEventName());
+        eventRecord.setEventDescription(eventRequest.getEventDescription());
+        try {
+            eventMapper.update(eventRecord);
+            //return the event object
+            log.info("Event is updated {}", eventRecord.getEventId());
+            return new JsonResponse(Status.SUCCESS, DataType.EVENT, eventRecord);
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        }
+
     }
 
     public JsonResponse deleteEvent(Long eventId) {
@@ -134,6 +198,18 @@ public class EventService {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
+    }
+
+    private void saveEventAtLocation (Long userId, Event event, Location location) {
+        if (location != null) {
+            event.setLocationId(location.getLocationId());
+        }
+
+        eventMapper.save(event);
+        event.setEventLink(linkUtil.generateEventLink(event.getEventId()));
+        eventMapper.update(event);
+        log.info("New event created");
+        eventMapper.saveUserEvent(userId, event.getEventId());
 
     }
 }

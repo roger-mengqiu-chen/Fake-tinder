@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS event (
     eventTime datetime NOT NULL,
     locationId bigint NOT NULL,
     eventDescription mediumText NOT NULL,
-    eventLink varchar(255) NOT NULL,
+    eventLink varchar(255),
     PRIMARY KEY (eventId),
     FOREIGN KEY (locationId) REFERENCES location (locationId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
