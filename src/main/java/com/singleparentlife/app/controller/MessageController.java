@@ -50,6 +50,13 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<JsonResponse> getAllUserChat(@PathVariable Long userId){
+        long currentUser = authUtil.getCurrentUserId();
+        JsonResponse response = messageService.getAllMessage(userId);
+        return ResponseEntity.ok(response);
+    }
+
     //@DeleteMapping("/{messageId}")
     //public ResponseEntity<JsonResponse> deleteMessage(@PathVariable Long messageId) {
         //TODO
