@@ -85,8 +85,25 @@ public class MessageService {
 
     }
 
+    public JsonResponse getAllMessage(long userId){
+        List<Message> messageHistory = messageMapper.getAllUserMessage(userId);
+
+        if(messageHistory.isEmpty()){
+            try {
+                throw new IOException();
+            } catch (IOException e){
+                log.error((e.getMessage()));
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, "IO Exception");
+            }
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, messageHistory);
+    }
+
+
     public JsonResponse deleteChatHistoryWithUser(long userId){
         messageMapper.deleteAll(userId);
         return new JsonResponse(Status.SUCCESS, null, null);
     }
+
+
 }

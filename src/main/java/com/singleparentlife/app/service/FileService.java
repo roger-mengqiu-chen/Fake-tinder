@@ -1,6 +1,7 @@
 package com.singleparentlife.app.service;
 
 import com.singleparentlife.app.Util.FileUtil;
+import com.singleparentlife.app.Util.LinkUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.AttachmentMapper;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,6 +31,8 @@ public class FileService {
     private AttachmentMapper attachmentMapper;
     @Autowired
     private FileUtil fileUtil;
+    @Autowired
+    private LinkUtil linkUtil;
 
     public JsonResponse uploadWithProfile(Long userId, MultipartFile file){
         if (!fileUtil.isValidImage(file)) {
@@ -111,8 +115,10 @@ public class FileService {
         return attachmentMapper.findByMessageId(messageId);
     }
 
-    public List<Long> getAttachmentByProfileId(long userId) {
-        return attachmentMapper.findByProfileId(userId);
+    public List<String> getAttachmentByProfileId(long userId) {
+        List<Long> attachmentIds = attachmentMapper.findByProfileId(userId);
+        List<String> attachmentLinks = attachmentIds.stream().map(linkUtil::generateProfileImageLink).collect(Collectors.toList());
+        return attachmentLinks;
     }
 
     public Attachment getAttachmentById(long attachmentId) {

@@ -19,6 +19,7 @@ public enum DataType {
     REACTION,
     ATTACHMENT,
     ATTACHMENT_IDS,
+    ATTACHMENT_LINKS,
     PREFERENCE_IDS,
     NOTIFICATION,
     EVENT,
@@ -36,6 +37,8 @@ public enum DataType {
     PREFERENCE_NOT_FOUND,
 
     USER_NOT_FOUND,
+
+    DEVICE_NOT_FOUND,
 
     LOCATION_EXISTED,
     LOCATION_NOT_FOUND,

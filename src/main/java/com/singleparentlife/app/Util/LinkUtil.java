@@ -9,4 +9,8 @@ public class LinkUtil {
     public String generateEventLink(Long eventId) {
         return SecurityConstant.SERVER + "/event/" + eventId;
     }
+
+    public String generateProfileImageLink(Long attachmentId) {
+        return SecurityConstant.SERVER + "/download/" + attachmentId;
+    }
 }
