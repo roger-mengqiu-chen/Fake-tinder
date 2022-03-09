@@ -32,6 +32,7 @@ public class EventService {
     private LinkUtil linkUtil;
 
     public JsonResponse getEventByEventId(Long eventId){
+        // Receive the event record by the event ID and return the result.
         Event event = eventMapper.getByEventId(eventId);
         if (event == null) {
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, "Event not found: " + eventId);
@@ -42,6 +43,7 @@ public class EventService {
     }
 
     public JsonResponse getEventByLocationId(Long locationId){
+        // Receive event records (List) by the location ID and return the result.
         List<Event> eventL = eventMapper.getByLocationId(locationId);
         if (eventL.size() == 0){
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
@@ -52,6 +54,7 @@ public class EventService {
     }
 
     public JsonResponse getAllEvent() {
+        // Receive all events in database. If there is no record in the event table, return Status.FAIL.
         List<Event> eventL = eventMapper.getAll();
         if (eventL.size() == 0){
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
@@ -63,9 +66,11 @@ public class EventService {
 
     public JsonResponse createEvent(Long userId, EventRequest request) {
 
+        // Get the LocationRequest from EventRequest.
         LocationRequest locationRequest = request.getLocation();
         Location location = null;
 
+        // Verify the LocationRequest information and transfer to Location object
         if (locationRequest != null) {
             location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
             if (location == null) {
@@ -80,11 +85,13 @@ public class EventService {
             }
         }
 
+        // Get the event information
         Event event = new Event();
         event.setEventName(request.getEventName());
         event.setEventDescription(request.getEventDescription());
         event.setEventTime(request.getEventTime());
 
+        // Save event record
         try {
             saveEventAtLocation(userId, event, location);
             return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
@@ -95,9 +102,11 @@ public class EventService {
     }
 
     public JsonResponse createEventWithAddress(Long userId, EventRequestWithAddress request) {
+        // Get the AddressRequest from EventRequest.
         AddressRequest addressRequest = request.getLocation();
         Location location = null;
 
+        // Verify the LocationRequest information and transfer to Location object
         if (addressRequest != null) {
             location = locationUtil.AddressToGPS(
                     addressRequest.getStreet(),
@@ -115,11 +124,14 @@ public class EventService {
                 location.setLocationId(existedLocation.getLocationId());
             }
         }
+
+        // Get the event information
         Event event = new Event();
         event.setEventName(request.getEventName());
         event.setEventDescription(request.getEventDescription());
         event.setEventTime(request.getEventTime());
 
+        // Save event record
         try {
             saveEventAtLocation(userId, event, location);
             return new JsonResponse(Status.SUCCESS, DataType.EVENT, event);
@@ -131,14 +143,17 @@ public class EventService {
     }
 
     public JsonResponse updateEvent(EventRequest eventRequest) {
+        // Receive event information by event ID
         Event eventRecord = eventMapper.getByEventId(eventRequest.getEventId());
         if (eventRecord == null) {
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
 
+        // Get the LocationRequest from EventRequest.
         LocationRequest locationRequest = eventRequest.getLocation();
         Location location = null;
 
+        // Verify the LocationRequest information and transfer to Location object
         if (locationRequest != null) {
             location = locationUtil.GPSToLocation(locationRequest.getLat(), locationRequest.getLon());
             if (location == null) {
@@ -155,9 +170,13 @@ public class EventService {
         if (location != null) {
             eventRecord.setLocationId(location.getLocationId());
         }
+
+        // Get the event information
         eventRecord.setEventTime(eventRequest.getEventTime());
         eventRecord.setEventName(eventRequest.getEventName());
         eventRecord.setEventDescription(eventRequest.getEventDescription());
+
+        // Verify the LocationRequest information and transfer to Location object
         try {
             eventMapper.update(eventRecord);
             //return the event object
@@ -172,11 +191,13 @@ public class EventService {
     }
 
     public JsonResponse deleteEvent(Long eventId) {
+        // Verify the event ID
         Event eventRecord = eventMapper.getByEventId(eventId);
         if (eventRecord == null) {
             return new JsonResponse(Status.FAIL, DataType.EVENT_NOT_FOUND, null);
         }
         else {
+            // If the event ID is valid, delete the event record
             try {
                 eventMapper.delete(eventId);
                 //return the eventInvitation object
@@ -191,6 +212,7 @@ public class EventService {
     }
 
     public JsonResponse getAllEventOfUser(Long userId) {
+        // Get all event record from database
         try {
             List<Event> events = eventMapper.getAllByUserId(userId);
             return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_EVENT, events);
@@ -201,10 +223,12 @@ public class EventService {
     }
 
     private void saveEventAtLocation (Long userId, Event event, Location location) {
+        // Import address object to the event object
         if (location != null) {
             event.setLocationId(location.getLocationId());
         }
 
+        // Save the event
         eventMapper.save(event);
         event.setEventLink(linkUtil.generateEventLink(event.getEventId()));
         eventMapper.update(event);
