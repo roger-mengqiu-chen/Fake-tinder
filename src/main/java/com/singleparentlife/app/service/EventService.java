@@ -6,8 +6,10 @@ import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.EventMapper;
 import com.singleparentlife.app.mapper.LocationMapper;
+import com.singleparentlife.app.mapper.ProfileMapper;
 import com.singleparentlife.app.model.Event;
 import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.payload.request.AddressRequest;
 import com.singleparentlife.app.payload.request.EventRequest;
 import com.singleparentlife.app.payload.request.EventRequestWithAddress;
@@ -17,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,6 +30,8 @@ public class EventService {
     private EventMapper eventMapper;
     @Autowired
     private LocationMapper locationMapper;
+    @Autowired
+    private ProfileMapper profileMapper;
     @Autowired
     private LocationUtil locationUtil;
     @Autowired
@@ -198,6 +204,31 @@ public class EventService {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
+    }
+
+    public JsonResponse getEventNearBy(Long userId) {
+        Profile profile = profileMapper.findByUserId(userId);
+        if(profile == null) {
+            return new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null);
+        }
+
+        Location userLocation = locationMapper.findById(profile.getLocationId());
+        List<Event> events = eventMapper.getAll();
+        List<Event> sortedEvent = new ArrayList<>();
+        List<Double> distances = new ArrayList<>();
+        for (Event e : events) {
+            Location l = locationMapper.findById(e.getLocationId());
+            e.setDistanceToMe(Double.MAX_VALUE);
+            if (l != null) {
+                double distance = locationUtil.distanceBetweenLocations(userLocation, l);
+                e.setDistanceToMe(distance);
+            }
+            
+            sortedEvent.add(e);
+        }
+
+        //TODO
+        return null;
     }
 
     private void saveEventAtLocation (Long userId, Event event, Location location) {
