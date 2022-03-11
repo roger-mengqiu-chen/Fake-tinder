@@ -104,7 +104,7 @@ public class ProfileController {
 
     @PutMapping()
     public ResponseEntity<JsonResponse> updateProfile(@RequestBody ProfileRequest request) {
-        Long userId = request.getUserId();
+        Long userId = authUtil.getCurrentUserId();
 
         // as email is not part of profile, it should be updated with userService
         String email = request.getEmail();
