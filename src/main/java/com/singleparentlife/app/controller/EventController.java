@@ -39,6 +39,13 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/location")
+    public ResponseEntity<JsonResponse> getEventsSortedByLocation() {
+        Long userId = authUtil.getCurrentUserId();
+        JsonResponse response = eventService.getEventNearBy(userId);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping()
     public ResponseEntity<JsonResponse> getAllEventCreatedByUser() {
         Long userId = authUtil.getCurrentUserId();

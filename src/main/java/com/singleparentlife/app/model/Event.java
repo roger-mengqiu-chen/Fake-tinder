@@ -18,4 +18,6 @@ public class Event {
     private String eventDescription;
 
     private String eventLink;
+
+    private double distanceToMe;
 }
