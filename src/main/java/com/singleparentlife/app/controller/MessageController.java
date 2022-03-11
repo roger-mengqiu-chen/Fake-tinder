@@ -43,6 +43,7 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping("/singleHistory/{userId}")
     public ResponseEntity<JsonResponse> getChatHistoryWithUser(@PathVariable Long userId) {
         long currentUser = authUtil.getCurrentUserId();
