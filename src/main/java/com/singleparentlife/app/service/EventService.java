@@ -2,6 +2,7 @@ package com.singleparentlife.app.service;
 
 import com.singleparentlife.app.Util.LinkUtil;
 import com.singleparentlife.app.Util.LocationUtil;
+import com.singleparentlife.app.Util.comparator.EventDistanceComparator;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.EventMapper;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -133,7 +135,6 @@ public class EventService {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
         }
-
     }
 
     public JsonResponse updateEvent(EventRequest eventRequest) {
@@ -223,12 +224,11 @@ public class EventService {
                 double distance = locationUtil.distanceBetweenLocations(userLocation, l);
                 e.setDistanceToMe(distance);
             }
-            
             sortedEvent.add(e);
         }
+        sortedEvent.sort(new EventDistanceComparator());
 
-        //TODO
-        return null;
+        return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_EVENT, sortedEvent);
     }
 
     private void saveEventAtLocation (Long userId, Event event, Location location) {
