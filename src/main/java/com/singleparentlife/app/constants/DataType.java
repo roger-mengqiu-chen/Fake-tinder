@@ -6,8 +6,12 @@ public enum DataType {
     /* Object types */
     PREFERENCE,
     PREFERENCE_WITH_ERROR,
+    LIST_OF_PREFERENCE,
+
     TAG,
     TAG_WITH_ERROR,
+    LIST_OF_TAGS,
+
     LOCATION,
     MESSAGE,
     USER,
@@ -21,6 +25,7 @@ public enum DataType {
     ATTACHMENT_IDS,
     ATTACHMENT_LINKS,
     PREFERENCE_IDS,
+
     NOTIFICATION,
     EVENT,
     LIST_OF_EVENT,
