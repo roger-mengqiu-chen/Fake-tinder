@@ -8,8 +8,7 @@ import java.time.LocalDate;
 
 @Data
 public class ProfileRequest {
-    @JsonProperty
-    private Long userId;
+
     @JsonProperty
     private String firstname;
     @JsonProperty

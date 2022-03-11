@@ -33,6 +33,10 @@ public class Profile {
 
     private Long locationId;
 
+    private double distanceToMe;
+
+    private int numberOfMatchedPreferencesWithMe;
+
     public void reduceProfileImgAmt() {
         if (this.profileImgAmt <= 0) {
             throw new UnsupportedOperationException();

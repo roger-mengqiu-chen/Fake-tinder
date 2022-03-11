@@ -43,16 +43,16 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
-    /*
-    @GetMapping("/{userId}")
+
+    @GetMapping("/singleHistory/{userId}")
     public ResponseEntity<JsonResponse> getChatHistoryWithUser(@PathVariable Long userId) {
         long currentUser = authUtil.getCurrentUserId();
         JsonResponse response = messageService.getCombinedMessageHistory(currentUser, userId);
         return ResponseEntity.ok(response);
     }
-    */
-    @GetMapping("/{userId}")
-    public ResponseEntity<JsonResponse> getAllUserChat(@PathVariable Long userId){
+
+    @GetMapping("/allHistory/{userId}")
+    public ResponseEntity<JsonResponse> getAllChatHistory(@PathVariable Long userId){
         long currentUser = authUtil.getCurrentUserId();
         JsonResponse response = messageService.getAllMessage(userId);
         return ResponseEntity.ok(response);
