@@ -10,7 +10,7 @@ public interface NotificationMapper {
 
     @Insert("INSERT INTO notification (userId, topic, title, content, time, isRead) " +
             "VALUES (#{userId}, #{topic}, #{title}, #{content}, #{time}, #{isRead})")
-    @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")
+    @Options(useGeneratedKeys = true, keyProperty = "notificationId", keyColumn = "notificationId")
     int save(AppNotification appNotification);
 
     @Select("SELECT * FROM notification WHERE userId = #{userId}")
