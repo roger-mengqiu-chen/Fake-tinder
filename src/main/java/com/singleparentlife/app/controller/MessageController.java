@@ -3,9 +3,11 @@ package com.singleparentlife.app.controller;
 import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.model.Message;
 import com.singleparentlife.app.payload.request.MessageRequest;
+import com.singleparentlife.app.payload.request.NotificationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.MessageService;
 import com.singleparentlife.app.service.NotificationService;
+import com.singleparentlife.app.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class MessageController {
     private NotificationService notificationService;
 
     @Autowired
+    private ProfileService profileService;
+
+    @Autowired
     private AuthUtil authUtil;
 
     @PostMapping()
@@ -39,6 +44,11 @@ public class MessageController {
         msg.setTime(LocalDateTime.now());
 
         JsonResponse response = messageService.sendMessage(msg, file);
+        NotificationRequest notificationRequest = new NotificationRequest();
+        notificationRequest.setTopic("Message");
+        notificationRequest.setTitle("You have a new message");
+        notificationRequest.setBody("You received a new text message from " + senderId);
+        notificationService.sendNotification(receiverId, notificationRequest);
 
         return ResponseEntity.ok(response);
     }
