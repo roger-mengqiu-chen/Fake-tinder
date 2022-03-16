@@ -34,7 +34,7 @@ public class MessageController {
     @PostMapping()
     public ResponseEntity<JsonResponse>sendMessage (@RequestPart("message") MessageRequest message, @RequestPart("file")MultipartFile file){
 
-        Long senderId = message.getSenderId();
+        Long senderId = authUtil.getCurrentUserId();
         Long receiverId = message.getReceiverId();
         String content = message.getContent();
         Message msg = new Message();
