@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 public interface ReactionMapper {
     /* Only has findByName */
 
-    @Select("SELECT * FROM reaction WHERE reactionType = #{reactionType")
+    @Select("SELECT * FROM reaction WHERE reactionType = #{reactionType}")
     @Results({
             @Result(id = true, property = "reactionId", column = "reactionId"),
             @Result(property = "reactionId", column = "reactionId")
