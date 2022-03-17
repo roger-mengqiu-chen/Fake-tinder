@@ -29,8 +29,11 @@ public class NotificationService {
     private DeviceMapper deviceMapper;
 
     public JsonResponse sendNotification(Long userId, NotificationRequest notificationRequest) {
+        // Get the device token information from database by the user ID.
         List<String> devices = deviceMapper.getAllDeviceTokensOfUser(userId);
+        // Check if user has devices
         if (devices.size() > 0) {
+            // Create multicast message  base on the notificaiton request.
             MulticastMessage multicastMessage =
                     MulticastMessage.builder()
                             .addAllTokens(devices)
@@ -44,6 +47,7 @@ public class NotificationService {
                             .build();
 
             try {
+                // Send multicast message. Create and save the notification.
                 BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(multicastMessage);
                 log.info("{} messages has been sent successfully", response.getSuccessCount());
                 AppNotification appNotification = new AppNotification();
@@ -77,12 +81,14 @@ public class NotificationService {
     }
 
     public JsonResponse readNotificationById(Long notificationId) {
+        // Get the notification from database by notification ID.
         AppNotification notification = notificationMapper.getNotificationById(notificationId);
 
         if (notification == null) {
             return new JsonResponse(Status.FAIL, DataType.NOTIFICATION_NOT_FOUND, null);
         }
         try {
+            // Return the notification.
             notificationMapper.markStatusOfNotificationById(notificationId, true);
             log.info("Notification is updated: {}", notificationId);
             return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, notification);
@@ -93,12 +99,14 @@ public class NotificationService {
     }
 
     public JsonResponse unreadNotificationById(Long notificationId) {
+        // Get the notification from database by notification ID.
         AppNotification notification = notificationMapper.getNotificationById(notificationId);
 
         if (notification == null) {
             return new JsonResponse(Status.FAIL, DataType.NOTIFICATION_NOT_FOUND, null);
         }
         try {
+            // Update this notification as unread status.
             notificationMapper.markStatusOfNotificationById(notificationId, false);
             log.info("Notification is updated: {}", notificationId);
             return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, notification);
@@ -110,6 +118,7 @@ public class NotificationService {
 
     public JsonResponse readAllNotificationsOfUser(Long userId) {
         try {
+            // Update all notification of this user as read status.
             notificationMapper.markStatusOfAllNotification(userId, true);
             log.info("Notifications of user {} are updated", userId );
             return new JsonResponse(Status.SUCCESS, null, null);
@@ -121,6 +130,7 @@ public class NotificationService {
 
     public JsonResponse unreadAllNotificationsOfUser(Long userId) {
         try {
+            // Update all notification of this user as unread status.
             notificationMapper.markStatusOfAllNotification(userId, false);
             log.info("Notifications of user {} are updated", userId );
             return new JsonResponse(Status.SUCCESS, null, null);
@@ -131,12 +141,13 @@ public class NotificationService {
     }
 
     public JsonResponse deleteNotificationById(Long notificationId) {
-
+        // Get the notification from database by notification ID.
         AppNotification notification = notificationMapper.getNotificationById(notificationId);
         if (notification == null) {
             return new JsonResponse(Status.FAIL, DataType.NOTIFICATION_NOT_FOUND, null);
         }
         try {
+            // Delete this notification from database.
             notificationMapper.deleteNotificationById(notificationId);
             log.info("Notification is deleted: {}", notificationId);
             return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, notification);
@@ -148,6 +159,7 @@ public class NotificationService {
 
     public JsonResponse deleteAllNotificationOfUser(Long userId) {
         try {
+            // Delete all notification of this user from database.
             notificationMapper.deleteAllNotification(userId);
             log.info("Notifications of user {} are deleted", userId);
             return new JsonResponse(Status.SUCCESS, null, null);
@@ -159,6 +171,7 @@ public class NotificationService {
 
     public JsonResponse getAllNotificationOfUser(Long userId) {
         try {
+            // Get all the notification of the user from database.
             List<AppNotification> notifications = notificationMapper.getAllNotificationOfUser(userId);
             return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, notifications);
         } catch ( Exception e) {
@@ -169,6 +182,7 @@ public class NotificationService {
 
     public JsonResponse getNotificationById(Long notificationId) {
         try {
+            // Get the notification from database by notification ID.
             AppNotification notification = notificationMapper.getNotificationById(notificationId);
             if (notification == null) {
                 return new JsonResponse(Status.FAIL, DataType.NOTIFICATION_NOT_FOUND, null);

@@ -70,15 +70,15 @@ public class MessageController {
 
     //@DeleteMapping("/{messageId}")
     //public ResponseEntity<JsonResponse> deleteMessage(@PathVariable Long messageId) {
-        //TODO
-      //  return null;
+    //TODO
+    //  return null;
     //}
 
-  //  @DeleteMapping("/user-{userId}")
+    //  @DeleteMapping("/user-{userId}")
     //public ResponseEntity<JsonResponse> deleteChatHistoryWithUser(@PathVariable Long userId) {
-     //   JsonResponse response = messageService.deleteChatHistoryWithUser(userId);
-       // return null;
-   // }
+    //   JsonResponse response = messageService.deleteChatHistoryWithUser(userId);
+    // return null;
+    // }
 
     @DeleteMapping("/allmessage")
     public ResponseEntity<JsonResponse> deleteAllMessageOfUser(@PathVariable long userId) {
