@@ -45,7 +45,8 @@ public class LocationUtil {
             return null;
         }
         try {
-            String uri = String.format("https://nominatim.openstreetmap.org/reverse.php?lat=%.10f&lon=%.10f&zoom=18&format=jsonv2", lat, lon);
+            String uri = String.format("https://nominatim.openstreetmap.org/reverse.php" +
+                    "?lat=%.10f&lon=%.10f&zoom=18&format=jsonv2", lat, lon);
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForEntity(new URI(uri), String.class).getBody();
             //String res = result.substring(1, result.length()-1);
