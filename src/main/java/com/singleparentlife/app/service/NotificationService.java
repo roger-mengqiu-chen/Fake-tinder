@@ -31,39 +31,53 @@ public class NotificationService {
     public JsonResponse sendNotification(Long userId, NotificationRequest notificationRequest) {
         // Get the device token information from database by the user ID.
         List<String> devices = deviceMapper.getAllDeviceTokensOfUser(userId);
-        // Create multicast message  base on the notificaiton request.
-        MulticastMessage multicastMessage =
-                MulticastMessage.builder()
-                        .addAllTokens(devices)
-                        .setApnsConfig(getApnsConfig(notificationRequest.getTopic()))
-                        .setAndroidConfig(getAndroidConfig(notificationRequest.getTopic()))
-                        .setNotification(
-                                Notification.builder()
-                                        .setTitle(notificationRequest.getTitle())
-                                        .setBody(notificationRequest.getBody())
-                                        .build())
-                .build();
-        try {
-            // Send multicast message. Create and save the notification.
-            BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(multicastMessage);
-            log.info("{} messages has been sent successfully", response.getSuccessCount());
-            AppNotification appNotification = new AppNotification();
-            appNotification.setTopic(notificationRequest.getTopic());
-            appNotification.setTitle(notificationRequest.getTitle());
-            appNotification.setContent(notificationRequest.getBody());
-            appNotification.setUserId(userId);
-            appNotification.setIsRead(false);
-            appNotification.setTime(LocalDateTime.now());
-            notificationMapper.save(appNotification);
-            log.info("Notification is saved into database: {}", appNotification.getNotificationId());
-            return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, appNotification);
-        } catch (FirebaseMessagingException e) {
-            log.error("Firebase exception: {}", e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+        // Check if user has devices
+        if (devices.size() > 0) {
+            // Create multicast message  base on the notificaiton request.
+            MulticastMessage multicastMessage =
+                    MulticastMessage.builder()
+                            .addAllTokens(devices)
+                            .setApnsConfig(getApnsConfig(notificationRequest.getTopic()))
+                            .setAndroidConfig(getAndroidConfig(notificationRequest.getTopic()))
+                            .setNotification(
+                                    Notification.builder()
+                                            .setTitle(notificationRequest.getTitle())
+                                            .setBody(notificationRequest.getBody())
+                                            .build())
+                            .build();
+
+            try {
+                // Send multicast message. Create and save the notification.
+                BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(multicastMessage);
+                log.info("{} messages has been sent successfully", response.getSuccessCount());
+                AppNotification appNotification = new AppNotification();
+                appNotification.setTopic(notificationRequest.getTopic());
+                appNotification.setTitle(notificationRequest.getTitle());
+                appNotification.setContent(notificationRequest.getBody());
+                appNotification.setUserId(userId);
+                appNotification.setIsRead(false);
+                appNotification.setTime(LocalDateTime.now());
+                notificationMapper.save(appNotification);
+                log.info("Notification is saved into database: {}", appNotification.getNotificationId());
+                return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, appNotification);
+            } catch (FirebaseMessagingException e) {
+                log.error("Firebase exception: {}", e.getMessage());
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
+            }
         }
+        AppNotification appNotification = new AppNotification();
+        appNotification.setTopic(notificationRequest.getTopic());
+        appNotification.setTitle(notificationRequest.getTitle());
+        appNotification.setContent(notificationRequest.getBody());
+        appNotification.setUserId(userId);
+        appNotification.setIsRead(false);
+        appNotification.setTime(LocalDateTime.now());
+        notificationMapper.save(appNotification);
+        log.info("Notification is saved into database: {}", appNotification.getNotificationId());
+        return new JsonResponse(Status.SUCCESS, DataType.NOTIFICATION, "Notification sent but target user doesn't have device to receive it");
     }
 
     public JsonResponse readNotificationById(Long notificationId) {

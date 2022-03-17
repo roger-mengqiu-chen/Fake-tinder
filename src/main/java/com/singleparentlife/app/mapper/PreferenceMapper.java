@@ -46,8 +46,20 @@ public interface PreferenceMapper {
     })
     List<Long> getPreferenceId(long userId);
 
-    @Select("SELECT preferenceId, content FROM userPreference up JOIN preference p " +
+    @Select("SELECT p.preferenceId, content FROM userTag ut JOIN preference p " +
+            "ON ut.preferenceId = p.preferenceId WHERE ut.userId = #{userId}")
+    @Results ({
+            @Result(id = true, property = "preferenceId", column = "preferenceId"),
+            @Result(property = "content", column = "content")
+    })
+    List<Preference> getTagsOfUser(Long userId);
+
+    @Select("SELECT p.preferenceId, content FROM userPreference up JOIN preference p " +
             "ON up.preferenceId = p.preferenceId WHERE up.userId = #{userId}")
+    @Results ({
+            @Result(id = true, property = "preferenceId", column = "preferenceId"),
+            @Result(property = "content", column = "content")
+    })
     List<Preference> getPreferencesOfUser(Long userId);
 
     /* Update */
@@ -65,7 +77,7 @@ public interface PreferenceMapper {
     int deleteUserPreference(long userId, long preferenceId);
 
     //This will delete a user tag from the userTag table
-    @Delete("DELETE FROM userTag WHERE userID = #{userId} AND preferenceId = #{preferenceId")
+    @Delete("DELETE FROM userTag WHERE userID = #{userId} AND preferenceId = #{preferenceId}")
     int deleteUserTag(long userId, long preferenceId);
 
     //This will delete all user specific preferences

@@ -21,7 +21,7 @@ Project progress:
 - [ ] Event service
   - [ ] Event CRUD
   - [ ] Send event invitations to other user
-- [ ] Message service
+- [x] Message service
 - [ ] Notification 
   - [x] Push notification to front end
   - [ ] Notification message queue

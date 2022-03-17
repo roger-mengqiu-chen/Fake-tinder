@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class ReactToProfile {
     @JsonProperty
-    private Long userId;
-    @JsonProperty
     private Long targetId;
     @JsonProperty
     private String reaction;
