@@ -43,16 +43,15 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
-    /*
-    @GetMapping("/{userId}")
+    @GetMapping("/singleHistory/{userId}")
     public ResponseEntity<JsonResponse> getChatHistoryWithUser(@PathVariable Long userId) {
         long currentUser = authUtil.getCurrentUserId();
         JsonResponse response = messageService.getCombinedMessageHistory(currentUser, userId);
         return ResponseEntity.ok(response);
     }
-    */
-    @GetMapping("/{userId}")
-    public ResponseEntity<JsonResponse> getAllUserChat(@PathVariable Long userId){
+
+    @GetMapping("/allHistory/{userId}")
+    public ResponseEntity<JsonResponse> getAllChatHistory(@PathVariable Long userId){
         long currentUser = authUtil.getCurrentUserId();
         JsonResponse response = messageService.getAllMessage(userId);
         return ResponseEntity.ok(response);
@@ -60,15 +59,15 @@ public class MessageController {
 
     //@DeleteMapping("/{messageId}")
     //public ResponseEntity<JsonResponse> deleteMessage(@PathVariable Long messageId) {
-        //TODO
-      //  return null;
+    //TODO
+    //  return null;
     //}
 
-  //  @DeleteMapping("/user-{userId}")
+    //  @DeleteMapping("/user-{userId}")
     //public ResponseEntity<JsonResponse> deleteChatHistoryWithUser(@PathVariable Long userId) {
-     //   JsonResponse response = messageService.deleteChatHistoryWithUser(userId);
-       // return null;
-   // }
+    //   JsonResponse response = messageService.deleteChatHistoryWithUser(userId);
+    // return null;
+    // }
 
     @DeleteMapping("/allmessage")
     public ResponseEntity<JsonResponse> deleteAllMessageOfUser(@PathVariable long userId) {
