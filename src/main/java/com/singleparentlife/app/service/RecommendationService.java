@@ -51,9 +51,10 @@ public class RecommendationService {
         List<Profile> sortedProfiles = new ArrayList<>();
         List<Double> distances = new ArrayList<>();
         for (Profile p : otherProfiles) {
-            Location location = locationMapper.findById(p.getLocationId());
+            Long locationId = p.getLocationId();
             double distance = Double.MAX_VALUE;
-            if (location != null) {
+            if (locationId != null) {
+                Location location = locationMapper.findById(p.getLocationId());
                 distance = locationUtil.distanceBetweenLocations(userLocation, location);
             }
             if (sortedProfiles.size() == 0) {
