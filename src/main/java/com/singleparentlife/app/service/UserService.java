@@ -80,6 +80,9 @@ public class UserService {
                     deviceMapper.save(device);
                     log.info("New device registered with user {}: {}", user.getUserId(), device.getDeviceId());
                 }
+                else {
+                    device.setDeviceId(existedDevice.getDeviceId());
+                }
 
                 SanitizedUser sanitizedUser = sanitizeUser(user);
                 log.info("User login: {} with device {}", fireId, device.getDeviceId());
