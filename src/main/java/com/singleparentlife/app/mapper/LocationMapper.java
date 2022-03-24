@@ -42,7 +42,7 @@ public interface LocationMapper {
             @Result(property = "street", column = "street"),
             @Result(property = "postcode", column = "postcode")
     })
-    Location findById(long locationId);
+    Location findById(Long locationId);
 
     /* Delete */
     //This will be used to delete a location from the location table

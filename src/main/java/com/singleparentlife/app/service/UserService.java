@@ -82,7 +82,7 @@ public class UserService {
                 }
 
                 SanitizedUser sanitizedUser = sanitizeUser(user);
-                log.info("User login: {} with device {}", fireId, existedDevice.getDeviceId());
+                log.info("User login: {} with device {}", fireId, device.getDeviceId());
                 return new JsonResponse(Status.SUCCESS, DataType.USER, sanitizedUser);
             }
         } else {
