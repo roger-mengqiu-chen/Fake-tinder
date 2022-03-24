@@ -1,6 +1,8 @@
 package com.singleparentlife.app.service;
 
 import com.singleparentlife.app.Util.LocationUtil;
+import com.singleparentlife.app.Util.comparator.ProfileDistanceComparator;
+import com.singleparentlife.app.Util.comparator.ProfilePreferenceComparator;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.LocationMapper;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,32 +60,10 @@ public class RecommendationService {
                 Location location = locationMapper.findById(p.getLocationId());
                 distance = locationUtil.distanceBetweenLocations(userLocation, location);
             }
-            if (sortedProfiles.size() == 0) {
-                sortedProfiles.add(p);
-                distances.add(distance);
-            }
-            else {
-                // binary search through the list of distances and insert profile to sortedProfiles according to distance
-                int low = 0;
-                int high = distances.size();
-
-                while (low < high) {
-                    int mid = low + (high - low) / 2;
-                    if (distances.get(mid) == distance) {
-                        distances.add(mid, distance);
-                        sortedProfiles.add(mid, p);
-                    }
-                    else if (distances.get(mid) > distance) {
-                        high = mid - 1;
-                    }
-                    else {
-                        low = mid + 1;
-                    }
-                }
-                distances.add(low, distance);
-                sortedProfiles.add(low, p);
-            }
+            p.setDistanceToMe(distance);
+            sortedProfiles.add(p);
         }
+        sortedProfiles.sort(new ProfileDistanceComparator());
         return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE, sortedProfiles);
     }
 
@@ -94,34 +75,10 @@ public class RecommendationService {
         for (Profile p : otherProfiles) {
             List<Preference> preferences = preferenceMapper.getPreferencesOfUser(p.getUserId());
             int numberOfMatched = calculateNumberOfMatchedPreference(userPreferences, preferences);
-
-            if (numbersOfMatchedPreferences.size() == 0) {
-                numbersOfMatchedPreferences.add(numberOfMatched);
-                sortedProfiles.add(p);
-            }
-
-            else {
-                // binary search through the list of sortedProfiles and insert
-                int low = 0;
-                int high = numbersOfMatchedPreferences.size();
-
-                while (low < high) {
-                    int mid = low + (high - low) / 2;
-                    if (numbersOfMatchedPreferences.get(mid) == numberOfMatched) {
-                        numbersOfMatchedPreferences.add(mid, numberOfMatched);
-                        sortedProfiles.add(mid, p);
-                    }
-                    else if (numbersOfMatchedPreferences.get(mid) > numberOfMatched) {
-                        high = mid - 1;
-                    }
-                    else {
-                        low = mid + 1;
-                    }
-                }
-                sortedProfiles.add(low, p);
-                numbersOfMatchedPreferences.add(low, numberOfMatched);
-            }
+            p.setNumberOfMatchedPreferencesWithMe(numberOfMatched);
+            sortedProfiles.add(p);
         }
+        sortedProfiles.sort(new ProfilePreferenceComparator());
         return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE, sortedProfiles);
     }
 
