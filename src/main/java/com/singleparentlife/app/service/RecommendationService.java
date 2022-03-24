@@ -56,7 +56,7 @@ public class RecommendationService {
 
         List<Profile> otherProfiles = profileMapper.findAllButUser(userId);
         List<Profile> sortedProfiles = new ArrayList<>();
-        List<Double> distances = new ArrayList<>();
+
         for (Profile p : otherProfiles) {
             Long locationId = p.getLocationId();
             double distance = Double.MAX_VALUE;
@@ -66,10 +66,7 @@ public class RecommendationService {
             }
             p.setDistanceToMe(distance);
 
-            String gender = p.getGender();
-            Long targetId = p.getUserId();
-            Match m = matchMapper.findMatchBetweenUsers(userId, targetId);
-            if (!gender.equals(profile.getShowme()) && m == null) {
+            if (shouldGetRecommended(profile, p)) {
                 sortedProfiles.add(p);
             }
         }
@@ -78,6 +75,7 @@ public class RecommendationService {
     }
 
     public JsonResponse getRecommendationBasedOnMatchedPreference(Long userId) {
+        Profile currentUserProfile = profileMapper.findByUserId(userId);
         List<Preference> userPreferences = preferenceMapper.getPreferencesOfUser(userId);
         List<Profile> otherProfiles = profileMapper.findAllButUser(userId);
         List<Profile> sortedProfiles = new ArrayList<>();
@@ -86,7 +84,9 @@ public class RecommendationService {
             List<Preference> preferences = preferenceMapper.getPreferencesOfUser(p.getUserId());
             int numberOfMatched = calculateNumberOfMatchedPreference(userPreferences, preferences);
             p.setNumberOfMatchedPreferencesWithMe(numberOfMatched);
-            sortedProfiles.add(p);
+            if (shouldGetRecommended(currentUserProfile, p)) {
+                sortedProfiles.add(p);
+            }
         }
         sortedProfiles.sort(new ProfilePreferenceComparator());
         return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE, sortedProfiles);
@@ -102,5 +102,14 @@ public class RecommendationService {
             }
         }
         return matched;
+    }
+
+    private boolean shouldGetRecommended(Profile user, Profile profile) {
+        String showme = user.getShowme();
+        String gender = profile.getGender();
+        Long userId = profile.getUserId();
+        Long targetId = profile.getUserId();
+
+        return !showme.equals(gender) && matchMapper.findMatchBetweenUsers(userId, targetId) == null;
     }
 }
