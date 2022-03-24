@@ -6,9 +6,11 @@ import com.singleparentlife.app.Util.comparator.ProfilePreferenceComparator;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.LocationMapper;
+import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.PreferenceMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
 import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.model.Match;
 import com.singleparentlife.app.model.Preference;
 import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -36,6 +38,8 @@ public class RecommendationService {
     @Autowired
     private PreferenceMapper preferenceMapper;
     @Autowired
+    private MatchMapper matchMapper;
+    @Autowired
     private LocationUtil locationUtil;
 
     public JsonResponse getRecommendationsBasedOnLocation(Long userId) {
@@ -61,7 +65,13 @@ public class RecommendationService {
                 distance = locationUtil.distanceBetweenLocations(userLocation, location);
             }
             p.setDistanceToMe(distance);
-            sortedProfiles.add(p);
+
+            String gender = p.getGender();
+            Long targetId = p.getUserId();
+            Match m = matchMapper.findMatchBetweenUsers(userId, targetId);
+            if (!gender.equals(profile.getShowme()) && m == null) {
+                sortedProfiles.add(p);
+            }
         }
         sortedProfiles.sort(new ProfileDistanceComparator());
         return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE, sortedProfiles);
