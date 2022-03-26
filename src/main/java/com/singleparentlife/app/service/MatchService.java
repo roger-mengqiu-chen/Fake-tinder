@@ -150,8 +150,8 @@ public class MatchService {
         Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
         Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
         if (match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId() > 1) {
-            return new JsonResponse(Status.SUCCESS, DataType.Boolean, true);
+            return new JsonResponse(Status.SUCCESS, DataType.IS_MATCH, true);
         }
-        return new JsonResponse(Status.SUCCESS, DataType.Boolean, false);
+        return new JsonResponse(Status.SUCCESS, DataType.IS_MATCH, false);
     }
 }

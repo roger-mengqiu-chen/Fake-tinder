@@ -31,7 +31,7 @@ public enum DataType {
     LIST_OF_EVENT,
     EVENT_INVITATION,
     LIST_OF_EVENT_INVITATION,
-
+    IS_MATCH,
 
     /* Error types */
     SERVER_ERROR,
@@ -66,6 +66,6 @@ public enum DataType {
 
     EVENT_INVITATION_NOT_FOUND,
     ;
-    public static DataType Boolean;
+
 }
 
