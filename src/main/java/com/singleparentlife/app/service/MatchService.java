@@ -146,4 +146,12 @@ public class MatchService {
         Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
         return match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId()> 1;
     }
+    public JsonResponse isMatchedJson(Long userId, Long targetUserId) {
+        Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
+        Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
+        if (match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId() > 1) {
+            return new JsonResponse(Status.SUCCESS, DataType.Boolean, true);
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.Boolean, false);
+    }
 }
