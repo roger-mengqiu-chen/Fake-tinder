@@ -186,7 +186,7 @@ public class ProfileController {
         }
         return ResponseEntity.ok(response);
     }
-     @GetMapping("/profile/react")
+     @GetMapping("/react")
      public ResponseEntity<JsonResponse> isMatch(@RequestBody MatchRequest request) {
         Long userId = authUtil.getCurrentUserId();
         Long targetId = request.getTargetId();
