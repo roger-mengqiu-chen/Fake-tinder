@@ -110,6 +110,6 @@ public class RecommendationService {
         Long userId = profile.getUserId();
         Long targetId = profile.getUserId();
 
-        return !showme.equals(gender) && matchMapper.findMatchBetweenUsers(userId, targetId) == null;
+        return (showme.equals(gender) || showme.equals("both")) && matchMapper.findMatchBetweenUsers(userId, targetId) == null;
     }
 }
