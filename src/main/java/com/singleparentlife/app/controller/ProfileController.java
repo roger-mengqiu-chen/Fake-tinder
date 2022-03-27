@@ -186,7 +186,13 @@ public class ProfileController {
         }
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/reacted")
+    public ResponseEntity<JsonResponse> isMatch(@RequestBody MatchRequest request) {
+        Long userId = authUtil.getCurrentUserId();
+        Long targetId = request.getTargetId();
+        JsonResponse matchResponse = matchService.isMatchedJson(userId, targetId);
+        return ResponseEntity.ok(matchResponse);
+    }
     private boolean validEmail(String email) {
         return email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
     }

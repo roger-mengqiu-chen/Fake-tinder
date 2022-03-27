@@ -65,7 +65,6 @@ public enum DataType {
     EVENT_NOT_FOUND,
 
     EVENT_INVITATION_NOT_FOUND,
-    ;
 
 }
 

@@ -52,11 +52,11 @@ public class MatchController {
         JsonResponse response = matchService.updateMatch(userId, request.getTargetId(), request.getReaction());
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/matched")
-    public ResponseEntity<JsonResponse> isMatch(@RequestBody MatchedRequest request) {
-        Long userId = authUtil.getCurrentUserId();
-        Long targetId = request.getTargetId();
-        JsonResponse matchResponse = matchService.isMatchedJson(userId, targetId);
-        return ResponseEntity.ok(matchResponse);
-    }
+//    @GetMapping("/matched")
+//    public ResponseEntity<JsonResponse> isMatch(@RequestBody MatchedRequest request) {
+//        Long userId = authUtil.getCurrentUserId();
+//        Long targetId = request.getTargetId();
+//        JsonResponse matchResponse = matchService.isMatchedJson(userId, targetId);
+//        return ResponseEntity.ok(matchResponse);
+//    }
 }

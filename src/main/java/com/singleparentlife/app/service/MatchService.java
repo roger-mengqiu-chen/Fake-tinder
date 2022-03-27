@@ -8,6 +8,7 @@ import com.singleparentlife.app.mapper.ReactionMapper;
 import com.singleparentlife.app.model.Match;
 import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.payload.request.MatchRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,16 @@ public class MatchService {
         match.setUserId(userId);
         match.setTargetId(targetUserId);
         match.setReactionId(reaction.getReactionId());
+
+
         try {
             matchMapper.save(match);
+            if (isMatched(userId,targetUserId)==true) {
+                match.setMutualMatch(true);
+                return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+            }
             log.info("Created a match: {} -> {}", userId, targetUserId);
+            match.setMutualMatch(false);
             return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -146,6 +154,7 @@ public class MatchService {
         Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
         return match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId()> 1;
     }
+
     public JsonResponse isMatchedJson(Long userId, Long targetUserId) {
         Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
         Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
@@ -153,5 +162,9 @@ public class MatchService {
             return new JsonResponse(Status.SUCCESS, DataType.IS_MATCH, true);
         }
         return new JsonResponse(Status.SUCCESS, DataType.IS_MATCH, false);
+    }
+    public JsonResponse sendMatched(Long userId, MatchRequest mutualMatch){
+
+        return null;
     }
 }
