@@ -10,5 +10,5 @@ public class Match {
     private Long targetId;
 
     private Short reactionId;
-    private Boolean mutualMatch;
+
 }

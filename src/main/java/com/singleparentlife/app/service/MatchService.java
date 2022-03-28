@@ -10,6 +10,7 @@ import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.model.Reaction;
 import com.singleparentlife.app.payload.request.MatchRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import com.singleparentlife.app.payload.response.MatchResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,12 +52,12 @@ public class MatchService {
         try {
             matchMapper.save(match);
             if (isMatched(userId,targetUserId)==true) {
-                match.setMutualMatch(true);
-                return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+
+                JsonResponse response=new JsonResponse(Status.SUCCESS, DataType.MATCH, (new MatchResponse(match,true)));
+                return response;
             }
             log.info("Created a match: {} -> {}", userId, targetUserId);
-            match.setMutualMatch(false);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, (new MatchResponse(match,false)));
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
