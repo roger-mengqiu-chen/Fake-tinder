@@ -18,6 +18,7 @@ public enum DataType {
     REPORTED_USER,
     PROFILE,
     LIST_OF_PROFILE,
+    LIST_OF_PROFILE_ALL_INFO,
     MATCH,
     LIST_OF_MATCH,
     REACTION,
