@@ -2,6 +2,7 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.payload.request.MatchRequest;
+import com.singleparentlife.app.payload.request.MatchedRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +52,11 @@ public class MatchController {
         JsonResponse response = matchService.updateMatch(userId, request.getTargetId(), request.getReaction());
         return ResponseEntity.ok(response);
     }
+//    @GetMapping("/matched")
+//    public ResponseEntity<JsonResponse> isMatch(@RequestBody MatchedRequest request) {
+//        Long userId = authUtil.getCurrentUserId();
+//        Long targetId = request.getTargetId();
+//        JsonResponse matchResponse = matchService.isMatchedJson(userId, targetId);
+//        return ResponseEntity.ok(matchResponse);
+//    }
 }
