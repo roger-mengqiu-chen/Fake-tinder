@@ -153,7 +153,7 @@ public class RecommendationService {
             Profile_AllInfo profile_allInfo = new Profile_AllInfo();
             profile_allInfo.setPreferences(preferenceMapper.getPreferencesOfUser(p.getUserId()));
             profile_allInfo.setLocation(locationMapper.findById(p.getLocationId()));
-            List<Long> attachmentIds = attachmentMapper.findByProfileId(userId);
+            List<Long> attachmentIds = attachmentMapper.findByProfileId(p.getUserId());
             profile_allInfo.setAttachmentLinks(attachmentIds.stream().map(linkUtil::generateProfileImageLink).collect(Collectors.toList()));
             profile_allInfos.add(profile_allInfo);
         }
