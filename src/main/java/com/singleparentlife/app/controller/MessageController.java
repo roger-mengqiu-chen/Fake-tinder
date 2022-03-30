@@ -10,6 +10,10 @@ import com.singleparentlife.app.service.NotificationService;
 import com.singleparentlife.app.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +23,10 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/message")
 public class MessageController {
+
+    @Autowired
+    private SimpMessagingTemplate simpleMessagingTemplate;
+
     @Autowired
     private MessageService messageService;
 
@@ -44,6 +52,10 @@ public class MessageController {
         msg.setTime(LocalDateTime.now());
 
         JsonResponse response = messageService.sendMessage(msg, file);
+
+        //To send using socket
+        receivePrivateMessage(msg);
+
         NotificationRequest notificationRequest = new NotificationRequest();
         notificationRequest.setTopic("Message");
         notificationRequest.setTitle("You have a new message");
@@ -51,6 +63,13 @@ public class MessageController {
         notificationService.sendNotification(receiverId, notificationRequest);
 
         return ResponseEntity.ok(response);
+    }
+
+    @MessageMapping("/privateMessage") // /app/privateMessage
+    public Message receivePrivateMessage(@Payload Message message){
+
+        simpleMessagingTemplate.convertAndSendToUser(Long.toString(message.getReceiverId()), "/private", message); // /user/userId/private
+        return message;
     }
 
 
