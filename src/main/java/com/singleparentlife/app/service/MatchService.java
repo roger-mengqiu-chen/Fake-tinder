@@ -8,7 +8,9 @@ import com.singleparentlife.app.mapper.ReactionMapper;
 import com.singleparentlife.app.model.Match;
 import com.singleparentlife.app.model.Profile;
 import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.payload.request.MatchRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
+import com.singleparentlife.app.payload.response.MatchResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,10 +47,17 @@ public class MatchService {
         match.setUserId(userId);
         match.setTargetId(targetUserId);
         match.setReactionId(reaction.getReactionId());
+
+
         try {
             matchMapper.save(match);
+            if (isMatched(userId,targetUserId)==true) {
+
+                JsonResponse response=new JsonResponse(Status.SUCCESS, DataType.MATCH, (new MatchResponse(match,true)));
+                return response;
+            }
             log.info("Created a match: {} -> {}", userId, targetUserId);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, (new MatchResponse(match,false)));
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
@@ -145,5 +154,18 @@ public class MatchService {
         Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
         Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
         return match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId()> 1;
+    }
+
+    public JsonResponse isMatchedJson(Long userId, Long targetUserId) {
+        Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
+        Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
+        if (match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId() > 1) {
+            return new JsonResponse(Status.SUCCESS, DataType.IS_MATCH, true);
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.IS_MATCH, false);
+    }
+    public JsonResponse sendMatched(Long userId, MatchRequest mutualMatch){
+
+        return null;
     }
 }
