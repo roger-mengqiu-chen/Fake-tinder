@@ -70,7 +70,7 @@ public interface MatchMapper {
      * @return
      */
     @Select("SELECT a.userId, a.targetId, a.reactionId FROM matches a INNER JOIN matches b " +
-            "ON a.userId = b.targetId AND b.userId = a.targetId" +
+            "ON a.userId = b.targetId AND b.userId = a.targetId " +
             "AND a.targetId = #{userId} AND a.reactionId > 1 AND b.reactionId < 2;")
     @Results({
             @Result(property = "userId", column = "userId"),
