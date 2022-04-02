@@ -186,9 +186,7 @@ public class ProfileController {
                 return ResponseEntity.ok(notificationResponse);
             }
         }
-        return ResponseEntity.ok(response);
-
-            return ResponseEntity.ok(response);}
+        return ResponseEntity.ok(response);}
         JsonResponse response=matchService.updateMatch(userId, targetId, request.getReaction());
         return ResponseEntity.ok(response);
     }
