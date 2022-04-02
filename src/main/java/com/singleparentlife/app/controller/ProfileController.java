@@ -171,7 +171,9 @@ public class ProfileController {
             return ResponseEntity.ok(reactionResponse);
         }
         Reaction reaction = (Reaction) reactionResponse.getData();
-        JsonResponse response = matchService.reactToProfile(userId, targetId, reaction);
+        if(matchService.alreadyReacted(userId,targetId)==false){
+
+            JsonResponse response = matchService.reactToProfile(userId, targetId, reaction);
         if (matchService.isMatched(userId, targetId)) {
             Profile targetProfile =(Profile)profileService.getProfileOfUser(targetId).getData();
             String targetName = targetProfile.getFirstname();
@@ -184,6 +186,10 @@ public class ProfileController {
                 return ResponseEntity.ok(notificationResponse);
             }
         }
+        return ResponseEntity.ok(response);
+
+            return ResponseEntity.ok(response);}
+        JsonResponse response=matchService.updateMatch(userId, targetId, request.getReaction());
         return ResponseEntity.ok(response);
     }
     @GetMapping("/reacted")
