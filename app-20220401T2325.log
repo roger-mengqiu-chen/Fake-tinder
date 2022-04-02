@@ -1,0 +1,227 @@
+23:25:01.509 [restartedMain] INFO  c.s.app.AppApplication - Starting AppApplication using Java 1.8.0_322 on LAPTOP-5HD6C1CU with PID 24604 (E:\SPA\Fake-tinder\target\classes started by Hargun Singh Bajwa in E:\SPA\Fake-tinder)
+23:25:01.509 [restartedMain] INFO  c.s.app.AppApplication - No active profile set, falling back to default profiles: default
+23:25:01.572 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\Hargun Singh Bajwa\.m2\repository\io\grpc\grpc-netty-shaded\1.39.0\grpc-netty-shaded-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/guava-30.1-android.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/gson-2.8.6.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-context-1.39.0.jar
+23:25:01.572 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\Hargun Singh Bajwa\.m2\repository\io\grpc\grpc-alts\1.39.0\grpc-alts-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-auth-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-grpclb-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-stub-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-util-3.17.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/proto-google-common-protos-2.0.1.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-3.17.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/conscrypt-openjdk-uber-2.5.1.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-oauth2-http-0.22.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-netty-shaded-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-lite-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-jackson2-1.38.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-1.38.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-contrib-http-util-0.24.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/guava-30.1-android.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-credentials-0.22.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/auto-value-annotations-1.7.4.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-api-0.24.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-context-1.39.0.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/gson-2.8.6.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/httpclient-4.5.13.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/httpcore-4.4.13.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/jackson-core-2.11.3.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-logging-1.2.jar,file:/C:/Users/Hargun%20Singh%20Bajwa/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-codec-1.11.jar
+23:25:01.572 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+23:25:01.572 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+23:25:03.541 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+23:25:03.556 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+23:25:03.556 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+23:25:03.556 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.56]
+23:25:03.666 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+23:25:03.666 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2094 ms
+23:25:04.705 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+23:25:04.924 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1e49a840, org.springframework.security.web.context.SecurityContextPersistenceFilter@12835607, org.springframework.security.web.header.HeaderWriterFilter@7b887c93, org.springframework.web.filter.CorsFilter@50c12613, org.springframework.security.web.authentication.logout.LogoutFilter@5d70a6f7, com.singleparentlife.app.config.security.SecurityFilter@48ed1420, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5e6b6c77, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6182d2e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5209da2, org.springframework.security.web.session.SessionManagementFilter@638b917f, org.springframework.security.web.access.ExceptionTranslationFilter@77932b34, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1cfe93fc]
+23:25:05.142 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+23:25:05.314 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+23:25:05.705 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+23:25:06.767 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+23:25:06.783 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+23:25:06.783 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+23:25:06.814 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+23:25:06.892 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+23:25:07.205 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: deleteReportedUserUsingDELETE_1
+23:25:07.205 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: getReportedUserUsingGET_1
+23:25:07.236 [restartedMain] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+23:25:07.236 [restartedMain] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1ae36985]]
+23:25:07.236 [restartedMain] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+23:25:07.252 [restartedMain] INFO  c.s.app.AppApplication - Started AppApplication in 6.173 seconds (JVM running for 6.943)
+23:25:41.467 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+23:25:41.468 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+23:25:41.469 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+23:25:41.912 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:25:41.912 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:25:41.912 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:25:42.146 [http-nio-8080-exec-3] ERROR c.s.a.service.RecommendationService - Profile not found: null
+23:25:42.211 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:25:42.217 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:03.824 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:03.881 [http-nio-8080-exec-2] INFO  c.s.app.service.UserService - New user registered: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:03.881 [http-nio-8080-exec-2] INFO  c.s.app.service.UserService - New device registered with user 13: 11
+23:26:03.890 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:04.213 [http-nio-8080-exec-1] INFO  c.s.app.service.LocationService - New location saved: {country: Canada, province: Alberta, city: Calgary, street: Nolan Hill Boulevard NW, postcode: T3R 0T3}
+23:26:04.229 [http-nio-8080-exec-1] INFO  c.s.app.service.UserService - User updated: 13
+23:26:04.236 [http-nio-8080-exec-1] INFO  c.s.app.service.ProfileService - Profile is saved
+23:26:05.033 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+23:26:08.062 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.072 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.075 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.076 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.095 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.109 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.191 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.192 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.200 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.200 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.200 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.206 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.225 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.233 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.234 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.242 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.251 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.257 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.262 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.266 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.272 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.271 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.290 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.290 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.293 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.294 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.295 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.308 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.314 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.317 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.320 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.323 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.324 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.327 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.328 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.330 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.337 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.345 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.346 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:09.348 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:12.325 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:12.344 [http-nio-8080-exec-2] INFO  c.s.app.service.MatchService - Created a match: 13 -> 2
+23:26:17.174 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.188 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.190 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.196 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.223 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.269 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.295 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.316 [http-nio-8080-exec-1] INFO  c.s.app.service.UserService - User login: k5C0dhk4cYfs45nJVXct345PuxM2 with device 11
+23:26:17.320 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.320 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.333 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.334 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.342 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.345 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.360 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.364 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.371 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.380 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.392 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.395 [http-nio-8080-exec-2] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.395 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.402 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.406 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.414 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.420 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.424 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.427 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.436 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.438 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.442 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.450 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.454 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.460 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.460 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.463 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.470 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.470 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.473 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.484 [http-nio-8080-exec-1] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.485 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.486 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:17.496 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:25.664 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:26:25.695 [http-nio-8080-exec-9] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 2
+23:30:52.019 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:30:52.640 [http-nio-8080-exec-3] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:30:52.640 [http-nio-8080-exec-3] INFO  c.s.app.service.NotificationService - Notification is saved into database: 1
+23:30:57.569 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:30:57.585 [http-nio-8080-exec-11] INFO  c.s.app.service.MatchService - Created a match: 13 -> 11
+23:30:58.988 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:30:59.003 [http-nio-8080-exec-8] INFO  c.s.app.service.MatchService - Created a match: 13 -> 10
+23:30:59.783 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:00.703 [http-nio-8080-exec-10] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:00.718 [http-nio-8080-exec-10] INFO  c.s.app.service.NotificationService - Notification is saved into database: 2
+23:31:03.490 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:03.682 [http-nio-8080-exec-10] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:03.697 [http-nio-8080-exec-10] INFO  c.s.app.service.NotificationService - Notification is saved into database: 3
+23:31:05.800 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:06.014 [http-nio-8080-exec-5] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:06.014 [http-nio-8080-exec-5] INFO  c.s.app.service.NotificationService - Notification is saved into database: 4
+23:31:08.838 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:09.032 [http-nio-8080-exec-9] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:09.032 [http-nio-8080-exec-9] INFO  c.s.app.service.NotificationService - Notification is saved into database: 5
+23:31:11.112 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:11.350 [http-nio-8080-exec-12] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:11.365 [http-nio-8080-exec-12] INFO  c.s.app.service.NotificationService - Notification is saved into database: 6
+23:31:13.430 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:13.438 [http-nio-8080-exec-9] INFO  c.s.app.service.MatchService - Created a match: 13 -> 12
+23:31:14.516 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:14.920 [http-nio-8080-exec-12] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:14.920 [http-nio-8080-exec-12] INFO  c.s.app.service.NotificationService - Notification is saved into database: 7
+23:31:17.022 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:17.466 [http-nio-8080-exec-3] INFO  c.s.app.service.NotificationService - 1 messages has been sent successfully
+23:31:17.481 [http-nio-8080-exec-3] INFO  c.s.app.service.NotificationService - Notification is saved into database: 8
+23:31:21.357 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.366 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.372 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.375 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.378 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.436 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.437 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.439 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.461 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.465 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.467 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.467 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.467 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.467 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.491 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.494 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.513 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.516 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.522 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.552 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.552 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.553 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.561 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.580 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.584 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.586 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.595 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.595 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.596 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.596 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.602 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.609 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.613 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.615 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.626 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.626 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.627 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.635 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.637 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.647 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.649 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:21.663 [http-nio-8080-exec-10] INFO  c.s.app.service.UserService - User login: k5C0dhk4cYfs45nJVXct345PuxM2 with device 11
+23:31:26.924 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:26.934 [http-nio-8080-exec-12] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 2
+23:31:29.968 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:29.979 [http-nio-8080-exec-3] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 1
+23:31:30.608 [http-nio-8080-exec-8] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:30.623 [http-nio-8080-exec-8] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 11
+23:31:31.053 [http-nio-8080-exec-10] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:31.063 [http-nio-8080-exec-10] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 10
+23:31:31.554 [http-nio-8080-exec-11] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:31.554 [http-nio-8080-exec-11] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 4
+23:31:31.970 [http-nio-8080-exec-4] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:31.978 [http-nio-8080-exec-4] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 9
+23:31:32.385 [http-nio-8080-exec-7] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:32.395 [http-nio-8080-exec-7] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 7
+23:31:32.793 [http-nio-8080-exec-9] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:32.811 [http-nio-8080-exec-9] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 6
+23:31:33.192 [http-nio-8080-exec-5] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:33.206 [http-nio-8080-exec-5] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 8
+23:31:33.584 [http-nio-8080-exec-6] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:33.599 [http-nio-8080-exec-6] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 12
+23:31:34.039 [http-nio-8080-exec-12] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:34.039 [http-nio-8080-exec-12] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 3
+23:31:34.551 [http-nio-8080-exec-3] INFO  c.s.a.config.security.SecurityFilter - User enter: k5C0dhk4cYfs45nJVXct345PuxM2
+23:31:34.567 [http-nio-8080-exec-3] INFO  c.s.app.service.MatchService - Match is updated: 13 <-> 5

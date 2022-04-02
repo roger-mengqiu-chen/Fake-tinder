@@ -55,7 +55,12 @@ public interface MatchMapper {
      * @return
      */
     @Select("SELECT a.userId, a.targetId, a.reactionId FROM matches a INNER JOIN matches b " +
+<<<<<<< Updated upstream
             "ON a.userId = #{userId} AND a.reactionId > 1 AND b.reactionId > 1")
+=======
+            "ON a.userId = b.targetId AND b.userId = a.targetId" +
+            " AND a.userId = #{userId} AND a.reactionId > 1 AND b.reactionId > 1")
+>>>>>>> Stashed changes
     @Results({
             @Result(property = "userId", column = "userId"),
             @Result(property = "targetId", column = "targetId"),
@@ -78,7 +83,7 @@ public interface MatchMapper {
     })
     List<Match> findFailedMatchOfUser(Long userId);
 
-    @Update("UPDATE matches (reactionId) VALUES (#{reactionId}) " +
+    @Update("UPDATE matches  SET reactionId=(#{reactionId}) " +
             "WHERE userId = #{userId} AND targetId = #{targetId}")
     int update(Match match);
 

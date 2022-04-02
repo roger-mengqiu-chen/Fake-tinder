@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS matches (
     userId bigint,
     targetId bigint,
     reactionId tinyint,
-    PRIMARY KEY (userId, targetId),
+    primary key(userId,targetId),
     FOREIGN KEY (userId) REFERENCES user (userId) ON DELETE CASCADE,
     FOREIGN KEY (targetId) REFERENCES user (userId) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8MB4;
