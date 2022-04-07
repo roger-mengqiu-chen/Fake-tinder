@@ -133,4 +133,19 @@ public class ProfileService {
         List<Profile> profiles = profileMapper.findAllButUser(userId);
         return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE, profiles);
     }
+
+
+    /**
+     * Get profile of user according to userId
+     * @param userId userId
+     * @return Profile about profile of this user
+     */
+    public Profile getProfileOfUserProfile(Long userId) {
+        Profile profile = profileMapper.findByUserId(userId);
+        if (profile == null) {
+            log.error("Profile not found: {}", userId);
+            return null;
+        }
+        return profile;
+    }
 }
