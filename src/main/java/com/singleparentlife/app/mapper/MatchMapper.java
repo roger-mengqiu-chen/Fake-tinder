@@ -79,7 +79,7 @@ public interface MatchMapper {
     })
     List<Match> findFailedMatchOfUser(Long userId);
 
-    @Update("UPDATE matches (reactionId) VALUES (#{reactionId}) " +
+    @Update("UPDATE matches SET reactionId=(#{reactionId}) " +
             "WHERE userId = #{userId} AND targetId = #{targetId}")
     int update(Match match);
 

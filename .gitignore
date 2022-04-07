@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/firebase_config.json
+app-20220401T2347.log
+app-20220401T2349.log
+app-20220401T2356.log
