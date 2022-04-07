@@ -1,18 +1,14 @@
 package com.singleparentlife.app.service;
 
+import com.singleparentlife.app.Util.FileUtil;
+import com.singleparentlife.app.Util.LinkUtil;
 import com.singleparentlife.app.Util.LocationUtil;
 import com.singleparentlife.app.Util.comparator.ProfileDistanceComparator;
 import com.singleparentlife.app.Util.comparator.ProfilePreferenceComparator;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
-import com.singleparentlife.app.mapper.LocationMapper;
-import com.singleparentlife.app.mapper.MatchMapper;
-import com.singleparentlife.app.mapper.PreferenceMapper;
-import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Location;
-import com.singleparentlife.app.model.Match;
-import com.singleparentlife.app.model.Preference;
-import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.mapper.*;
+import com.singleparentlife.app.model.*;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * RecommendationService needs more advanced algorithms. Currently, we are assuming that there are not many profiles in
@@ -41,6 +38,12 @@ public class RecommendationService {
     private MatchMapper matchMapper;
     @Autowired
     private LocationUtil locationUtil;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
+    @Autowired
+    private FileUtil fileUtil;
+    @Autowired
+    private LinkUtil linkUtil;
 
     public JsonResponse getRecommendationsBasedOnLocation(Long userId) {
         Profile profile = profileMapper.findByUserId(userId);
@@ -111,5 +114,49 @@ public class RecommendationService {
         Long targetId = profile.getUserId();
 
         return (showme.equals(gender) || showme.equals("both")) && matchMapper.findMatchBetweenUsers(userId, targetId) == null;
+    }
+
+    public JsonResponse getRecommendationsBasedOnLocation_AllInfo(Long userId) {
+        List<Profile_AllInfo> profile_allInfos = new ArrayList<>();
+
+
+        Profile profile = profileMapper.findByUserId(userId);
+        if (profile == null) {
+            log.error("Profile not found: {}", userId);
+            return new JsonResponse(Status.FAIL, DataType.PROFILE_NOT_FOUND, null);
+        }
+        Location userLocation = locationMapper.findById(profile.getLocationId());
+        if (userLocation == null) {
+            log.error("User does not have location: {}", userId);
+            return new JsonResponse(Status.FAIL, DataType.LOCATION_NOT_FOUND, "User does not have location");
+        }
+
+        List<Profile> otherProfiles = profileMapper.findAllButUser(userId);
+        List<Profile> sortedProfiles = new ArrayList<>();
+
+        for (Profile p : otherProfiles) {
+            Long locationId = p.getLocationId();
+            double distance = Double.MAX_VALUE;
+            if (locationId != null) {
+                Location location = locationMapper.findById(p.getLocationId());
+                distance = locationUtil.distanceBetweenLocations(userLocation, location);
+            }
+            p.setDistanceToMe(distance);
+
+            if (shouldGetRecommended(profile, p)) {
+                sortedProfiles.add(p);
+            }
+        }
+        sortedProfiles.sort(new ProfileDistanceComparator());
+        for(Profile p: sortedProfiles)
+        {
+            Profile_AllInfo profile_allInfo = new Profile_AllInfo();
+            profile_allInfo.setPreferences(preferenceMapper.getPreferencesOfUser(p.getUserId()));
+            profile_allInfo.setLocation(locationMapper.findById(p.getLocationId()));
+            List<Long> attachmentIds = attachmentMapper.findByProfileId(p.getUserId());
+            profile_allInfo.setAttachmentLinks(attachmentIds.stream().map(linkUtil::generateProfileImageLink).collect(Collectors.toList()));
+            profile_allInfos.add(profile_allInfo);
+        }
+        return new JsonResponse(Status.SUCCESS, DataType.LIST_OF_PROFILE_ALL_INFO, profile_allInfos);
     }
 }
