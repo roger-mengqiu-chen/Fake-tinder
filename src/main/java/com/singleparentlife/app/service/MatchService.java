@@ -88,7 +88,7 @@ public class MatchService {
             match.setReactionId(reaction.getReactionId());
             matchMapper.update(match);
             log.info("Match is updated: {} <-> {}", match.getUserId(), match.getTargetId());
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, match);
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, new MatchResponse(match,isMatched(userId,targetUserId)));
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
@@ -148,13 +148,28 @@ public class MatchService {
      * If 2 matches both have non-reject reactions, we can say two users are matched
      * @param userId
      * @param targetUserId
-     * @return
+     * @return boolean true or false, true if match is mutual
      */
     public boolean isMatched(Long userId, Long targetUserId) {
         Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
         Match match2 = matchMapper.findMatchBetweenUsers(targetUserId, userId);
         return match1 != null && match2 != null && match1.getReactionId() > 1 && match2.getReactionId()> 1;
     }
+    /**
+     * Check if user has reacted to same profile before
+     * if true, update the ,match with new reaction, otherwise add it.
+     * @param userId
+     * @param targetUserId
+     * @return
+     */
+    public boolean alreadyReacted(Long userId,Long targetUserId){
+        Match match = matchMapper.findMatchBetweenUsers(userId, targetUserId);
+        if(match==null){
+            return false;
+        }
+        return true;
+    }
+
 
     public JsonResponse isMatchedJson(Long userId, Long targetUserId) {
         Match match1 = matchMapper.findMatchBetweenUsers(userId, targetUserId);
