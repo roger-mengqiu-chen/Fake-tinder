@@ -111,7 +111,7 @@ public class MatchService {
             List<MatchedProfiles> matchedProfilesList = new ArrayList<>();
             for(Match m: matches)
             {
-                Profile profile=profileService.getProfileOfUserProfile((m.getTargetId()));
+                Profile profile=profileMapper.findByUserId((m.getTargetId()));
                 MatchedProfiles matchedProfile = new MatchedProfiles();
                 matchedProfile.setProfile(profile);
                 List<Long> attachmentIds = attachmentMapper.findByProfileId(m.getTargetId());
