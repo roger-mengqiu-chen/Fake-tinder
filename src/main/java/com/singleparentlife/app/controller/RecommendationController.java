@@ -42,4 +42,12 @@ public class RecommendationController {
         JsonResponse response = recommendationService.getRecommendationBasedOnMatchedPreference(userId);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/location/allInfo")
+    public ResponseEntity<JsonResponse> getRecommendationsBasedOnLocations_AllInfo() {
+
+        Long userId = authUtil.getCurrentUserId();
+        JsonResponse response = recommendationService.getRecommendationsBasedOnLocation_AllInfo(userId);
+        return ResponseEntity.ok(response);
+    }
 }
