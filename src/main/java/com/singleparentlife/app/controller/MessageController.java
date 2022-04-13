@@ -108,7 +108,7 @@ public class MessageController {
     @GetMapping("/allHistory/{userId}")
     public ResponseEntity<JsonResponse> getAllChatHistory(@PathVariable Long userId){
         long currentUser = authUtil.getCurrentUserId();
-        JsonResponse response = messageService.getAllMessage(userId);
+        JsonResponse response = messageService.getAllMessage(authUtil.getCurrentUserId());
         return ResponseEntity.ok(response);
     }
 
