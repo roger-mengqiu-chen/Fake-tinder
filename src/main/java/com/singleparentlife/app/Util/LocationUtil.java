@@ -41,7 +41,7 @@ public class LocationUtil {
      */
     public Location GPSToLocation(Double lat, Double lon) {
         if (lat == null || lon == null) {
-            log.error("lat or lon can't be null");
+            log.error("lat or lon is null");
             return null;
         }
         try {
