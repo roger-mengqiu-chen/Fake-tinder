@@ -65,6 +65,31 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/nofile")
+    public ResponseEntity<JsonResponse> sendMessageWithoutFile(@RequestBody MessageRequest message) {
+        Long senderId = authUtil.getCurrentUserId();
+        Long receiverId = message.getReceiverId();
+        String content = message.getContent();
+        Message msg = new Message();
+        msg.setReceiverId(receiverId);
+        msg.setSenderId(senderId);
+        msg.setContent(content);
+        msg.setTime(LocalDateTime.now());
+
+        JsonResponse response = messageService.sendMessage(msg, null);
+
+        //To send using socket
+        receivePrivateMessage(msg);
+
+        NotificationRequest notificationRequest = new NotificationRequest();
+        notificationRequest.setTopic("Message");
+        notificationRequest.setTitle("You have a new message");
+        notificationRequest.setBody("You received a new text message from " + senderId);
+        notificationService.sendNotification(receiverId, notificationRequest);
+
+        return ResponseEntity.ok(response);
+    }
+
     @MessageMapping("/privateMessage") // /app/privateMessage
     public Message receivePrivateMessage(@Payload Message message){
 
