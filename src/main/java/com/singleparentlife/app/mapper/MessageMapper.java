@@ -36,7 +36,7 @@ public interface MessageMapper {
     })
     List<Message> getCombinedMessage(long user1, long user2);
 
-    @Select("SELECT * FROM message WHERE senderId = #{userId) OR receiverId = #{userId} ORDER BY time")
+    @Select("SELECT * FROM message WHERE receiverId = #{userId} OR senderId = #{userId} ORDER BY time DESC")
     @Results({
             @Result(id = true, property = "messageId", column = "messageId"),
             @Result(property = "senderId", column = "senderId"),
