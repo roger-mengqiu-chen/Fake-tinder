@@ -1,13 +1,14 @@
 package com.singleparentlife.app.service;
 
+import com.singleparentlife.app.Util.FileUtil;
+import com.singleparentlife.app.Util.LinkUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
+import com.singleparentlife.app.mapper.AttachmentMapper;
 import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
 import com.singleparentlife.app.mapper.ReactionMapper;
-import com.singleparentlife.app.model.Match;
-import com.singleparentlife.app.model.Profile;
-import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.model.*;
 import com.singleparentlife.app.payload.request.MatchRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.payload.response.MatchResponse;
@@ -15,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,7 +29,14 @@ public class MatchService {
     private MatchMapper matchMapper;
     @Autowired
     private ReactionMapper reactionMapper;
-
+    @Autowired
+    private ProfileService profileService;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
+    @Autowired
+    private FileUtil fileUtil;
+    @Autowired
+    private LinkUtil linkUtil;
     /**
      * Set reaction to a profile
      * @param userId userId
@@ -98,7 +108,17 @@ public class MatchService {
     public JsonResponse getAllMatchedUsers(Long userId) {
         try {
             List<Match> matches = matchMapper.findOutMatchOfUser(userId);
-            return new JsonResponse(Status.SUCCESS, DataType.MATCH, matches);
+            List<MatchedProfiles> matchedProfilesList = new ArrayList<>();
+            for(Match m: matches)
+            {
+                Profile profile=profileMapper.findByUserId((m.getTargetId()));
+                MatchedProfiles matchedProfile = new MatchedProfiles();
+                matchedProfile.setProfile(profile);
+                List<Long> attachmentIds = attachmentMapper.findByProfileId(m.getTargetId());
+                matchedProfile.setAttachmentLinks(attachmentIds.stream().map(linkUtil::generateProfileImageLink).collect(Collectors.toList()));
+                matchedProfilesList.add(matchedProfile);
+            }
+            return new JsonResponse(Status.SUCCESS, DataType.MATCH, matchedProfilesList);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new JsonResponse(Status.FAIL, DataType.SERVER_ERROR, null);
