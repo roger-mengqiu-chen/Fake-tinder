@@ -51,7 +51,7 @@ public class MessageService {
         messageResponse.setSenderName(sender.getFirstname());
         messageResponse.setReceiverName(receiver.getFirstname());
 
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             try {
                 Attachment attachment = fileUtil.fileToAttachment(file);
                 attachment.setMessageId(message.getMessageId());
