@@ -103,7 +103,7 @@ public class ProfileController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping()
+    @PostMapping("/update")
     public ResponseEntity<JsonResponse> updateProfile(@RequestBody ProfileRequest request) {
         Long userId = authUtil.getCurrentUserId();
 
@@ -121,28 +121,27 @@ public class ProfileController {
 
         Profile profile = new Profile();
         BeanUtils.copyProperties(request, profile);
+        profile.setUserId(userId);
         LocationRequest locationRequest = request.getLocation();
-
-        Double lat = locationRequest.getLat();
-        Double lon = locationRequest.getLon();
-        if (lat == null || lon == null) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Lat and Lon can't be empty"));
+        Double lat = null;
+        Double lon = null;
+        if (locationRequest != null) {
+            lat = locationRequest.getLat();
+            lon = locationRequest.getLon();
         }
 
         Location location = locationUtil.GPSToLocation(lat, lon);
-        if (location == null) {
-            return ResponseEntity.badRequest().body(new JsonResponse(Status.FAIL, DataType.INVALID_INPUT, "Not address found for coordinates"));
-        }
+
         // we need the id of location, check it with location service.
         JsonResponse locationResponse = locationService.createLocation(location);
-        if (locationResponse.getStatus().equals(Status.SUCCESS)) {
-            Location returnedLocation = (Location) locationResponse.getData();
+        Location returnedLocation = null;
+        if (locationResponse.getData() != null) {
+            returnedLocation = (Location) locationResponse.getData();
+        }
+        if (returnedLocation != null) {
             profile.setLocationId(returnedLocation.getLocationId());
         }
-        // if failed, returned the response directly
-        else {
-            return ResponseEntity.ok(locationResponse);
-        }
+
         JsonResponse response = profileService.updateProfile(profile);
 
         return ResponseEntity.ok(response);
