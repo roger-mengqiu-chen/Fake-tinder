@@ -1,6 +1,6 @@
 package com.singleparentlife.app.Util.comparator;
 
-import com.singleparentlife.app.model.Event;
+import com.singleparentlife.app.service.model.Event;
 
 import java.util.Comparator;
 

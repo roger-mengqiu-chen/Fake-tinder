@@ -6,9 +6,9 @@ import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.AttachmentMapper;
 import com.singleparentlife.app.mapper.MessageMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Attachment;
-import com.singleparentlife.app.model.Message;
-import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.service.model.Attachment;
+import com.singleparentlife.app.service.model.Message;
+import com.singleparentlife.app.service.model.Profile;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.payload.response.MessageResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -37,6 +35,13 @@ public class MessageService {
 
     @Autowired
     private FileUtil fileUtil;
+
+    /**
+     * Send Message to user
+     * @param message message
+     * @param file file
+     * @return JsonResponse of Message
+     */
 
     public JsonResponse sendMessage (Message message, MultipartFile file) {
         messageMapper.save(message);
@@ -70,6 +75,12 @@ public class MessageService {
         return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, messageResponse);
     }
 
+    /**
+     * Retrive the messages between two users
+     * @param currentUser currentUser
+     * @param otherUser otherUser
+     * @return JsonResponse of message history
+     */
     public JsonResponse getCombinedMessageHistory(long currentUser, long otherUser){
         List<Message> messageHistory = messageMapper.getCombinedMessage(currentUser, otherUser);
 
@@ -85,6 +96,11 @@ public class MessageService {
 
     }
 
+    /**
+     * Get all the messages of a certain user
+     * @param userId
+     * @return JsonResponse of all the messages of a certain user
+     */
     public JsonResponse getAllMessage(long userId){
         List<Message> messageHistory = messageMapper.getAllUserMessage(userId);
 
@@ -99,7 +115,11 @@ public class MessageService {
         return new JsonResponse(Status.SUCCESS, DataType.MESSAGE, messageHistory);
     }
 
-
+    /**
+     * Delete the message history of a user
+     * @param userId
+     * @return JsonResponse confirming that messages were deleted
+     */
     public JsonResponse deleteChatHistoryWithUser(long userId){
         messageMapper.deleteAll(userId);
         return new JsonResponse(Status.SUCCESS, null, null);

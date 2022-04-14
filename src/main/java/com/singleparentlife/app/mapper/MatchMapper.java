@@ -1,6 +1,6 @@
 package com.singleparentlife.app.mapper;
 
-import com.singleparentlife.app.model.Match;
+import com.singleparentlife.app.service.model.Match;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

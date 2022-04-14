@@ -1,7 +1,7 @@
 package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
-import com.singleparentlife.app.model.Message;
+import com.singleparentlife.app.service.model.Message;
 import com.singleparentlife.app.payload.request.MessageRequest;
 import com.singleparentlife.app.payload.request.NotificationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,6 +1,6 @@
 package com.singleparentlife.app.mapper;
 
-import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.service.model.Location;
 import org.apache.ibatis.annotations.*;
 
 @Mapper

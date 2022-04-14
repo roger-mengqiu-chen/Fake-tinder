@@ -1,6 +1,6 @@
 package com.singleparentlife.app.Util.comparator;
 
-import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.service.model.Profile;
 
 import java.util.Comparator;
 

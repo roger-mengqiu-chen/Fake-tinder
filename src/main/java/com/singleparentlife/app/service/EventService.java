@@ -8,9 +8,9 @@ import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.EventMapper;
 import com.singleparentlife.app.mapper.LocationMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Event;
-import com.singleparentlife.app.model.Location;
-import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.service.model.Event;
+import com.singleparentlife.app.service.model.Location;
+import com.singleparentlife.app.service.model.Profile;
 import com.singleparentlife.app.payload.request.AddressRequest;
 import com.singleparentlife.app.payload.request.EventRequest;
 import com.singleparentlife.app.payload.request.EventRequestWithAddress;
@@ -21,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Service

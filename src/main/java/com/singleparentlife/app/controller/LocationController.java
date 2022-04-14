@@ -3,13 +3,11 @@ package com.singleparentlife.app.controller;
 import com.singleparentlife.app.Util.LocationUtil;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
-import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.service.model.Location;
 import com.singleparentlife.app.payload.request.LocationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.LocationService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

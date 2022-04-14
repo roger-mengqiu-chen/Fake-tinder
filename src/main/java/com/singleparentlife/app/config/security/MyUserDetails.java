@@ -1,6 +1,6 @@
 package com.singleparentlife.app.config.security;
 
-import com.singleparentlife.app.model.User;
+import com.singleparentlife.app.service.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

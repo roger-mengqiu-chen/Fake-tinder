@@ -1,6 +1,6 @@
 package com.singleparentlife.app.mapper;
 
-import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.service.model.Reaction;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;

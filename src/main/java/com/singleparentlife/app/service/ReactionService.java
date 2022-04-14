@@ -3,7 +3,7 @@ package com.singleparentlife.app.service;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.ReactionMapper;
-import com.singleparentlife.app.model.Reaction;
+import com.singleparentlife.app.service.model.Reaction;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

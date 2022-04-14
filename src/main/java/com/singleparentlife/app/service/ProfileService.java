@@ -5,7 +5,7 @@ import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.AttachmentMapper;
 import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.service.model.Profile;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

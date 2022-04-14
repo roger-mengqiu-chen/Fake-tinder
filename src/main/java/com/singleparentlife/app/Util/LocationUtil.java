@@ -1,6 +1,6 @@
 package com.singleparentlife.app.Util;
 
-import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.service.model.Location;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;

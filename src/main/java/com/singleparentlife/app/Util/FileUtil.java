@@ -1,7 +1,6 @@
 package com.singleparentlife.app.Util;
 
-import com.singleparentlife.app.model.Attachment;
-import org.springframework.http.MediaType;
+import com.singleparentlife.app.service.model.Attachment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

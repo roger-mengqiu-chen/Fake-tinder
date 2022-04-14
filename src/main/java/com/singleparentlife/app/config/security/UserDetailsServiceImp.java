@@ -3,13 +3,12 @@ package com.singleparentlife.app.config.security;
 
 import com.singleparentlife.app.mapper.RoleMapper;
 import com.singleparentlife.app.mapper.UserMapper;
-import com.singleparentlife.app.model.Role;
-import com.singleparentlife.app.model.User;
+import com.singleparentlife.app.service.model.Role;
+import com.singleparentlife.app.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

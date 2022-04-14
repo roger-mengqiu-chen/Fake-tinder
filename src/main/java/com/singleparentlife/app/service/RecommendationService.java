@@ -9,17 +9,15 @@ import com.singleparentlife.app.mapper.LocationMapper;
 import com.singleparentlife.app.mapper.MatchMapper;
 import com.singleparentlife.app.mapper.PreferenceMapper;
 import com.singleparentlife.app.mapper.ProfileMapper;
-import com.singleparentlife.app.model.Location;
-import com.singleparentlife.app.model.Match;
-import com.singleparentlife.app.model.Preference;
-import com.singleparentlife.app.model.Profile;
+import com.singleparentlife.app.service.model.Location;
+import com.singleparentlife.app.service.model.Preference;
+import com.singleparentlife.app.service.model.Profile;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

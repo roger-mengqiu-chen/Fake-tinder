@@ -6,7 +6,7 @@ import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.DeviceMapper;
 import com.singleparentlife.app.mapper.NotificationMapper;
 import com.singleparentlife.app.mapper.UserMapper;
-import com.singleparentlife.app.model.AppNotification;
+import com.singleparentlife.app.service.model.AppNotification;
 import com.singleparentlife.app.payload.request.NotificationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;

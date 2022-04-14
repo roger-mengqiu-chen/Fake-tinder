@@ -2,7 +2,7 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
-import com.singleparentlife.app.model.Attachment;
+import com.singleparentlife.app.service.model.Attachment;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;

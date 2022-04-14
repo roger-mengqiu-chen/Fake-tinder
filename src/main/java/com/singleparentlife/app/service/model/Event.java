@@ -1,4 +1,4 @@
-package com.singleparentlife.app.model;
+package com.singleparentlife.app.service.model;
 
 import lombok.Data;
 

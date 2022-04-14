@@ -3,7 +3,7 @@ package com.singleparentlife.app.service;
 import com.singleparentlife.app.constants.DataType;
 import com.singleparentlife.app.constants.Status;
 import com.singleparentlife.app.mapper.LocationMapper;
-import com.singleparentlife.app.model.Location;
+import com.singleparentlife.app.service.model.Location;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.singleparentlife.app.mapper;
 
-import com.singleparentlife.app.model.ReportedUser;
+import com.singleparentlife.app.service.model.ReportedUser;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

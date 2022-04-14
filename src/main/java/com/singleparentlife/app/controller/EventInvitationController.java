@@ -2,19 +2,16 @@ package com.singleparentlife.app.controller;
 
 import com.singleparentlife.app.Util.AuthUtil;
 import com.singleparentlife.app.constants.Status;
-import com.singleparentlife.app.model.Event;
-import com.singleparentlife.app.model.EventInvitation;
+import com.singleparentlife.app.service.model.Event;
+import com.singleparentlife.app.service.model.EventInvitation;
 import com.singleparentlife.app.payload.request.EventInvitationRequest;
 import com.singleparentlife.app.payload.request.NotificationRequest;
 import com.singleparentlife.app.payload.response.JsonResponse;
 import com.singleparentlife.app.service.EventInvitationService;
 import com.singleparentlife.app.service.EventService;
 import com.singleparentlife.app.service.NotificationService;
-import com.singleparentlife.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://locahost:3000", maxAge = 3600)

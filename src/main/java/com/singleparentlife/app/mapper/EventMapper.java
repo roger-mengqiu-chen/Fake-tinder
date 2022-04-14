@@ -1,7 +1,6 @@
 package com.singleparentlife.app.mapper;
 
-import com.singleparentlife.app.model.Event;
-import com.singleparentlife.app.model.EventInvitation;
+import com.singleparentlife.app.service.model.Event;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
